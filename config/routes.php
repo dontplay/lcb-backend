@@ -22,7 +22,11 @@ use Cake\Core\Plugin;
 use Cake\Routing\Router;
 
 Router::scope('/', function ($routes) {
-/**
+
+	$routes->extensions(['json']);
+ 	$routes->resources('Users');
+ 	$routes->resources('Ports');
+ /**
  * Here, we are connecting '/' (base path) to a controller called 'Pages',
  * its action called 'display', and we pass a param to select the view file
  * to use (in this case, src/Template/Pages/home.ctp)...
