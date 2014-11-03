@@ -46,9 +46,9 @@ class CitiesFixture extends TestFixture {
 			'id' => 1,
 			'recstatus' => 1,
 			'creator_id' => 1,
-			'created' => '2014-10-30 18:11:14',
+			'created' => '2014-11-03 12:35:58',
 			'modifier_id' => 1,
-			'modified' => '2014-10-30 18:11:14',
+			'modified' => '2014-11-03 12:35:58',
 			'name' => 'Lorem ipsum dolor sit amet',
 			'country_id' => 1
 		],

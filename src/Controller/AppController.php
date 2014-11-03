@@ -36,6 +36,8 @@ class AppController extends Controller {
  */
 	public function initialize() {
 		$this->loadComponent('Flash');
-	}
-
+        $this->loadComponent('RequestHandler');
+		$this->response->header('Access-Control-Allow-Origin', '*');
+		$this->response->header('Access-Control-Allow-Methods', '*');
+  	}
 }

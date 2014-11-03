@@ -1,14 +1,13 @@
 <?php
-namespace App\Test\TestCase\Model\Table;
+namespace App\Test\TestCase\Controller;
 
-use Cake\ORM\TableRegistry;
-use App\Model\Table\CitiesTable;
-use Cake\TestSuite\TestCase;
+use App\Controller\CitiesController;
+use Cake\TestSuite\IntegrationTestCase;
 
 /**
- * App\Model\Table\CitiesTable Test Case
+ * App\Controller\CitiesController Test Case
  */
-class CitiesTableTest extends TestCase {
+class CitiesControllerTest extends IntegrationTestCase {
 
 /**
  * Fixtures
@@ -38,42 +37,47 @@ class CitiesTableTest extends TestCase {
 	];
 
 /**
- * setUp method
+ * Test index method
  *
  * @return void
  */
-	public function setUp() {
-		parent::setUp();
-		$config = TableRegistry::exists('Cities') ? [] : ['className' => 'App\Model\Table\CitiesTable'];
-		$this->Cities = TableRegistry::get('Cities', $config);
-	}
-
-/**
- * tearDown method
- *
- * @return void
- */
-	public function tearDown() {
-		unset($this->Cities);
-
-		parent::tearDown();
-	}
-
-/**
- * Test initialize method
- *
- * @return void
- */
-	public function testInitialize() {
+	public function testIndex() {
 		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 /**
- * Test validationDefault method
+ * Test view method
  *
  * @return void
  */
-	public function testValidationDefault() {
+	public function testView() {
+		$this->markTestIncomplete('Not implemented yet.');
+	}
+
+/**
+ * Test add method
+ *
+ * @return void
+ */
+	public function testAdd() {
+		$this->markTestIncomplete('Not implemented yet.');
+	}
+
+/**
+ * Test edit method
+ *
+ * @return void
+ */
+	public function testEdit() {
+		$this->markTestIncomplete('Not implemented yet.');
+	}
+
+/**
+ * Test delete method
+ *
+ * @return void
+ */
+	public function testDelete() {
 		$this->markTestIncomplete('Not implemented yet.');
 	}
 

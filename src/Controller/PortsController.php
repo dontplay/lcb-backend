@@ -20,6 +20,7 @@ class PortsController extends AppController {
         parent::initialize();
         $this->loadComponent('RequestHandler');
 		$this->response->header('Access-Control-Allow-Origin', '*');
+		$this->response->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
     }
 
 /**
@@ -29,7 +30,7 @@ class PortsController extends AppController {
  */
 	public function index() {
 		$this->paginate = [
-			'contain' => ['Creators', 'Modifiers', 'Countries']
+			'contain' => ['Countries']
 		];
 		$this->set('ports', $this->paginate($this->Ports));
         $this->set('_serialize', ['ports']);
@@ -44,7 +45,7 @@ class PortsController extends AppController {
  */
 	public function view($id = null) {
 		$port = $this->Ports->get($id, [
-			'contain' => ['Creators', 'Modifiers', 'Countries', 'Dischargings', 'Loadings']
+		//	'contain' => ['Creators', 'Modifiers', 'Countries', 'Dischargings', 'Loadings']
 		]);
 		$this->set('port', $port);
         $this->set('_serialize', ['port']);
@@ -56,15 +57,26 @@ class PortsController extends AppController {
  * @return void
  */
 	public function add() {
-		$port = $this->Ports->newEntity($this->request->data);
-		if ($this->request->is('post')) {
-			if ($this->Ports->save($port)) {
-				$this->Flash->success('The port has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The port could not be saved. Please, try again.');
-			}
-		}
+		//$port = $this->Ports->newEntity($this->request->data);
+		//if ($this->request->is('post')) {
+		//	if ($this->Ports->save($port)) {
+		//		$this->Flash->success('The port has been saved.');
+		//		return $this->redirect(['action' => 'index']);
+		//	} else {
+		//		$this->Flash->error('The port could not be saved. Please, try again.');
+		//	}
+		//}
+        $port = $this->Ports->newEntity($this->request->data);
+        if ($this->Ports->save($port, ['validate' => false])) {
+            $message = 'Saved';
+        } else {
+            $message = 'Error';
+        }
+        $this->set([
+            'message' => $message,
+            'port' => $port,
+            '_serialize' => ['message', 'recipe']
+        ]);
 		$creators = $this->Ports->Creators->find('list');
 		$modifiers = $this->Ports->Modifiers->find('list');
 		$countries = $this->Ports->Countries->find('list');
@@ -84,17 +96,24 @@ class PortsController extends AppController {
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$port = $this->Ports->patchEntity($port, $this->request->data);
+			pr($port);
 			if ($this->Ports->save($port)) {
-				$this->Flash->success('The port has been saved.');
-				return $this->redirect(['action' => 'index']);
+                $message = 'Saved';
+				//$this->Flash->success('The port has been saved.');
+				//return $this->redirect(['action' => 'index']);
 			} else {
-				$this->Flash->error('The port could not be saved. Please, try again.');
+	            $message = 'Error';
+				//$this->Flash->error('The port could not be saved. Please, try again.');
 			}
 		}
 		$creators = $this->Ports->Creators->find('list');
 		$modifiers = $this->Ports->Modifiers->find('list');
 		$countries = $this->Ports->Countries->find('list');
 		$this->set(compact('port', 'creators', 'modifiers', 'countries'));
+        $this->set([
+            'message' => $message,
+            '_serialize' => ['message']
+        ]);
 	}
 
 /**
