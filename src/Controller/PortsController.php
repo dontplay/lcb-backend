@@ -44,11 +44,20 @@ class PortsController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function view($id = null) {
-		$port = $this->Ports->get($id, [
-		//	'contain' => ['Creators', 'Modifiers', 'Countries', 'Dischargings', 'Loadings']
-		]);
-		$this->set('port', $port);
-        $this->set('_serialize', ['port']);
+		if($this->request->params['_ext']){
+			$port = $this->Ports->get($id, [
+				//'fields' => ['id','name'],
+				'contain' => ['Creators', 'Modifiers', 'Countries', 'Dischargings', 'Loadings']
+			]);
+			$this->set('port', $port);
+	        $this->set('_serialize', ['port']);
+		}
+		else {
+			$port = $this->Ports->get($id, [
+				'contain' => ['Creators', 'Modifiers', 'Countries', 'Dischargings', 'Loadings']
+			]);
+			$this->set('port', $port);
+		}
 	}
 
 /**
@@ -96,7 +105,7 @@ class PortsController extends AppController {
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$port = $this->Ports->patchEntity($port, $this->request->data);
-			pr($port);
+			//pr($this->request->data);
 			if ($this->Ports->save($port)) {
                 $message = 'Saved';
 				//$this->Flash->success('The port has been saved.');
