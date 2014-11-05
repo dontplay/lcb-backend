@@ -11,15 +11,29 @@ use App\Controller\AppController;
 class VesselOwnersController extends AppController {
 
 /**
+ * Initialize method
+ *
+ * @return void
+ */
+
+	public function initialize() {
+        parent::initialize();
+        $this->loadComponent('RequestHandler');
+		$this->response->header('Access-Control-Allow-Origin', '*');
+		$this->response->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');        
+    }
+
+/**
  * Index method
  *
  * @return void
  */
 	public function index() {
 		$this->paginate = [
-			'contain' => ['Creators', 'Modifiers', 'Categories', 'Cities']
+			'contain' => ['Categories', 'Cities']
 		];
 		$this->set('vesselOwners', $this->paginate($this->VesselOwners));
+        $this->set('_serialize', ['vesselOwners']);
 	}
 
 /**
@@ -30,10 +44,19 @@ class VesselOwnersController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function view($id = null) {
-		$vesselOwner = $this->VesselOwners->get($id, [
-			'contain' => ['Creators', 'Modifiers', 'Categories', 'Cities', 'Vessels']
-		]);
-		$this->set('vesselOwner', $vesselOwner);
+		if($this->request->params['_ext']){
+			$vesselOwner = $this->VesselOwners->get($id, [
+			//	'fields' => ['id','name','category_id', 'city_id']
+			]);
+			$this->set('vesselOwner', $vesselOwner);
+	        $this->set('_serialize', ['vesselOwner']);
+		}
+		else {
+			$vesselOwner = $this->VesselOwners->get($id, [
+				'contain' => ['Creators', 'Modifiers', 'Categories', 'Cities', 'Vessels']
+			]);
+			$this->set('vesselOwner', $vesselOwner);
+		}
 	}
 
 /**
@@ -42,20 +65,36 @@ class VesselOwnersController extends AppController {
  * @return void
  */
 	public function add() {
-		$vesselOwner = $this->VesselOwners->newEntity($this->request->data);
-		if ($this->request->is('post')) {
-			if ($this->VesselOwners->save($vesselOwner)) {
-				$this->Flash->success('The vessel owner has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The vessel owner could not be saved. Please, try again.');
-			}
+		if($this->request->params['_ext']){
+	        $vesselOwner = $this->VesselOwners->newEntity($this->request->data);
+	        if ($this->VesselOwners->save($vesselOwner, ['validate' => false])) {
+	            $message = 'Saved';
+	        } else {
+	            $message = 'Error';
+	        }
+	        $this->set([
+	            'data' => $this->request->data,
+	            'message' => $message,
+	            'vesselOwner' => $vesselOwner,
+	            '_serialize' => ['message', 'vesselOwner', 'data']
+	        ]);
 		}
-		$creators = $this->VesselOwners->Creators->find('list');
-		$modifiers = $this->VesselOwners->Modifiers->find('list');
-		$categories = $this->VesselOwners->Categories->find('list');
-		$cities = $this->VesselOwners->Cities->find('list');
-		$this->set(compact('vesselOwner', 'creators', 'modifiers', 'categories', 'cities'));
+		else {
+			$vesselOwner = $this->VesselOwners->newEntity($this->request->data);
+			if ($this->request->is('post')) {
+				if ($this->VesselOwners->save($vesselOwner)) {
+					$this->Flash->success('The vesselOwner has been saved.');
+					return $this->redirect(['action' => 'index']);
+				} else {
+					$this->Flash->error('The vesselOwner could not be saved. Please, try again.');
+				}
+			}
+			$creators = $this->VesselOwners->Creators->find('list');
+			$modifiers = $this->VesselOwners->Modifiers->find('list');
+			$categories = $this->VesselOwners->Categories->find('list');
+			$cities = $this->VesselOwners->Cities->find('list');
+			$this->set(compact('vesselOwner', 'creators', 'modifiers', 'categories', 'cities'));
+		}
 	}
 
 /**
@@ -66,23 +105,44 @@ class VesselOwnersController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function edit($id = null) {
-		$vesselOwner = $this->VesselOwners->get($id, [
-			'contain' => []
-		]);
-		if ($this->request->is(['patch', 'post', 'put'])) {
-			$vesselOwner = $this->VesselOwners->patchEntity($vesselOwner, $this->request->data);
-			if ($this->VesselOwners->save($vesselOwner)) {
-				$this->Flash->success('The vessel owner has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The vessel owner could not be saved. Please, try again.');
+		if($this->request->params['_ext']){
+			$vesselOwner = $this->VesselOwners->get($id, [
+				'contain' => []
+			]);
+			if ($this->request->is(['patch', 'post', 'put'])) {
+				$vesselOwner = $this->VesselOwners->patchEntity($vesselOwner, $this->request->data);
+				if ($this->VesselOwners->save($vesselOwner, ['validate' => false])) {
+	                $message = 'Saved';
+				} else {
+		            $message = 'Error';
+				}
 			}
+	        $this->set([
+	        	'vesselOwner' => $vesselOwner,
+	            'message' => $message,
+	            'data' => $this->request->data,
+	            '_serialize' => ['message','vesselOwner','data']
+	        ]);
 		}
-		$creators = $this->VesselOwners->Creators->find('list');
-		$modifiers = $this->VesselOwners->Modifiers->find('list');
-		$categories = $this->VesselOwners->Categories->find('list');
-		$cities = $this->VesselOwners->Cities->find('list');
-		$this->set(compact('vesselOwner', 'creators', 'modifiers', 'categories', 'cities'));
+		else {
+			$vesselOwner = $this->VesselOwners->get($id, [
+				'contain' => []
+			]);
+			if ($this->request->is(['patch', 'post', 'put'])) {
+				$vesselOwner = $this->VesselOwners->patchEntity($vesselOwner, $this->request->data);
+				if ($this->VesselOwners->save($vesselOwner, ['validate' => false])) {
+					$this->Flash->success('The vesselOwner has been saved.');
+					return $this->redirect(['action' => 'index']);
+				} else {
+					$this->Flash->error('The vesselOwner could not be saved. Please, try again.');
+				}
+			}
+			$creators = $this->VesselOwners->Creators->find('list');
+			$modifiers = $this->VesselOwners->Modifiers->find('list');
+			$categories = $this->VesselOwners->Categories->find('list');
+			$cities = $this->VesselOwners->Cities->find('list');
+			$this->set(compact('vesselOwner', 'creators', 'modifiers', 'categories', 'cities'));
+		}
 	}
 
 /**
@@ -93,13 +153,26 @@ class VesselOwnersController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function delete($id = null) {
-		$vesselOwner = $this->VesselOwners->get($id);
-		$this->request->allowMethod(['post', 'delete']);
-		if ($this->VesselOwners->delete($vesselOwner)) {
-			$this->Flash->success('The vessel owner has been deleted.');
-		} else {
-			$this->Flash->error('The vessel owner could not be deleted. Please, try again.');
+		if($this->request->params['_ext']){
+	        $vesselOwner = $this->VesselOwners->get($id);
+	        $message = 'Deleted';
+	        if (!$this->VesselOwners->delete($vesselOwner)) {
+	            $message = 'Error';
+	        }
+	        $this->set([
+	            'message' => $message,
+	            '_serialize' => ['message']
+	        ]);
 		}
-		return $this->redirect(['action' => 'index']);
+		else {		
+			$vesselOwner = $this->VesselOwners->get($id);
+			$this->request->allowMethod(['post', 'delete']);
+			if ($this->VesselOwners->delete($vesselOwner)) {
+				$this->Flash->success('The vesselOwner has been deleted.');
+			} else {
+				$this->Flash->error('The vesselOwner could not be deleted. Please, try again.');
+			}
+			return $this->redirect(['action' => 'index']);
+		}
 	}
 }

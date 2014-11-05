@@ -46,8 +46,7 @@ class PortsController extends AppController {
 	public function view($id = null) {
 		if($this->request->params['_ext']){
 			$port = $this->Ports->get($id, [
-				//'fields' => ['id','name'],
-				'contain' => ['Creators', 'Modifiers', 'Countries', 'Dischargings', 'Loadings']
+				'fields' => ['id','name','category','country_id'],
 			]);
 			$this->set('port', $port);
 	        $this->set('_serialize', ['port']);
@@ -66,30 +65,35 @@ class PortsController extends AppController {
  * @return void
  */
 	public function add() {
-		//$port = $this->Ports->newEntity($this->request->data);
-		//if ($this->request->is('post')) {
-		//	if ($this->Ports->save($port)) {
-		//		$this->Flash->success('The port has been saved.');
-		//		return $this->redirect(['action' => 'index']);
-		//	} else {
-		//		$this->Flash->error('The port could not be saved. Please, try again.');
-		//	}
-		//}
-        $port = $this->Ports->newEntity($this->request->data);
-        if ($this->Ports->save($port, ['validate' => false])) {
-            $message = 'Saved';
-        } else {
-            $message = 'Error';
-        }
-        $this->set([
-            'message' => $message,
-            'port' => $port,
-            '_serialize' => ['message', 'recipe']
-        ]);
-		$creators = $this->Ports->Creators->find('list');
-		$modifiers = $this->Ports->Modifiers->find('list');
-		$countries = $this->Ports->Countries->find('list');
-		$this->set(compact('port', 'creators', 'modifiers', 'countries'));
+		if($this->request->params['_ext']){
+	        $port = $this->Ports->newEntity($this->request->data);
+	        if ($this->Ports->save($port, ['validate' => false])) {
+	            $message = 'Saved';
+	        } else {
+	            $message = 'Error';
+	        }
+	        $this->set([
+	            'data' => $this->request->data,
+	            'message' => $message,
+	            'port' => $port,
+	            '_serialize' => ['message', 'port', 'data']
+	        ]);
+		}
+		else {
+			$port = $this->Ports->newEntity($this->request->data);
+			if ($this->request->is('post')) {
+				if ($this->Ports->save($port)) {
+					$this->Flash->success('The port has been saved.');
+					return $this->redirect(['action' => 'index']);
+				} else {
+					$this->Flash->error('The port could not be saved. Please, try again.');
+				}
+			}
+			$creators = $this->Ports->Creators->find('list');
+			$modifiers = $this->Ports->Modifiers->find('list');
+			$countries = $this->Ports->Countries->find('list');
+			$this->set(compact('port', 'creators', 'modifiers', 'countries'));
+		}
 	}
 
 /**
@@ -100,29 +104,43 @@ class PortsController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function edit($id = null) {
-		$port = $this->Ports->get($id, [
-			'contain' => []
-		]);
-		if ($this->request->is(['patch', 'post', 'put'])) {
-			$port = $this->Ports->patchEntity($port, $this->request->data);
-			//pr($this->request->data);
-			if ($this->Ports->save($port)) {
-                $message = 'Saved';
-				//$this->Flash->success('The port has been saved.');
-				//return $this->redirect(['action' => 'index']);
-			} else {
-	            $message = 'Error';
-				//$this->Flash->error('The port could not be saved. Please, try again.');
+		if($this->request->params['_ext']){
+			$port = $this->Ports->get($id, [
+				'contain' => []
+			]);
+			if ($this->request->is(['patch', 'post', 'put'])) {
+				$port = $this->Ports->patchEntity($port, $this->request->data);
+				if ($this->Ports->save($port, ['validate' => false])) {
+	                $message = 'Saved';
+				} else {
+		            $message = 'Error';
+				}
 			}
+	        $this->set([
+	        	'port' => $port,
+	            'message' => $message,
+	            'data' => $this->request->data,
+	            '_serialize' => ['message','port','data']
+	        ]);
 		}
-		$creators = $this->Ports->Creators->find('list');
-		$modifiers = $this->Ports->Modifiers->find('list');
-		$countries = $this->Ports->Countries->find('list');
-		$this->set(compact('port', 'creators', 'modifiers', 'countries'));
-        $this->set([
-            'message' => $message,
-            '_serialize' => ['message']
-        ]);
+		else {
+			$port = $this->Ports->get($id, [
+				'contain' => []
+			]);
+			if ($this->request->is(['patch', 'post', 'put'])) {
+				$port = $this->Ports->patchEntity($port, $this->request->data);
+				if ($this->Ports->save($port, ['validate' => false])) {
+					$this->Flash->success('The port has been saved.');
+					return $this->redirect(['action' => 'index']);
+				} else {
+					$this->Flash->error('The port could not be saved. Please, try again.');
+				}
+			}
+			$creators = $this->Ports->Creators->find('list');
+			$modifiers = $this->Ports->Modifiers->find('list');
+			$countries = $this->Ports->Countries->find('list');
+			$this->set(compact('port', 'creators', 'modifiers', 'countries'));
+		}
 	}
 
 /**
@@ -133,13 +151,26 @@ class PortsController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function delete($id = null) {
-		$port = $this->Ports->get($id);
-		$this->request->allowMethod(['post', 'delete']);
-		if ($this->Ports->delete($port)) {
-			$this->Flash->success('The port has been deleted.');
-		} else {
-			$this->Flash->error('The port could not be deleted. Please, try again.');
+		if($this->request->params['_ext']){
+	        $port = $this->Ports->get($id);
+	        $message = 'Deleted';
+	        if (!$this->Ports->delete($port)) {
+	            $message = 'Error';
+	        }
+	        $this->set([
+	            'message' => $message,
+	            '_serialize' => ['message']
+	        ]);
 		}
-		return $this->redirect(['action' => 'index']);
+		else {		
+			$port = $this->Ports->get($id);
+			$this->request->allowMethod(['post', 'delete']);
+			if ($this->Ports->delete($port)) {
+				$this->Flash->success('The port has been deleted.');
+			} else {
+				$this->Flash->error('The port could not be deleted. Please, try again.');
+			}
+			return $this->redirect(['action' => 'index']);
+		}
 	}
 }
