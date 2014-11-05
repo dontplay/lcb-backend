@@ -33,8 +33,8 @@ class VesselOwnersTable extends Table {
 			'className' => 'Users',
 			'foreignKey' => 'modifier_id',
 		]);
-		$this->belongsTo('Categories', [
-			'foreignKey' => 'category_id',
+		$this->belongsTo('VesselOwnerCategories', [
+			'foreignKey' => 'vessel_owner_category_id',
 		]);
 		$this->belongsTo('Cities', [
 			'foreignKey' => 'city_id',

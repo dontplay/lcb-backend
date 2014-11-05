@@ -53,7 +53,7 @@ class VesselOwnersController extends AppController {
 		}
 		else {
 			$vesselOwner = $this->VesselOwners->get($id, [
-				'contain' => ['Creators', 'Modifiers', 'Categories', 'Cities', 'Vessels']
+				'contain' => ['Creators', 'Modifiers', 'VesselOwnerCategories', 'VesselOwnerContacts', 'Cities', 'Vessels']
 			]);
 			$this->set('vesselOwner', $vesselOwner);
 		}
