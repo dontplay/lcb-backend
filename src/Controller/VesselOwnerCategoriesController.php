@@ -65,18 +65,34 @@ class VesselOwnerCategoriesController extends AppController {
  * @return void
  */
 	public function add() {
-		$vesselOwnerCategory = $this->VesselOwnerCategories->newEntity($this->request->data);
-		if ($this->request->is('post')) {
-			if ($this->VesselOwnerCategories->save($vesselOwnerCategory)) {
-				$this->Flash->success('The vessel owner category has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The vessel owner category could not be saved. Please, try again.');
-			}
+		if($this->request->params['_ext']){
+	        $vesselOwnerCategory = $this->VesselOwnerCategories->newEntity($this->request->data);
+	        if ($this->VesselOwnerCategories->save($vesselOwnerCategory, ['validate' => false])) {
+	            $message = 'Saved';
+	        } else {
+	            $message = 'Error';
+	        }
+	        $this->set([
+	            'data' => $this->request->data,
+	            'message' => $message,
+	            'vesselOwnerCategory' => $vesselOwnerCategory,
+	            '_serialize' => ['message', 'vesselOwnerCategory', 'data']
+	        ]);
 		}
-		$creators = $this->VesselOwnerCategories->Creators->find('list');
-		$modifiers = $this->VesselOwnerCategories->Modifiers->find('list');
-		$this->set(compact('vesselOwnerCategory', 'creators', 'modifiers'));
+		else {
+			$vesselOwnerCategory = $this->VesselOwnerCategories->newEntity($this->request->data);
+			if ($this->request->is('post')) {
+				if ($this->VesselOwnerCategories->save($vesselOwnerCategory)) {
+					$this->Flash->success('The vesselOwnerCategory has been saved.');
+					return $this->redirect(['action' => 'index']);
+				} else {
+					$this->Flash->error('The vesselOwnerCategory could not be saved. Please, try again.');
+				}
+			}
+			$creators = $this->VesselOwnerCategories->Creators->find('list');
+			$modifiers = $this->VesselOwnerCategories->Modifiers->find('list');
+			$this->set(compact('vesselOwnerCategory', 'creators', 'modifiers'));
+		}
 	}
 
 /**
@@ -87,21 +103,42 @@ class VesselOwnerCategoriesController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function edit($id = null) {
-		$vesselOwnerCategory = $this->VesselOwnerCategories->get($id, [
-			'contain' => []
-		]);
-		if ($this->request->is(['patch', 'post', 'put'])) {
-			$vesselOwnerCategory = $this->VesselOwnerCategories->patchEntity($vesselOwnerCategory, $this->request->data);
-			if ($this->VesselOwnerCategories->save($vesselOwnerCategory)) {
-				$this->Flash->success('The vessel owner category has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The vessel owner category could not be saved. Please, try again.');
+		if($this->request->params['_ext']){
+			$vesselOwnerCategory = $this->VesselOwnerCategories->get($id, [
+				'contain' => []
+			]);
+			if ($this->request->is(['patch', 'post', 'put'])) {
+				$vesselOwnerCategory = $this->VesselOwnerCategories->patchEntity($vesselOwnerCategory, $this->request->data);
+				if ($this->VesselOwnerCategories->save($vesselOwnerCategory, ['validate' => false])) {
+	                $message = 'Saved';
+				} else {
+		            $message = 'Error';
+				}
 			}
+	        $this->set([
+	            'vesselOwnerCategory' => $vesselOwnerCategory,
+	            'message' => $message,
+	            'data' => $this->request->data,
+	            '_serialize' => ['message','vesselOwnerCategory','data']
+	        ]);
 		}
-		$creators = $this->VesselOwnerCategories->Creators->find('list');
-		$modifiers = $this->VesselOwnerCategories->Modifiers->find('list');
-		$this->set(compact('vesselOwnerCategory', 'creators', 'modifiers'));
+		else {
+			$vesselOwnerCategory = $this->VesselOwnerCategories->get($id, [
+				'contain' => []
+			]);
+			if ($this->request->is(['patch', 'post', 'put'])) {
+				$vesselOwnerCategory = $this->VesselOwnerCategories->patchEntity($vesselOwnerCategory, $this->request->data);
+				if ($this->VesselOwnerCategories->save($vesselOwnerCategory)) {
+					$this->Flash->success('The vessel owner category has been saved.');
+					return $this->redirect(['action' => 'index']);
+				} else {
+					$this->Flash->error('The vessel owner category could not be saved. Please, try again.');
+				}
+			}
+			$creators = $this->VesselOwnerCategories->Creators->find('list');
+			$modifiers = $this->VesselOwnerCategories->Modifiers->find('list');
+			$this->set(compact('vesselOwnerCategory', 'creators', 'modifiers'));
+		}
 	}
 
 /**
@@ -112,13 +149,26 @@ class VesselOwnerCategoriesController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function delete($id = null) {
-		$vesselOwnerCategory = $this->VesselOwnerCategories->get($id);
-		$this->request->allowMethod(['post', 'delete']);
-		if ($this->VesselOwnerCategories->delete($vesselOwnerCategory)) {
-			$this->Flash->success('The vessel owner category has been deleted.');
-		} else {
-			$this->Flash->error('The vessel owner category could not be deleted. Please, try again.');
+		if($this->request->params['_ext']){
+	        $vesselOwnerCategory = $this->VesselOwnerCategories->get($id);
+	        $message = 'Deleted';
+	        if (!$this->VesselOwnerCategories->delete($vesselOwnerCategory)) {
+	            $message = 'Error';
+	        }
+	        $this->set([
+	            'message' => $message,
+	            '_serialize' => ['message']
+	        ]);
 		}
-		return $this->redirect(['action' => 'index']);
+		else {		
+			$vesselOwnerCategory = $this->VesselOwnerCategories->get($id);
+			$this->request->allowMethod(['post', 'delete']);
+			if ($this->VesselOwnerCategories->delete($vesselOwnerCategory)) {
+				$this->Flash->success('The vessel owner category has been deleted.');
+			} else {
+				$this->Flash->error('The vessel owner category could not be deleted. Please, try again.');
+			}
+			return $this->redirect(['action' => 'index']);
+		}
 	}
 }

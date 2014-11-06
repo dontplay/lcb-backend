@@ -28,10 +28,9 @@ class VesselOwnersFixture extends TestFixture {
 		'contact' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
 		'credit_period' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
 		'remarks' => ['type' => 'text', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
-		'category_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+		'vessel_owner_category_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
 		'city_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
 		'_indexes' => [
-			'category_master_id' => ['type' => 'index', 'columns' => ['category_id'], 'length' => []],
 			'creator_id' => ['type' => 'index', 'columns' => ['creator_id'], 'length' => []],
 			'modifier_id' => ['type' => 'index', 'columns' => ['modifier_id'], 'length' => []],
 		],
@@ -53,9 +52,9 @@ class VesselOwnersFixture extends TestFixture {
 			'id' => 1,
 			'recstatus' => 1,
 			'creator_id' => 1,
-			'created' => '2014-10-31 16:47:02',
+			'created' => '2014-11-06 15:04:02',
 			'modifier_id' => 1,
-			'modified' => '2014-10-31 16:47:02',
+			'modified' => '2014-11-06 15:04:02',
 			'name' => 'Lorem ipsum dolor sit amet',
 			'address' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 			'pincode' => 1,
@@ -63,7 +62,7 @@ class VesselOwnersFixture extends TestFixture {
 			'contact' => 1,
 			'credit_period' => 1,
 			'remarks' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-			'category_id' => 1,
+			'vessel_owner_category_id' => 1,
 			'city_id' => 1
 		],
 	];

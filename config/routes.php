@@ -28,6 +28,10 @@ Router::scope('/', function ($routes) {
  	$routes->resources('Users');
  	$routes->resources('Cities');
  	$routes->resources('Countries');
+ 	$routes->resources('Vessels');
+ 	$routes->resources('VesselOwners');
+ 	$routes->resources('VesselOwnerContacts');
+ 	$routes->resources('VesselOwnerCategories');
  /**
  * Here, we are connecting '/' (base path) to a controller called 'Pages',
  * its action called 'display', and we pass a param to select the view file

@@ -30,7 +30,7 @@ class VesselOwnersController extends AppController {
  */
 	public function index() {
 		$this->paginate = [
-			'contain' => ['Categories', 'Cities']
+			'contain' => ['VesselOwnerCategories', 'VesselOwnerContacts', 'Cities']
 		];
 		$this->set('vesselOwners', $this->paginate($this->VesselOwners));
         $this->set('_serialize', ['vesselOwners']);
@@ -66,7 +66,9 @@ class VesselOwnersController extends AppController {
  */
 	public function add() {
 		if($this->request->params['_ext']){
-	        $vesselOwner = $this->VesselOwners->newEntity($this->request->data);
+	        $vesselOwner = $this->VesselOwners->newEntity($this->request->data, [
+	        //	'associated' => ['VesselOwnerContacts']
+	        ]);
 	        if ($this->VesselOwners->save($vesselOwner, ['validate' => false])) {
 	            $message = 'Saved';
 	        } else {
@@ -78,6 +80,8 @@ class VesselOwnersController extends AppController {
 	            'vesselOwner' => $vesselOwner,
 	            '_serialize' => ['message', 'vesselOwner', 'data']
 	        ]);
+	        //debug($this->VesselOwners);
+	        //debug($vesselOwner);
 		}
 		else {
 			$vesselOwner = $this->VesselOwners->newEntity($this->request->data);
