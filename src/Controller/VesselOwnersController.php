@@ -47,6 +47,7 @@ class VesselOwnersController extends AppController {
 		if($this->request->params['_ext']){
 			$vesselOwner = $this->VesselOwners->get($id, [
 			//	'fields' => ['id','name','category_id', 'city_id']
+				'contain' => ['VesselOwnerContacts']
 			]);
 			$this->set('vesselOwner', $vesselOwner);
 	        $this->set('_serialize', ['vesselOwner']);
