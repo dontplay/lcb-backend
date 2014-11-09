@@ -45,7 +45,7 @@ class VesselOwnerContactsController extends AppController {
  */
 	public function view($id = null) {
 		if($this->request->params['_ext']){
-			$ = $this->VesselOwnerContacts->get($id, [
+			$vesselOwnerContact = $this->VesselOwnerContacts->get($id, [
 			//	'fields' => ['id','name','category_id', 'city_id']
 			]);
 			$this->set('vesselOwnerContact', $vesselOwnerContact);

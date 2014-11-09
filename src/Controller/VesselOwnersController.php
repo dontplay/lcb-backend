@@ -118,7 +118,8 @@ class VesselOwnersController extends AppController {
 				$vesselOwner = $this->VesselOwners->patchEntity($vesselOwner, $this->request->data);
 				if ($this->VesselOwners->save($vesselOwner, ['validate' => false])) {
 	                $message = 'Saved';
-				} else {
+				}
+				else {
 		            $message = 'Error';
 				}
 			}

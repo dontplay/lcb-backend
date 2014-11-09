@@ -14,6 +14,7 @@ class VesselOwnerContact extends Entity {
  * @var array
  */
 	protected $_accessible = [
+		'id' => true,
 		'recstatus' => true,
 		'creator_id' => true,
 		'modifier_id' => true,
