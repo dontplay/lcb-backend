@@ -15,12 +15,12 @@ class CountriesController extends AppController {
  *
  * @return void
  */
-
 	public function initialize() {
-        parent::initialize();
-        $this->loadComponent('RequestHandler');
+		parent::initialize();
+		$this->loadComponent('RequestHandler');
 		$this->response->header('Access-Control-Allow-Origin', '*');
-    }
+		$this->response->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
+	}
 
 /**
  * Index method
@@ -28,21 +28,16 @@ class CountriesController extends AppController {
  * @return void
  */
 	public function index() {
-        if ($this->RequestHandler->accepts(['json'])) {
-	        $conditions = [
+		if ($this->request->params['_ext']) {
+			$conditions = [
 				'fields' => ['Countries.id', 'Countries.name']
 			];
-			$this->set('countries', $this->Countries->find('all',$conditions));
-        }
-        else {
-	        $conditions = [
-				'fields' => ['Countries.id', 'Countries.name']
-			];
-			$this->set('countries', $this->Countries->find('all',$conditions));
+			$this->set('countries', $this->Countries->find('all', $conditions));
 		}
-
-
-        $this->set('_serialize', ['countries']);
+		else {
+			$this->set('countries', $this->Countries->find('all'));
+		}
+		$this->set('_serialize', ['countries']);
 	}
 
 /**
@@ -57,7 +52,7 @@ class CountriesController extends AppController {
 			'contain' => ['Creators', 'Modifiers', 'Cities', 'Ports']
 		]);
 		$this->set('country', $country);
-        $this->set('_serialize', ['country']);
+		$this->set('_serialize', ['country']);
 	}
 
 /**

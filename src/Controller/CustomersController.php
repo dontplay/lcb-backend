@@ -15,12 +15,11 @@ class CustomersController extends AppController {
  *
  * @return void
  */
-
 	public function initialize() {
 		parent::initialize();
 		$this->loadComponent('RequestHandler');
 		$this->response->header('Access-Control-Allow-Origin', '*');
-		$this->response->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');        
+		$this->response->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
 	}
 
 /**
@@ -44,14 +43,13 @@ class CustomersController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function view($id = null) {
-		if($this->request->params['_ext']){
+		if ($this->request->params['_ext']) {
 			$customer = $this->Customers->get($id, [
 				'contain' => ['CustomerContacts']
 			]);
 			$this->set('customer', $customer);
 			$this->set('_serialize', ['customer']);
-		}
-		else {
+		} else {
 			$customer = $this->Customers->get($id, [
 				'contain' => ['Creators', 'Modifiers', 'CustomerCategories', 'CustomerContacts', 'Cities', 'Vessels']
 			]);
@@ -65,7 +63,7 @@ class CustomersController extends AppController {
  * @return void
  */
 	public function add() {
-		if($this->request->params['_ext']){
+		if ($this->request->params['_ext']) {
 			$customer = $this->Customers->newEntity($this->request->data);
 			if ($this->Customers->save($customer, ['validate' => false])) {
 				$message = 'Saved';
@@ -78,8 +76,7 @@ class CustomersController extends AppController {
 				'customer' => $customer,
 				'_serialize' => ['message', 'customer', 'data']
 			]);
-		}
-		else {
+		} else {
 			$customer = $this->Customers->newEntity($this->request->data);
 			if ($this->request->is('post')) {
 				if ($this->Customers->save($customer)) {
@@ -105,7 +102,7 @@ class CustomersController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function edit($id = null) {
-		if($this->request->params['_ext']){
+		if ($this->request->params['_ext']) {
 			$customer = $this->Customers->get($id, [
 				'contain' => ['CustomerContacts']
 			]);
@@ -113,8 +110,7 @@ class CustomersController extends AppController {
 				$customer = $this->Customers->patchEntity($customer, $this->request->data);
 				if ($this->Customers->save($customer, ['validate' => false])) {
 					$message = 'Saved';
-				}
-				else {
+				} else {
 					$message = 'Error';
 				}
 			}
@@ -154,7 +150,7 @@ class CustomersController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function delete($id = null) {
-		if($this->request->params['_ext']){
+		if ($this->request->params['_ext']) {
 			$customer = $this->Customers->get($id);
 			$message = 'Deleted';
 			if (!$this->Customers->delete($customer)) {
