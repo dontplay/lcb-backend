@@ -23,9 +23,11 @@ class VesselOwnersTable extends Table {
 		$this->addBehavior('Timestamp');
 
 		$this->belongsTo('Creators', [
+			'className' => 'Users',
 			'foreignKey' => 'creator_id',
 		]);
 		$this->belongsTo('Modifiers', [
+			'className' => 'Users',
 			'foreignKey' => 'modifier_id',
 		]);
 		$this->belongsTo('VesselOwnerCategories', [

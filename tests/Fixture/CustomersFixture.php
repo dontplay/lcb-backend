@@ -29,10 +29,10 @@ class CustomersFixture extends TestFixture {
 		'credit_period' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
 		'remarks' => ['type' => 'text', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
 		'city_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-		'category_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+		'customer_category_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
 		'_indexes' => [
 			'city_master_id' => ['type' => 'index', 'columns' => ['city_id'], 'length' => []],
-			'category_master_id' => ['type' => 'index', 'columns' => ['category_id'], 'length' => []],
+			'category_master_id' => ['type' => 'index', 'columns' => ['customer_category_id'], 'length' => []],
 			'modifier_id' => ['type' => 'index', 'columns' => ['modifier_id'], 'length' => []],
 			'creator_id' => ['type' => 'index', 'columns' => ['creator_id'], 'length' => []],
 		],
@@ -54,9 +54,9 @@ class CustomersFixture extends TestFixture {
 			'id' => 1,
 			'recstatus' => 1,
 			'creator_id' => 1,
-			'created' => '2014-10-30 18:11:50',
+			'created' => '2014-11-10 00:41:46',
 			'modifier_id' => 1,
-			'modified' => '2014-10-30 18:11:50',
+			'modified' => '2014-11-10 00:41:46',
 			'name' => 'Lorem ipsum dolor sit amet',
 			'address' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 			'pincode' => 1,
@@ -65,7 +65,7 @@ class CustomersFixture extends TestFixture {
 			'credit_period' => 1,
 			'remarks' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 			'city_id' => 1,
-			'category_id' => 1
+			'customer_category_id' => 1
 		],
 	];
 

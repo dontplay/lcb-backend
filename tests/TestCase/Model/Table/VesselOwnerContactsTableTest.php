@@ -20,8 +20,7 @@ class VesselOwnerContactsTableTest extends TestCase {
 		'app.creators',
 		'app.modifiers',
 		'app.vessel_owners',
-		'app.categories',
-		'app.customers',
+		'app.vessel_owner_categories',
 		'app.cities',
 		'app.countries',
 		'app.ports',
@@ -35,6 +34,9 @@ class VesselOwnerContactsTableTest extends TestCase {
 		'app.status_masters',
 		'app.vessel_masters',
 		'app.port_masters',
+		'app.customers',
+		'app.customer_categories',
+		'app.customer_contacts',
 		'app.vessels'
 	];
 

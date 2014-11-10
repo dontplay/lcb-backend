@@ -30,8 +30,9 @@ class VesselOwner extends Entity {
 		'modifier' => true,
 		'vessel_owner_category' => true,
 		'city' => true,
-		'vessels' => true,
+		'orders' => true,
 		'vessel_owner_contacts' => true,
+		'vessels' => true,
 	];
 
 }

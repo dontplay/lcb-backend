@@ -4,11 +4,11 @@ namespace App\Controller;
 use App\Controller\AppController;
 
 /**
- * VesselOwnerCategories Controller
+ * CustomerCategories Controller
  *
- * @property App\Model\Table\VesselOwnerCategoriesTable $VesselOwnerCategories
+ * @property App\Model\Table\CustomerCategoriesTable $CustomerCategories
  */
-class VesselOwnerCategoriesController extends AppController {
+class CustomerCategoriesController extends AppController {
 
 /**
  * Initialize method
@@ -32,8 +32,8 @@ class VesselOwnerCategoriesController extends AppController {
 		$this->paginate = [
 			'contain' => ['Creators', 'Modifiers']
 		];
-		$this->set('vesselOwnerCategories', $this->paginate($this->VesselOwnerCategories));
-        $this->set('_serialize', ['vesselOwnerCategories']);
+		$this->set('customerCategories', $this->paginate($this->CustomerCategories));
+        $this->set('_serialize', ['customerCategories']);
 	}
 
 /**
@@ -45,15 +45,15 @@ class VesselOwnerCategoriesController extends AppController {
  */
 	public function view($id = null) {
 		if($this->request->params['_ext']){
-			$vesselOwnerCategory = $this->VesselOwnerCategories->get($id);
-			$this->set('vesselOwnerCategory', $vesselOwnerCategory);
-	        $this->set('_serialize', ['vesselOwnerCategory']);
+			$customerCategory = $this->CustomerCategories->get($id);
+			$this->set('customerCategory', $customerCategory);
+	        $this->set('_serialize', ['customerCategory']);
 		}
 		else {
-			$vesselOwnerCategory = $this->VesselOwnerCategories->get($id, [
-				'contain' => ['Creators', 'Modifiers', 'VesselOwners']
+			$customerCategory = $this->CustomerCategories->get($id, [
+				'contain' => ['Creators', 'Modifiers', 'Customers']
 			]);
-			$this->set('vesselOwnerCategory', $vesselOwnerCategory);
+			$this->set('customerCategory', $customerCategory);
 		}
 	}
 
@@ -64,8 +64,8 @@ class VesselOwnerCategoriesController extends AppController {
  */
 	public function add() {
 		if($this->request->params['_ext']){
-	        $vesselOwnerCategory = $this->VesselOwnerCategories->newEntity($this->request->data);
-	        if ($this->VesselOwnerCategories->save($vesselOwnerCategory, ['validate' => false])) {
+	        $customerCategory = $this->CustomerCategories->newEntity($this->request->data);
+	        if ($this->CustomerCategories->save($customerCategory, ['validate' => false])) {
 	            $message = 'Saved';
 	        } else {
 	            $message = 'Error';
@@ -73,23 +73,23 @@ class VesselOwnerCategoriesController extends AppController {
 	        $this->set([
 	            'data' => $this->request->data,
 	            'message' => $message,
-	            'vesselOwnerCategory' => $vesselOwnerCategory,
-	            '_serialize' => ['message', 'vesselOwnerCategory', 'data']
+	            'customerCategory' => $customerCategory,
+	            '_serialize' => ['message', 'customerCategory', 'data']
 	        ]);
 		}
 		else {
-			$vesselOwnerCategory = $this->VesselOwnerCategories->newEntity($this->request->data);
+			$customerCategory = $this->CustomerCategories->newEntity($this->request->data);
 			if ($this->request->is('post')) {
-				if ($this->VesselOwnerCategories->save($vesselOwnerCategory)) {
-					$this->Flash->success('The vesselOwnerCategory has been saved.');
+				if ($this->CustomerCategories->save($customerCategory)) {
+					$this->Flash->success('The customerCategory has been saved.');
 					return $this->redirect(['action' => 'index']);
 				} else {
-					$this->Flash->error('The vesselOwnerCategory could not be saved. Please, try again.');
+					$this->Flash->error('The customerCategory could not be saved. Please, try again.');
 				}
 			}
-			$creators = $this->VesselOwnerCategories->Creators->find('list');
-			$modifiers = $this->VesselOwnerCategories->Modifiers->find('list');
-			$this->set(compact('vesselOwnerCategory', 'creators', 'modifiers'));
+			$creators = $this->CustomerCategories->Creators->find('list');
+			$modifiers = $this->CustomerCategories->Modifiers->find('list');
+			$this->set(compact('customerCategory', 'creators', 'modifiers'));
 		}
 	}
 
@@ -102,40 +102,40 @@ class VesselOwnerCategoriesController extends AppController {
  */
 	public function edit($id = null) {
 		if($this->request->params['_ext']){
-			$vesselOwnerCategory = $this->VesselOwnerCategories->get($id, [
+			$customerCategory = $this->CustomerCategories->get($id, [
 				'contain' => []
 			]);
 			if ($this->request->is(['patch', 'post', 'put'])) {
-				$vesselOwnerCategory = $this->VesselOwnerCategories->patchEntity($vesselOwnerCategory, $this->request->data);
-				if ($this->VesselOwnerCategories->save($vesselOwnerCategory, ['validate' => false])) {
+				$customerCategory = $this->CustomerCategories->patchEntity($customerCategory, $this->request->data);
+				if ($this->CustomerCategories->save($customerCategory, ['validate' => false])) {
 	                $message = 'Saved';
 				} else {
 		            $message = 'Error';
 				}
 			}
 	        $this->set([
-	            'vesselOwnerCategory' => $vesselOwnerCategory,
+	            'customerCategory' => $customerCategory,
 	            'message' => $message,
 	            'data' => $this->request->data,
-	            '_serialize' => ['message','vesselOwnerCategory','data']
+	            '_serialize' => ['message','customerCategory','data']
 	        ]);
 		}
 		else {
-			$vesselOwnerCategory = $this->VesselOwnerCategories->get($id, [
+			$customerCategory = $this->CustomerCategories->get($id, [
 				'contain' => []
 			]);
 			if ($this->request->is(['patch', 'post', 'put'])) {
-				$vesselOwnerCategory = $this->VesselOwnerCategories->patchEntity($vesselOwnerCategory, $this->request->data);
-				if ($this->VesselOwnerCategories->save($vesselOwnerCategory)) {
+				$customerCategory = $this->CustomerCategories->patchEntity($customerCategory, $this->request->data);
+				if ($this->CustomerCategories->save($customerCategory)) {
 					$this->Flash->success('The vessel owner category has been saved.');
 					return $this->redirect(['action' => 'index']);
 				} else {
 					$this->Flash->error('The vessel owner category could not be saved. Please, try again.');
 				}
 			}
-			$creators = $this->VesselOwnerCategories->Creators->find('list');
-			$modifiers = $this->VesselOwnerCategories->Modifiers->find('list');
-			$this->set(compact('vesselOwnerCategory', 'creators', 'modifiers'));
+			$creators = $this->CustomerCategories->Creators->find('list');
+			$modifiers = $this->CustomerCategories->Modifiers->find('list');
+			$this->set(compact('customerCategory', 'creators', 'modifiers'));
 		}
 	}
 
@@ -148,9 +148,9 @@ class VesselOwnerCategoriesController extends AppController {
  */
 	public function delete($id = null) {
 		if($this->request->params['_ext']){
-	        $vesselOwnerCategory = $this->VesselOwnerCategories->get($id);
+	        $customerCategory = $this->CustomerCategories->get($id);
 	        $message = 'Deleted';
-	        if (!$this->VesselOwnerCategories->delete($vesselOwnerCategory)) {
+	        if (!$this->CustomerCategories->delete($customerCategory)) {
 	            $message = 'Error';
 	        }
 	        $this->set([
@@ -159,9 +159,9 @@ class VesselOwnerCategoriesController extends AppController {
 	        ]);
 		}
 		else {		
-			$vesselOwnerCategory = $this->VesselOwnerCategories->get($id);
+			$customerCategory = $this->CustomerCategories->get($id);
 			$this->request->allowMethod(['post', 'delete']);
-			if ($this->VesselOwnerCategories->delete($vesselOwnerCategory)) {
+			if ($this->CustomerCategories->delete($customerCategory)) {
 				$this->Flash->success('The vessel owner category has been deleted.');
 			} else {
 				$this->Flash->error('The vessel owner category could not be deleted. Please, try again.');

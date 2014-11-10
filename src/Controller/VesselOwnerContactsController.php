@@ -15,7 +15,6 @@ class VesselOwnerContactsController extends AppController {
  *
  * @return void
  */
-
 	public function initialize() {
         parent::initialize();
         $this->loadComponent('RequestHandler');
@@ -45,9 +44,7 @@ class VesselOwnerContactsController extends AppController {
  */
 	public function view($id = null) {
 		if($this->request->params['_ext']){
-			$vesselOwnerContact = $this->VesselOwnerContacts->get($id, [
-			//	'fields' => ['id','name','category_id', 'city_id']
-			]);
+			$vesselOwnerContact = $this->VesselOwnerContacts->get($id);
 			$this->set('vesselOwnerContact', $vesselOwnerContact);
 	        $this->set('_serialize', ['vesselOwnerContact']);
 		}

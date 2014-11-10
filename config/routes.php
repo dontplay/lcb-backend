@@ -24,14 +24,22 @@ use Cake\Routing\Router;
 Router::scope('/', function ($routes) {
 
 	$routes->extensions(['json']);
- 	$routes->resources('Ports');
+
+	$routes->resources('Ports');
+ 	$routes->resources('Vessels');
+
  	$routes->resources('Users');
+
  	$routes->resources('Cities');
  	$routes->resources('Countries');
- 	$routes->resources('Vessels');
+
  	$routes->resources('VesselOwners');
- 	$routes->resources('VesselOwnerContacts');
  	$routes->resources('VesselOwnerCategories');
+ 	$routes->resources('VesselOwnerContacts');
+
+ 	$routes->resources('Customers');
+ 	$routes->resources('CustomerCategories');
+ 	$routes->resources('CustomerContacts');
  /**
  * Here, we are connecting '/' (base path) to a controller called 'Pages',
  * its action called 'display', and we pass a param to select the view file

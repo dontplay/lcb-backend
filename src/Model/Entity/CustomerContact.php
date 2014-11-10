@@ -4,9 +4,9 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * VesselOwnerContact Entity.
+ * CustomerContact Entity.
  */
-class VesselOwnerContact extends Entity {
+class CustomerContact extends Entity {
 
 /**
  * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -17,12 +17,12 @@ class VesselOwnerContact extends Entity {
 		'recstatus' => true,
 		'creator_id' => true,
 		'modifier_id' => true,
-		'vessel_owner_id' => true,
+		'customer_id' => true,
 		'name' => true,
 		'number' => true,
 		'creator' => true,
 		'modifier' => true,
-		'vessel_owner' => true,
+		'customer' => true,
 	];
 
 }

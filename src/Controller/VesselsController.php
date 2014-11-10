@@ -17,11 +17,11 @@ class VesselsController extends AppController {
  */
 
 	public function initialize() {
-        parent::initialize();
-        $this->loadComponent('RequestHandler');
+		parent::initialize();
+		$this->loadComponent('RequestHandler');
 		$this->response->header('Access-Control-Allow-Origin', '*');
 		$this->response->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');        
-    }
+	}
 
 /**
  * Index method
@@ -34,8 +34,8 @@ class VesselsController extends AppController {
 			'contain' => ['VesselOwners']
 		];
 		$this->set('vessels', $this->paginate($this->Vessels));
-        $this->set('_serialize', ['vessels']);
-    }
+		$this->set('_serialize', ['vessels']);
+	}
 
 /**
  * View method
@@ -46,11 +46,9 @@ class VesselsController extends AppController {
  */
 	public function view($id = null) {
 		if($this->request->params['_ext']){
-			$vessel = $this->Vessels->get($id, [
-			//	'fields' => ['id','name','vessel_owner_id']
-			]);
+			$vessel = $this->Vessels->get($id);
 			$this->set('vessel', $vessel);
-	        $this->set('_serialize', ['vessel']);
+			$this->set('_serialize', ['vessel']);
 		}
 		else {
 			$vessel = $this->Vessels->get($id, [
@@ -67,18 +65,18 @@ class VesselsController extends AppController {
  */
 	public function add() {
 		if($this->request->params['_ext']){
-	        $vessel = $this->Vessels->newEntity($this->request->data);
-	        if ($this->Vessels->save($vessel, ['validate' => false])) {
-	            $message = 'Saved';
-	        } else {
-	            $message = 'Error';
-	        }
-	        $this->set([
-	            'data' => $this->request->data,
-	            'message' => $message,
-	            'vessel' => $vessel,
-	            '_serialize' => ['message', 'vessel', 'data']
-	        ]);
+			$vessel = $this->Vessels->newEntity($this->request->data);
+			if ($this->Vessels->save($vessel, ['validate' => false])) {
+				$message = 'Saved';
+			} else {
+				$message = 'Error';
+			}
+			$this->set([
+				'data' => $this->request->data,
+				'message' => $message,
+				'vessel' => $vessel,
+				'_serialize' => ['message', 'vessel', 'data']
+			]);
 		}
 		else {
 			$vessel = $this->Vessels->newEntity($this->request->data);
@@ -112,17 +110,17 @@ class VesselsController extends AppController {
 			if ($this->request->is(['patch', 'post', 'put'])) {
 				$vessel = $this->Vessels->patchEntity($vessel, $this->request->data);
 				if ($this->Vessels->save($vessel, ['validate' => false])) {
-	                $message = 'Saved';
+					$message = 'Saved';
 				} else {
-		            $message = 'Error';
+					$message = 'Error';
 				}
 			}
-	        $this->set([
-	        	'vessel' => $vessel,
-	            'message' => $message,
-	            'data' => $this->request->data,
-	            '_serialize' => ['message','vessel','data']
-	        ]);
+			$this->set([
+				'vessel' => $vessel,
+				'message' => $message,
+				'data' => $this->request->data,
+				'_serialize' => ['message','vessel','data']
+			]);
 		}
 		else {
 			$vessel = $this->Vessels->get($id, [
@@ -153,15 +151,15 @@ class VesselsController extends AppController {
  */
 	public function delete($id = null) {
 		if($this->request->params['_ext']){
-	        $vessel = $this->Vessels->get($id);
-	        $message = 'Deleted';
-	        if (!$this->Vessels->delete($vessel)) {
-	            $message = 'Error';
-	        }
-	        $this->set([
-	            'message' => $message,
-	            '_serialize' => ['message']
-	        ]);
+			$vessel = $this->Vessels->get($id);
+			$message = 'Deleted';
+			if (!$this->Vessels->delete($vessel)) {
+				$message = 'Error';
+			}
+			$this->set([
+				'message' => $message,
+				'_serialize' => ['message']
+			]);
 		}
 		else {		
 			$vessel = $this->Vessels->get($id);

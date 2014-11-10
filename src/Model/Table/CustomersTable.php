@@ -23,16 +23,24 @@ class CustomersTable extends Table {
 		$this->addBehavior('Timestamp');
 
 		$this->belongsTo('Creators', [
+			'className' => 'Users',
 			'foreignKey' => 'creator_id',
 		]);
 		$this->belongsTo('Modifiers', [
+			'className' => 'Users',
 			'foreignKey' => 'modifier_id',
 		]);
 		$this->belongsTo('Cities', [
 			'foreignKey' => 'city_id',
 		]);
-		$this->belongsTo('Categories', [
-			'foreignKey' => 'category_id',
+		$this->belongsTo('CustomerCategories', [
+			'foreignKey' => 'customer_category_id',
+		]);
+		$this->hasMany('CustomerContacts', [
+			'foreignKey' => 'customer_id',
+		]);
+		$this->hasMany('Orders', [
+			'foreignKey' => 'customer_id',
 		]);
 	}
 
@@ -75,9 +83,9 @@ class CustomersTable extends Table {
 			->add('city_id', 'valid', ['rule' => 'numeric'])
 			->validatePresence('city_id', 'create')
 			->notEmpty('city_id')
-			->add('category_id', 'valid', ['rule' => 'numeric'])
-			->validatePresence('category_id', 'create')
-			->notEmpty('category_id');
+			->add('customer_category_id', 'valid', ['rule' => 'numeric'])
+			->validatePresence('customer_category_id', 'create')
+			->notEmpty('customer_category_id');
 
 		return $validator;
 	}

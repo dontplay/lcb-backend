@@ -25,11 +25,13 @@ class Customer extends Entity {
 		'credit_period' => true,
 		'remarks' => true,
 		'city_id' => true,
-		'category_id' => true,
+		'customer_category_id' => true,
 		'creator' => true,
 		'modifier' => true,
 		'city' => true,
-		'category' => true,
+		'customer_category' => true,
+		'customer_contacts' => true,
+		'orders' => true,
 	];
 
 }

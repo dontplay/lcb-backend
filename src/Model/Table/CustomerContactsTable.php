@@ -6,9 +6,9 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Vessels Model
+ * CustomerContacts Model
  */
-class VesselsTable extends Table {
+class CustomerContactsTable extends Table {
 
 /**
  * Initialize method
@@ -17,11 +17,10 @@ class VesselsTable extends Table {
  * @return void
  */
 	public function initialize(array $config) {
-		$this->table('vessels');
+		$this->table('customer_contacts');
 		$this->displayField('name');
 		$this->primaryKey('id');
 		$this->addBehavior('Timestamp');
-		$this->addBehavior('Blame.Blame');
 
 		$this->belongsTo('Creators', [
 			'className' => 'Users',
@@ -31,8 +30,8 @@ class VesselsTable extends Table {
 			'className' => 'Users',
 			'foreignKey' => 'modifier_id',
 		]);
-		$this->belongsTo('VesselOwners', [
-			'foreignKey' => 'vessel_owner_id',
+		$this->belongsTo('Customers', [
+			'foreignKey' => 'customer_id',
 		]);
 	}
 
@@ -53,13 +52,13 @@ class VesselsTable extends Table {
 			->allowEmpty('creator_id')
 			->add('modifier_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('modifier_id')
+			->add('customer_id', 'valid', ['rule' => 'numeric'])
+			->validatePresence('customer_id', 'create')
+			->notEmpty('customer_id')
 			->validatePresence('name', 'create')
 			->notEmpty('name')
-			->validatePresence('catagory', 'create')
-			->notEmpty('catagory')
-			->add('vessel_owner_id', 'valid', ['rule' => 'numeric'])
-			->validatePresence('vessel_owner_id', 'create')
-			->notEmpty('vessel_owner_id');
+			->validatePresence('number', 'create')
+			->notEmpty('number');
 
 		return $validator;
 	}

@@ -4,10 +4,10 @@ namespace App\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * VesselOwnerContactsFixture
+ * CustomerCategoriesFixture
  *
  */
-class VesselOwnerContactsFixture extends TestFixture {
+class CustomerCategoriesFixture extends TestFixture {
 
 /**
  * Fields
@@ -21,9 +21,7 @@ class VesselOwnerContactsFixture extends TestFixture {
 		'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => '0000-00-00 00:00:00', 'comment' => '', 'precision' => null],
 		'modifier_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
 		'modified' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => '0000-00-00 00:00:00', 'comment' => '', 'precision' => null],
-		'vessel_owner_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
 		'name' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
-		'number' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
 		'_indexes' => [
 			'creator_id' => ['type' => 'index', 'columns' => ['creator_id'], 'length' => []],
 			'modifier_id' => ['type' => 'index', 'columns' => ['modifier_id'], 'length' => []],
@@ -46,12 +44,10 @@ class VesselOwnerContactsFixture extends TestFixture {
 			'id' => 1,
 			'recstatus' => 1,
 			'creator_id' => 1,
-			'created' => '2014-11-09 22:33:12',
+			'created' => '2014-11-09 22:23:38',
 			'modifier_id' => 1,
-			'modified' => '2014-11-09 22:33:12',
-			'vessel_owner_id' => 1,
-			'name' => 'Lorem ipsum dolor sit amet',
-			'number' => 'Lorem ipsum dolor sit amet'
+			'modified' => '2014-11-09 22:23:38',
+			'name' => 'Lorem ipsum dolor sit amet'
 		],
 	];
 

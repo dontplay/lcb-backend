@@ -17,11 +17,11 @@ class VesselOwnersController extends AppController {
  */
 
 	public function initialize() {
-        parent::initialize();
-        $this->loadComponent('RequestHandler');
+		parent::initialize();
+		$this->loadComponent('RequestHandler');
 		$this->response->header('Access-Control-Allow-Origin', '*');
 		$this->response->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');        
-    }
+	}
 
 /**
  * Index method
@@ -33,7 +33,7 @@ class VesselOwnersController extends AppController {
 			'contain' => ['VesselOwnerCategories', 'VesselOwnerContacts', 'Cities']
 		];
 		$this->set('vesselOwners', $this->paginate($this->VesselOwners));
-        $this->set('_serialize', ['vesselOwners']);
+		$this->set('_serialize', ['vesselOwners']);
 	}
 
 /**
@@ -46,11 +46,10 @@ class VesselOwnersController extends AppController {
 	public function view($id = null) {
 		if($this->request->params['_ext']){
 			$vesselOwner = $this->VesselOwners->get($id, [
-			//	'fields' => ['id','name','category_id', 'city_id']
 				'contain' => ['VesselOwnerContacts']
 			]);
 			$this->set('vesselOwner', $vesselOwner);
-	        $this->set('_serialize', ['vesselOwner']);
+			$this->set('_serialize', ['vesselOwner']);
 		}
 		else {
 			$vesselOwner = $this->VesselOwners->get($id, [
@@ -67,22 +66,18 @@ class VesselOwnersController extends AppController {
  */
 	public function add() {
 		if($this->request->params['_ext']){
-	        $vesselOwner = $this->VesselOwners->newEntity($this->request->data, [
-	        //	'associated' => ['VesselOwnerContacts']
-	        ]);
-	        if ($this->VesselOwners->save($vesselOwner, ['validate' => false])) {
-	            $message = 'Saved';
-	        } else {
-	            $message = 'Error';
-	        }
-	        $this->set([
-	            'data' => $this->request->data,
-	            'message' => $message,
-	            'vesselOwner' => $vesselOwner,
-	            '_serialize' => ['message', 'vesselOwner', 'data']
-	        ]);
-	        //debug($this->VesselOwners);
-	        //debug($vesselOwner);
+			$vesselOwner = $this->VesselOwners->newEntity($this->request->data);
+			if ($this->VesselOwners->save($vesselOwner, ['validate' => false])) {
+				$message = 'Saved';
+			} else {
+				$message = 'Error';
+			}
+			$this->set([
+				'data' => $this->request->data,
+				'message' => $message,
+				'vesselOwner' => $vesselOwner,
+				'_serialize' => ['message', 'vesselOwner', 'data']
+			]);
 		}
 		else {
 			$vesselOwner = $this->VesselOwners->newEntity($this->request->data);
@@ -112,27 +107,27 @@ class VesselOwnersController extends AppController {
 	public function edit($id = null) {
 		if($this->request->params['_ext']){
 			$vesselOwner = $this->VesselOwners->get($id, [
-				'contain' => []
+				'contain' => ['VesselOwnerContacts']
 			]);
 			if ($this->request->is(['patch', 'post', 'put'])) {
 				$vesselOwner = $this->VesselOwners->patchEntity($vesselOwner, $this->request->data);
 				if ($this->VesselOwners->save($vesselOwner, ['validate' => false])) {
-	                $message = 'Saved';
+					$message = 'Saved';
 				}
 				else {
-		            $message = 'Error';
+					$message = 'Error';
 				}
 			}
-	        $this->set([
-	        	'vesselOwner' => $vesselOwner,
-	            'message' => $message,
-	            'data' => $this->request->data,
-	            '_serialize' => ['message','vesselOwner','data']
-	        ]);
+			$this->set([
+				'vesselOwner' => $vesselOwner,
+				'message' => $message,
+				'data' => $this->request->data,
+				'_serialize' => ['message','vesselOwner','data']
+			]);
 		}
 		else {
 			$vesselOwner = $this->VesselOwners->get($id, [
-				'contain' => []
+				'contain' => ['VesselOwnerContacts']
 			]);
 			if ($this->request->is(['patch', 'post', 'put'])) {
 				$vesselOwner = $this->VesselOwners->patchEntity($vesselOwner, $this->request->data);
@@ -160,15 +155,15 @@ class VesselOwnersController extends AppController {
  */
 	public function delete($id = null) {
 		if($this->request->params['_ext']){
-	        $vesselOwner = $this->VesselOwners->get($id);
-	        $message = 'Deleted';
-	        if (!$this->VesselOwners->delete($vesselOwner)) {
-	            $message = 'Error';
-	        }
-	        $this->set([
-	            'message' => $message,
-	            '_serialize' => ['message']
-	        ]);
+			$vesselOwner = $this->VesselOwners->get($id);
+			$message = 'Deleted';
+			if (!$this->VesselOwners->delete($vesselOwner)) {
+				$message = 'Error';
+			}
+			$this->set([
+				'message' => $message,
+				'_serialize' => ['message']
+			]);
 		}
 		else {		
 			$vesselOwner = $this->VesselOwners->get($id);
