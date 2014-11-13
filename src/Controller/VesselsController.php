@@ -30,6 +30,7 @@ class VesselsController extends AppController {
  */
 
 	public function index() {
+		$data = $this->Vessels->VesselOwners->VesselOwnerContacts->find('all', array('order' => array('created' => 'DESC')))->first();
 		$this->paginate = [
 			'contain' => ['VesselOwners']
 		];
