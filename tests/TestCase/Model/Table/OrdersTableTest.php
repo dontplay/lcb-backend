@@ -25,7 +25,19 @@ class OrdersTableTest extends TestCase {
 		'app.vessel_masters',
 		'app.port_masters',
 		'app.dischargings',
-		'app.loadings'
+		'app.loadings',
+		'app.loi_statuses',
+		'app.bill_statuses',
+		'app.ports',
+		'app.countries',
+		'app.cities',
+		'app.customers',
+		'app.customer_categories',
+		'app.customer_contacts',
+		'app.vessel_owners',
+		'app.vessel_owner_categories',
+		'app.vessel_owner_contacts',
+		'app.vessels'
 	];
 
 /**

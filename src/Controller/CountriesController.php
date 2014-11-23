@@ -30,7 +30,7 @@ class CountriesController extends AppController {
 	public function index() {
 		if ($this->request->params['_ext']) {
 			$conditions = [
-				'fields' => ['Countries.id', 'Countries.name']
+			//	'fields' => ['Countries.id', 'Countries.name']
 			];
 			$this->set('countries', $this->Countries->find('all', $conditions));
 		}
