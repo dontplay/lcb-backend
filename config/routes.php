@@ -30,6 +30,8 @@ Router::scope('/', function ($routes) {
 
  	$routes->resources('Users');
 
+ 	$routes->resources('Orders');
+
  	$routes->resources('Cities');
  	$routes->resources('Countries');
 
