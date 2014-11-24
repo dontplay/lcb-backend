@@ -31,6 +31,10 @@ Router::scope('/', function ($routes) {
  	$routes->resources('Users');
 
  	$routes->resources('Orders');
+ 	$routes->resources('ShipmentTypes');
+ 	$routes->resources('Statuses');
+ 	$routes->resources('LoiStatuses');
+ 	$routes->resources('BlStatuses');
 
  	$routes->resources('Cities');
  	$routes->resources('Countries');

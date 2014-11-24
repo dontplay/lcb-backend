@@ -11,15 +11,33 @@ use App\Controller\AppController;
 class LoiStatusesController extends AppController {
 
 /**
+ * Initialize method
+ *
+ * @return void
+ */
+	public function initialize() {
+		parent::initialize();
+		$this->loadComponent('RequestHandler');
+		$this->response->header('Access-Control-Allow-Origin', '*');
+		$this->response->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
+	}
+
+/**
  * Index method
  *
  * @return void
  */
 	public function index() {
-		$this->paginate = [
-			'contain' => ['Creators', 'Modifiers']
-		];
-		$this->set('loiStatuses', $this->paginate($this->LoiStatuses));
+		if ($this->request->params['_ext']) {
+			$conditions = [
+			//	'fields' => ['LoiStatuses.id', 'LoiStatuses.name']
+			];
+			$this->set('loiStatuses', $this->LoiStatuses->find('all', $conditions));
+		}
+		else {
+			$this->set('loiStatuses', $this->LoiStatuses->find('all'));
+		}
+		$this->set('_serialize', ['loiStatuses']);
 	}
 
 /**
@@ -30,10 +48,17 @@ class LoiStatusesController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function view($id = null) {
-		$loiStatus = $this->LoiStatuses->get($id, [
-			'contain' => ['Creators', 'Modifiers', 'Loadings']
-		]);
-		$this->set('loiStatus', $loiStatus);
+		if ($this->request->params['_ext']) {
+			$loiStatus = $this->LoiStatuses->get($id);
+			$this->set('loiStatus', $loiStatus);
+			$this->set('_serialize', ['loiStatus']);
+		} else {
+			$loiStatus = $this->LoiStatuses->get($id, [
+				'contain' => ['Creators', 'Modifiers']
+			]);
+			$this->set('loiStatus', $loiStatus);
+			$this->set('_serialize', ['loiStatus']);
+		}
 	}
 
 /**
@@ -42,18 +67,33 @@ class LoiStatusesController extends AppController {
  * @return void
  */
 	public function add() {
-		$loiStatus = $this->LoiStatuses->newEntity($this->request->data);
-		if ($this->request->is('post')) {
-			if ($this->LoiStatuses->save($loiStatus)) {
-				$this->Flash->success('The loi status has been saved.');
-				return $this->redirect(['action' => 'index']);
+		if ($this->request->params['_ext']) {
+			$loiStatus = $this->LoiStatuses->newEntity($this->request->data);
+			if ($this->LoiStatuses->save($loiStatus, ['validate' => false])) {
+				$message = 'Saved';
 			} else {
-				$this->Flash->error('The loi status could not be saved. Please, try again.');
+				$message = 'Error';
 			}
+			$this->set([
+				'data' => $this->request->data,
+				'message' => $message,
+				'loiStatus' => $loiStatus,
+				'_serialize' => ['message', 'loiStatus', 'data']
+			]);
+		} else {
+			$loiStatus = $this->LoiStatuses->newEntity($this->request->data);
+			if ($this->request->is('post')) {
+				if ($this->LoiStatuses->save($loiStatus)) {
+					$this->Flash->success('The loiStatus has been saved.');
+					return $this->redirect(['action' => 'index']);
+				} else {
+					$this->Flash->error('The loiStatus could not be saved. Please, try again.');
+				}
+			}
+			$creators = $this->LoiStatuses->Creators->find('list');
+			$modifiers = $this->LoiStatuses->Modifiers->find('list');
+			$this->set(compact('loiStatus', 'creators', 'modifiers'));
 		}
-		$creators = $this->LoiStatuses->Creators->find('list');
-		$modifiers = $this->LoiStatuses->Modifiers->find('list');
-		$this->set(compact('loiStatus', 'creators', 'modifiers'));
 	}
 
 /**
@@ -64,21 +104,40 @@ class LoiStatusesController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function edit($id = null) {
-		$loiStatus = $this->LoiStatuses->get($id, [
-			'contain' => []
-		]);
-		if ($this->request->is(['patch', 'post', 'put'])) {
-			$loiStatus = $this->LoiStatuses->patchEntity($loiStatus, $this->request->data);
-			if ($this->LoiStatuses->save($loiStatus)) {
-				$this->Flash->success('The loi status has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The loi status could not be saved. Please, try again.');
+		if ($this->request->params['_ext']) {
+			$loiStatus = $this->LoiStatuses->get($id);
+			if ($this->request->is(['patch', 'post', 'put'])) {
+				$loiStatus = $this->LoiStatuses->patchEntity($loiStatus, $this->request->data);
+				if ($this->LoiStatuses->save($loiStatus, ['validate' => false])) {
+					$message = 'Saved';
+				} else {
+					$message = 'Error';
+				}
 			}
+			$this->set([
+				'loiStatus' => $loiStatus,
+				'message' => $message,
+				'data' => $this->request->data,
+				'_serialize' => ['message','loiStatus','data']
+			]);
 		}
-		$creators = $this->LoiStatuses->Creators->find('list');
-		$modifiers = $this->LoiStatuses->Modifiers->find('list');
-		$this->set(compact('loiStatus', 'creators', 'modifiers'));
+		else {
+			$loiStatus = $this->LoiStatuses->get($id, [
+				'contain' => []
+			]);
+			if ($this->request->is(['patch', 'post', 'put'])) {
+				$loiStatus = $this->LoiStatuses->patchEntity($loiStatus, $this->request->data);
+				if ($this->LoiStatuses->save($loiStatus)) {
+					$this->Flash->success('The loiStatus has been saved.');
+					return $this->redirect(['action' => 'index']);
+				} else {
+					$this->Flash->error('The loiStatus could not be saved. Please, try again.');
+				}
+			}
+			$creators = $this->LoiStatuses->Creators->find('list');
+			$modifiers = $this->LoiStatuses->Modifiers->find('list');
+			$this->set(compact('loiStatus', 'creators', 'modifiers'));
+		}
 	}
 
 /**
@@ -89,13 +148,26 @@ class LoiStatusesController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function delete($id = null) {
-		$loiStatus = $this->LoiStatuses->get($id);
-		$this->request->allowMethod(['post', 'delete']);
-		if ($this->LoiStatuses->delete($loiStatus)) {
-			$this->Flash->success('The loi status has been deleted.');
-		} else {
-			$this->Flash->error('The loi status could not be deleted. Please, try again.');
+		if ($this->request->params['_ext']) {
+			$loiStatus = $this->LoiStatuses->get($id);
+			$message = 'Deleted';
+			if (!$this->LoiStatuses->delete($loiStatus)) {
+				$message = 'Error';
+			}
+			$this->set([
+				'message' => $message,
+				'_serialize' => ['message']
+			]);
 		}
-		return $this->redirect(['action' => 'index']);
+		else {		
+			$loiStatus = $this->LoiStatuses->get($id);
+			$this->request->allowMethod(['post', 'delete']);
+			if ($this->LoiStatuses->delete($loiStatus)) {
+				$this->Flash->success('The loiStatus has been deleted.');
+			} else {
+				$this->Flash->error('The loiStatus could not be deleted. Please, try again.');
+			}
+			return $this->redirect(['action' => 'index']);
+		}
 	}
 }

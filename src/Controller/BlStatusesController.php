@@ -11,15 +11,33 @@ use App\Controller\AppController;
 class BlStatusesController extends AppController {
 
 /**
+ * Initialize method
+ *
+ * @return void
+ */
+	public function initialize() {
+		parent::initialize();
+		$this->loadComponent('RequestHandler');
+		$this->response->header('Access-Control-Allow-Origin', '*');
+		$this->response->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
+	}
+
+/**
  * Index method
  *
  * @return void
  */
 	public function index() {
-		$this->paginate = [
-			'contain' => ['Creators', 'Modifiers']
-		];
-		$this->set('blStatuses', $this->paginate($this->BlStatuses));
+		if ($this->request->params['_ext']) {
+			$conditions = [
+			//	'fields' => ['BlStatuses.id', 'BlStatuses.name']
+			];
+			$this->set('blStatuses', $this->BlStatuses->find('all', $conditions));
+		}
+		else {
+			$this->set('blStatuses', $this->BlStatuses->find('all'));
+		}
+		$this->set('_serialize', ['blStatuses']);
 	}
 
 /**
@@ -30,10 +48,17 @@ class BlStatusesController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function view($id = null) {
-		$blStatus = $this->BlStatuses->get($id, [
-			'contain' => ['Creators', 'Modifiers', 'Loadings']
-		]);
-		$this->set('blStatus', $blStatus);
+		if ($this->request->params['_ext']) {
+			$blStatus = $this->BlStatuses->get($id);
+			$this->set('blStatus', $blStatus);
+			$this->set('_serialize', ['blStatus']);
+		} else {
+			$blStatus = $this->BlStatuses->get($id, [
+				'contain' => ['Creators', 'Modifiers']
+			]);
+			$this->set('blStatus', $blStatus);
+			$this->set('_serialize', ['blStatus']);
+		}
 	}
 
 /**
@@ -42,18 +67,33 @@ class BlStatusesController extends AppController {
  * @return void
  */
 	public function add() {
-		$blStatus = $this->BlStatuses->newEntity($this->request->data);
-		if ($this->request->is('post')) {
-			if ($this->BlStatuses->save($blStatus)) {
-				$this->Flash->success('The bl status has been saved.');
-				return $this->redirect(['action' => 'index']);
+		if ($this->request->params['_ext']) {
+			$blStatus = $this->BlStatuses->newEntity($this->request->data);
+			if ($this->BlStatuses->save($blStatus, ['validate' => false])) {
+				$message = 'Saved';
 			} else {
-				$this->Flash->error('The bl status could not be saved. Please, try again.');
+				$message = 'Error';
 			}
+			$this->set([
+				'data' => $this->request->data,
+				'message' => $message,
+				'blStatus' => $blStatus,
+				'_serialize' => ['message', 'blStatus', 'data']
+			]);
+		} else {
+			$blStatus = $this->BlStatuses->newEntity($this->request->data);
+			if ($this->request->is('post')) {
+				if ($this->BlStatuses->save($blStatus)) {
+					$this->Flash->success('The blStatus has been saved.');
+					return $this->redirect(['action' => 'index']);
+				} else {
+					$this->Flash->error('The blStatus could not be saved. Please, try again.');
+				}
+			}
+			$creators = $this->BlStatuses->Creators->find('list');
+			$modifiers = $this->BlStatuses->Modifiers->find('list');
+			$this->set(compact('blStatus', 'creators', 'modifiers'));
 		}
-		$creators = $this->BlStatuses->Creators->find('list');
-		$modifiers = $this->BlStatuses->Modifiers->find('list');
-		$this->set(compact('blStatus', 'creators', 'modifiers'));
 	}
 
 /**
@@ -64,21 +104,40 @@ class BlStatusesController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function edit($id = null) {
-		$blStatus = $this->BlStatuses->get($id, [
-			'contain' => []
-		]);
-		if ($this->request->is(['patch', 'post', 'put'])) {
-			$blStatus = $this->BlStatuses->patchEntity($blStatus, $this->request->data);
-			if ($this->BlStatuses->save($blStatus)) {
-				$this->Flash->success('The bl status has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The bl status could not be saved. Please, try again.');
+		if ($this->request->params['_ext']) {
+			$blStatus = $this->BlStatuses->get($id);
+			if ($this->request->is(['patch', 'post', 'put'])) {
+				$blStatus = $this->BlStatuses->patchEntity($blStatus, $this->request->data);
+				if ($this->BlStatuses->save($blStatus, ['validate' => false])) {
+					$message = 'Saved';
+				} else {
+					$message = 'Error';
+				}
 			}
+			$this->set([
+				'blStatus' => $blStatus,
+				'message' => $message,
+				'data' => $this->request->data,
+				'_serialize' => ['message','blStatus','data']
+			]);
 		}
-		$creators = $this->BlStatuses->Creators->find('list');
-		$modifiers = $this->BlStatuses->Modifiers->find('list');
-		$this->set(compact('blStatus', 'creators', 'modifiers'));
+		else {
+			$blStatus = $this->BlStatuses->get($id, [
+				'contain' => []
+			]);
+			if ($this->request->is(['patch', 'post', 'put'])) {
+				$blStatus = $this->BlStatuses->patchEntity($blStatus, $this->request->data);
+				if ($this->BlStatuses->save($blStatus)) {
+					$this->Flash->success('The blStatus has been saved.');
+					return $this->redirect(['action' => 'index']);
+				} else {
+					$this->Flash->error('The blStatus could not be saved. Please, try again.');
+				}
+			}
+			$creators = $this->BlStatuses->Creators->find('list');
+			$modifiers = $this->BlStatuses->Modifiers->find('list');
+			$this->set(compact('blStatus', 'creators', 'modifiers'));
+		}
 	}
 
 /**
@@ -89,13 +148,26 @@ class BlStatusesController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function delete($id = null) {
-		$blStatus = $this->BlStatuses->get($id);
-		$this->request->allowMethod(['post', 'delete']);
-		if ($this->BlStatuses->delete($blStatus)) {
-			$this->Flash->success('The bl status has been deleted.');
-		} else {
-			$this->Flash->error('The bl status could not be deleted. Please, try again.');
+		if ($this->request->params['_ext']) {
+			$blStatus = $this->BlStatuses->get($id);
+			$message = 'Deleted';
+			if (!$this->BlStatuses->delete($blStatus)) {
+				$message = 'Error';
+			}
+			$this->set([
+				'message' => $message,
+				'_serialize' => ['message']
+			]);
 		}
-		return $this->redirect(['action' => 'index']);
+		else {		
+			$blStatus = $this->BlStatuses->get($id);
+			$this->request->allowMethod(['post', 'delete']);
+			if ($this->BlStatuses->delete($blStatus)) {
+				$this->Flash->success('The blStatus has been deleted.');
+			} else {
+				$this->Flash->error('The blStatus could not be deleted. Please, try again.');
+			}
+			return $this->redirect(['action' => 'index']);
+		}
 	}
 }
