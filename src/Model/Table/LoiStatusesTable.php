@@ -48,10 +48,10 @@ class LoiStatusesTable extends Table {
 			->add('recstatus', 'valid', ['rule' => 'boolean'])
 			->validatePresence('recstatus', 'create')
 			->notEmpty('recstatus')
-			->add('created_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('created_id')
-			->add('modified_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('modified_id')
+			->add('creator_id', 'valid', ['rule' => 'numeric'])
+			->allowEmpty('creator_id')
+			->add('modifier_id', 'valid', ['rule' => 'numeric'])
+			->allowEmpty('modifier_id')
 			->validatePresence('name', 'create')
 			->notEmpty('name');
 

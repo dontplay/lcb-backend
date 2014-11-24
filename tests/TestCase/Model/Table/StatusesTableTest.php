@@ -18,7 +18,23 @@ class StatusesTableTest extends TestCase {
 	public $fixtures = [
 		'app.statuses',
 		'app.creators',
-		'app.modifiers'
+		'app.modifiers',
+		'app.orders',
+		'app.customers',
+		'app.cities',
+		'app.countries',
+		'app.ports',
+		'app.dischargings',
+		'app.loadings',
+		'app.loi_statuses',
+		'app.bill_statuses',
+		'app.vessel_owners',
+		'app.vessel_owner_categories',
+		'app.vessel_owner_contacts',
+		'app.vessels',
+		'app.customer_categories',
+		'app.customer_contacts',
+		'app.invoices'
 	];
 
 /**

@@ -15,9 +15,11 @@ class BlStatus extends Entity {
  */
 	protected $_accessible = [
 		'recstatus' => true,
-		'created_id' => true,
-		'modified_id' => true,
+		'creator_id' => true,
+		'modifier_id' => true,
 		'name' => true,
+		'creator' => true,
+		'modifier' => true,
 		'loadings' => true,
 	];
 

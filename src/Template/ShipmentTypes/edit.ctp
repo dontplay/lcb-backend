@@ -15,8 +15,8 @@
 		<legend><?= __('Edit Shipment Type') ?></legend>
 	<?php
 		echo $this->Form->input('recstatus');
-		echo $this->Form->input('created_id');
-		echo $this->Form->input('modified_id');
+		echo $this->Form->input('creator_id', ['options' => $creators]);
+		echo $this->Form->input('modifier_id', ['options' => $modifiers]);
 		echo $this->Form->input('name');
 	?>
 	</fieldset>

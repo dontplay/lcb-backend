@@ -17,14 +17,12 @@ class BlStatusesTableTest extends TestCase {
  */
 	public $fixtures = [
 		'app.bl_statuses',
-		'app.createds',
-		'app.modifieds',
-		'app.loadings',
 		'app.creators',
 		'app.modifiers',
+		'app.loadings',
 		'app.loi_statuses',
-		'app.dischargings',
 		'app.bill_statuses',
+		'app.dischargings',
 		'app.orders',
 		'app.customers',
 		'app.cities',

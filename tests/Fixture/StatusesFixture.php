@@ -44,9 +44,9 @@ class StatusesFixture extends TestFixture {
 			'id' => 1,
 			'recstatus' => 1,
 			'creator_id' => 1,
-			'created' => '2014-11-24 18:36:28',
+			'created' => '2014-11-24 18:50:57',
 			'modifier_id' => 1,
-			'modified' => '2014-11-24 18:36:28',
+			'modified' => '2014-11-24 18:50:57',
 			'name' => 'Lorem ipsum dolor sit amet'
 		],
 	];

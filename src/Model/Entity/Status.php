@@ -20,6 +20,7 @@ class Status extends Entity {
 		'name' => true,
 		'creator' => true,
 		'modifier' => true,
+		'orders' => true,
 	];
 
 }

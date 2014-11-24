@@ -15,16 +15,16 @@
 	<h2><?= h($shipmentType->name) ?></h2>
 	<div class="row">
 		<div class="large-5 columns strings">
+			<h6 class="subheader"><?= __('Creator') ?></h6>
+			<p><?= $shipmentType->has('creator') ? $this->Html->link($shipmentType->creator->id, ['controller' => 'Creators', 'action' => 'view', $shipmentType->creator->id]) : '' ?></p>
+			<h6 class="subheader"><?= __('Modifier') ?></h6>
+			<p><?= $shipmentType->has('modifier') ? $this->Html->link($shipmentType->modifier->id, ['controller' => 'Modifiers', 'action' => 'view', $shipmentType->modifier->id]) : '' ?></p>
 			<h6 class="subheader"><?= __('Name') ?></h6>
 			<p><?= h($shipmentType->name) ?></p>
 		</div>
 		<div class="large-2 large-offset-1 columns numbers end">
 			<h6 class="subheader"><?= __('Id') ?></h6>
 			<p><?= $this->Number->format($shipmentType->id) ?></p>
-			<h6 class="subheader"><?= __('Created Id') ?></h6>
-			<p><?= $this->Number->format($shipmentType->created_id) ?></p>
-			<h6 class="subheader"><?= __('Modified Id') ?></h6>
-			<p><?= $this->Number->format($shipmentType->modified_id) ?></p>
 		</div>
 		<div class="large-2 columns dates end">
 			<h6 class="subheader"><?= __('Created') ?></h6>

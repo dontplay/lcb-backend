@@ -17,8 +17,8 @@ class ShipmentTypesTableTest extends TestCase {
  */
 	public $fixtures = [
 		'app.shipment_types',
-		'app.createds',
-		'app.modifieds'
+		'app.creators',
+		'app.modifiers'
 	];
 
 /**

@@ -14,9 +14,9 @@
 		<tr>
 			<th><?= $this->Paginator->sort('id') ?></th>
 			<th><?= $this->Paginator->sort('recstatus') ?></th>
-			<th><?= $this->Paginator->sort('created_id') ?></th>
+			<th><?= $this->Paginator->sort('creator_id') ?></th>
 			<th><?= $this->Paginator->sort('created') ?></th>
-			<th><?= $this->Paginator->sort('modified_id') ?></th>
+			<th><?= $this->Paginator->sort('modifier_id') ?></th>
 			<th><?= $this->Paginator->sort('modified') ?></th>
 			<th><?= $this->Paginator->sort('name') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
@@ -27,9 +27,13 @@
 		<tr>
 			<td><?= $this->Number->format($shipmentType->id) ?></td>
 			<td><?= h($shipmentType->recstatus) ?></td>
-			<td><?= $this->Number->format($shipmentType->created_id) ?></td>
+			<td>
+				<?= $shipmentType->has('creator') ? $this->Html->link($shipmentType->creator->id, ['controller' => 'Creators', 'action' => 'view', $shipmentType->creator->id]) : '' ?>
+			</td>
 			<td><?= h($shipmentType->created) ?></td>
-			<td><?= $this->Number->format($shipmentType->modified_id) ?></td>
+			<td>
+				<?= $shipmentType->has('modifier') ? $this->Html->link($shipmentType->modifier->id, ['controller' => 'Modifiers', 'action' => 'view', $shipmentType->modifier->id]) : '' ?>
+			</td>
 			<td><?= h($shipmentType->modified) ?></td>
 			<td><?= h($shipmentType->name) ?></td>
 			<td class="actions">
