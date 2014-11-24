@@ -28,6 +28,9 @@ class StatusesTable extends Table {
 		$this->belongsTo('Modifiers', [
 			'foreignKey' => 'modifier_id',
 		]);
+		$this->hasMany('Orders', [
+			'foreignKey' => 'status_id',
+		]);
 	}
 
 /**

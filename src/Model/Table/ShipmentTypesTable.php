@@ -6,9 +6,9 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * LoiStatuses Model
+ * ShipmentTypes Model
  */
-class LoiStatusesTable extends Table {
+class ShipmentTypesTable extends Table {
 
 /**
  * Initialize method
@@ -17,7 +17,7 @@ class LoiStatusesTable extends Table {
  * @return void
  */
 	public function initialize(array $config) {
-		$this->table('loi_statuses');
+		$this->table('shipment_types');
 		$this->displayField('name');
 		$this->primaryKey('id');
 		$this->addBehavior('Timestamp');
@@ -27,9 +27,6 @@ class LoiStatusesTable extends Table {
 		]);
 		$this->belongsTo('Modifieds', [
 			'foreignKey' => 'modified_id',
-		]);
-		$this->hasMany('Loadings', [
-			'foreignKey' => 'loi_status_id',
 		]);
 	}
 

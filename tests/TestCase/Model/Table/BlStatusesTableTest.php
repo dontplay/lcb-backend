@@ -2,13 +2,13 @@
 namespace App\Test\TestCase\Model\Table;
 
 use Cake\ORM\TableRegistry;
-use App\Model\Table\LoiStatusesTable;
+use App\Model\Table\BlStatusesTable;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\LoiStatusesTable Test Case
+ * App\Model\Table\BlStatusesTable Test Case
  */
-class LoiStatusesTableTest extends TestCase {
+class BlStatusesTableTest extends TestCase {
 
 /**
  * Fixtures
@@ -16,11 +16,14 @@ class LoiStatusesTableTest extends TestCase {
  * @var array
  */
 	public $fixtures = [
-		'app.loi_statuses',
+		'app.bl_statuses',
+		'app.createds',
+		'app.modifieds',
+		'app.loadings',
 		'app.creators',
 		'app.modifiers',
+		'app.loi_statuses',
 		'app.dischargings',
-		'app.loadings',
 		'app.bill_statuses',
 		'app.orders',
 		'app.customers',
@@ -44,8 +47,8 @@ class LoiStatusesTableTest extends TestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$config = TableRegistry::exists('LoiStatuses') ? [] : ['className' => 'App\Model\Table\LoiStatusesTable'];
-		$this->LoiStatuses = TableRegistry::get('LoiStatuses', $config);
+		$config = TableRegistry::exists('BlStatuses') ? [] : ['className' => 'App\Model\Table\BlStatusesTable'];
+		$this->BlStatuses = TableRegistry::get('BlStatuses', $config);
 	}
 
 /**
@@ -54,7 +57,7 @@ class LoiStatusesTableTest extends TestCase {
  * @return void
  */
 	public function tearDown() {
-		unset($this->LoiStatuses);
+		unset($this->BlStatuses);
 
 		parent::tearDown();
 	}

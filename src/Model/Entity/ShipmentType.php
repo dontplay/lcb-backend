@@ -4,9 +4,9 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * LoiStatus Entity.
+ * ShipmentType Entity.
  */
-class LoiStatus extends Entity {
+class ShipmentType extends Entity {
 
 /**
  * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -18,10 +18,6 @@ class LoiStatus extends Entity {
 		'created_id' => true,
 		'modified_id' => true,
 		'name' => true,
-		'creator' => true,
-		'modifier' => true,
-		'dischargings' => true,
-		'loadings' => true,
 	];
 
 }
