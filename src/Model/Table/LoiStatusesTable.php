@@ -22,11 +22,13 @@ class LoiStatusesTable extends Table {
 		$this->primaryKey('id');
 		$this->addBehavior('Timestamp');
 
-		$this->belongsTo('Createds', [
-			'foreignKey' => 'created_id',
+		$this->belongsTo('Creators', [
+			'className' => 'Users',
+			'foreignKey' => 'creator_id',
 		]);
-		$this->belongsTo('Modifieds', [
-			'foreignKey' => 'modified_id',
+		$this->belongsTo('Modifiers', [
+			'className' => 'Users',
+			'foreignKey' => 'modifier_id',
 		]);
 		$this->hasMany('Loadings', [
 			'foreignKey' => 'loi_status_id',
