@@ -1,0 +1,3 @@
+[submodule "webroot/app"]
+	path = webroot/app
+	url = https://github.com/webelight/lcb-frontend.git
