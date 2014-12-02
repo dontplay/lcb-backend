@@ -2,13 +2,11 @@
 	<h3><?= __('Actions') ?></h3>
 	<ul class="side-nav">
 		<li><?= $this->Html->link(__('List Orders'), ['action' => 'index']) ?></li>
-		<li><?= $this->Html->link(__('List Creators'), ['controller' => 'Creators', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Creator'), ['controller' => 'Creators', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Modifiers'), ['controller' => 'Modifiers', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Modifier'), ['controller' => 'Modifiers', 'action' => 'add']) ?> </li>
+		<li><?= $this->Html->link(__('List Creators'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Creator'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Customers'), ['controller' => 'Customers', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Customer'), ['controller' => 'Customers', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List VesselOwners'), ['controller' => 'VesselOwners', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('List Vessel Owners'), ['controller' => 'VesselOwners', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Vessel Owner'), ['controller' => 'VesselOwners', 'action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Statuses'), ['controller' => 'Statuses', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Status'), ['controller' => 'Statuses', 'action' => 'add']) ?> </li>
@@ -23,22 +21,22 @@
 	</ul>
 </div>
 <div class="orders form large-10 medium-9 columns">
-<?= $this->Form->create($order) ?>
+	<?= $this->Form->create($order); ?>
 	<fieldset>
 		<legend><?= __('Add Order') ?></legend>
-	<?php
-		echo $this->Form->input('recstatus');
-		echo $this->Form->input('creator_id', ['options' => $creators]);
-		echo $this->Form->input('modifier_id', ['options' => $modifiers]);
-		echo $this->Form->input('fixtureDate');
-		echo $this->Form->input('laycanStartDate');
-		echo $this->Form->input('laycanEndDate');
-		echo $this->Form->input('customer_id', ['options' => $customers]);
-		echo $this->Form->input('vessel_owner_id', ['options' => $vesselOwners]);
-		echo $this->Form->input('status_id', ['options' => $statuses]);
-		echo $this->Form->input('vessel_id', ['options' => $vessels]);
-	?>
+		<?php
+			echo $this->Form->input('recstatus');
+			echo $this->Form->input('creator_id', ['options' => $creators]);
+			echo $this->Form->input('modifier_id', ['options' => $modifiers]);
+			echo $this->Form->input('fixtureDate');
+			echo $this->Form->input('laycanStartDate');
+			echo $this->Form->input('laycanEndDate');
+			echo $this->Form->input('customer_id', ['options' => $customers]);
+			echo $this->Form->input('vessel_owner_id', ['options' => $vesselOwners]);
+			echo $this->Form->input('status_id', ['options' => $statuses]);
+			echo $this->Form->input('vessel_id', ['options' => $vessels]);
+		?>
 	</fieldset>
-<?= $this->Form->button(__('Submit')) ?>
-<?= $this->Form->end() ?>
+	<?= $this->Form->button(__('Submit')) ?>
+	<?= $this->Form->end() ?>
 </div>

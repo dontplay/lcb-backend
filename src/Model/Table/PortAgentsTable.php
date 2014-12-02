@@ -21,24 +21,32 @@ class PortAgentsTable extends Table {
 		$this->displayField('name');
 		$this->primaryKey('id');
 		$this->addBehavior('Timestamp');
-
 		$this->belongsTo('Creators', [
 			'className' => 'Users',
-			'foreignKey' => 'creator_id',
+			'foreignKey' => 'creator_id'
 		]);
 		$this->belongsTo('Modifiers', [
 			'className' => 'Users',
-			'foreignKey' => 'modifier_id',
+			'foreignKey' => 'modifier_id'
+		]);
+		$this->hasMany('Dischargings', [
+			'alias' => 'Dischargings',
+			'foreignKey' => 'port_agent_id'
+		]);
+		$this->hasMany('Loadings', [
+			'alias' => 'Loadings',
+			'foreignKey' => 'port_agent_id'
 		]);
 		$this->hasMany('PortAgentContacts', [
-			'foreignKey' => 'port_agent_id',
+			'alias' => 'PortAgentContacts',
+			'foreignKey' => 'port_agent_id'
 		]);
 	}
 
 /**
  * Default validation rules.
  *
- * @param \Cake\Validation\Validator $validator
+ * @param \Cake\Validation\Validator $validator instance
  * @return \Cake\Validation\Validator
  */
 	public function validationDefault(Validator $validator) {
@@ -46,13 +54,13 @@ class PortAgentsTable extends Table {
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
 			->add('recstatus', 'valid', ['rule' => 'numeric'])
-			->validatePresence('recstatus', 'create')
+			->requirePresence('recstatus', 'create')
 			->notEmpty('recstatus')
 			->add('creator_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('creator_id')
 			->add('modifier_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('modifier_id')
-			->validatePresence('name', 'create')
+			->requirePresence('name', 'create')
 			->notEmpty('name');
 
 		return $validator;

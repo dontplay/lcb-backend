@@ -56,18 +56,33 @@ class UsersController extends AppController {
  * @return void
  */
 	public function add() {
-		$user = $this->Users->newEntity($this->request->data);
-		if ($this->request->is('post')) {
+		if ($this->request->params['_ext']) {
+			$user = $this->Users->newEntity($this->request->data);
 			if ($this->Users->save($user)) {
-				$this->Flash->success('The user has been saved.');
-				return $this->redirect(['action' => 'index']);
+				$message = 'Saved';
 			} else {
-				$this->Flash->error('The user could not be saved. Please, try again.');
+				$message = 'Error';
 			}
+			$this->set([
+				'data' => $this->request->data,
+				'message' => $message,
+				'user' => $user,
+				'_serialize' => ['message', 'user', 'data']
+			]);
+		} else {
+			$user = $this->Users->newEntity($this->request->data);
+			if ($this->request->is('post')) {
+				if ($this->Users->save($user)) {
+					$this->Flash->success('The user has been saved.');
+					return $this->redirect(['action' => 'index']);
+				} else {
+					$this->Flash->error('The user could not be saved. Please, try again.');
+				}
+			}
+			$creators = $this->Users->Creators->find('list');
+			$modifiers = $this->Users->Modifiers->find('list');
+			$this->set(compact('user', 'creators', 'modifiers'));
 		}
-		$creators = $this->Users->Creators->find('list');
-		$modifiers = $this->Users->Modifiers->find('list');
-		$this->set(compact('user', 'creators', 'modifiers'));
 	}
 
 /**

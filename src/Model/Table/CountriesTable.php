@@ -21,7 +21,6 @@ class CountriesTable extends Table {
 		$this->displayField('name');
 		$this->primaryKey('id');
 		$this->addBehavior('Timestamp');
-		$this->addBehavior('Blame.Blame');
 
 		$this->belongsTo('Creators', [
 			'className' => 'Users',

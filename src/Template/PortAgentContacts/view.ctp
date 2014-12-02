@@ -5,11 +5,9 @@
 		<li><?= $this->Form->postLink(__('Delete Port Agent Contact'), ['action' => 'delete', $portAgentContact->id], ['confirm' => __('Are you sure you want to delete # {0}?', $portAgentContact->id)]) ?> </li>
 		<li><?= $this->Html->link(__('List Port Agent Contacts'), ['action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Port Agent Contact'), ['action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Creators'), ['controller' => 'Creators', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Creator'), ['controller' => 'Creators', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Modifiers'), ['controller' => 'Modifiers', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Modifier'), ['controller' => 'Modifiers', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List PortAgents'), ['controller' => 'PortAgents', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('List Creators'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Creator'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
+		<li><?= $this->Html->link(__('List Port Agents'), ['controller' => 'PortAgents', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Port Agent'), ['controller' => 'PortAgents', 'action' => 'add']) ?> </li>
 	</ul>
 </div>
@@ -18,11 +16,11 @@
 	<div class="row">
 		<div class="large-5 columns strings">
 			<h6 class="subheader"><?= __('Creator') ?></h6>
-			<p><?= $portAgentContact->has('creator') ? $this->Html->link($portAgentContact->creator->id, ['controller' => 'Creators', 'action' => 'view', $portAgentContact->creator->id]) : '' ?></p>
+			<p><?= $portAgentContact->has('creator') ? $this->Html->link($portAgentContact->creator->id, ['controller' => 'Users', 'action' => 'view', $portAgentContact->creator->id]) : '' ?>" ?></p>
 			<h6 class="subheader"><?= __('Modifier') ?></h6>
-			<p><?= $portAgentContact->has('modifier') ? $this->Html->link($portAgentContact->modifier->id, ['controller' => 'Modifiers', 'action' => 'view', $portAgentContact->modifier->id]) : '' ?></p>
+			<p><?= $portAgentContact->has('modifier') ? $this->Html->link($portAgentContact->modifier->id, ['controller' => 'Users', 'action' => 'view', $portAgentContact->modifier->id]) : '' ?>" ?></p>
 			<h6 class="subheader"><?= __('Port Agent') ?></h6>
-			<p><?= $portAgentContact->has('port_agent') ? $this->Html->link($portAgentContact->port_agent->name, ['controller' => 'PortAgents', 'action' => 'view', $portAgentContact->port_agent->id]) : '' ?></p>
+			<p><?= $portAgentContact->has('port_agent') ? $this->Html->link($portAgentContact->port_agent->name, ['controller' => 'PortAgents', 'action' => 'view', $portAgentContact->port_agent->id]) : '' ?>" ?></p>
 			<h6 class="subheader"><?= __('Name') ?></h6>
 			<p><?= h($portAgentContact->name) ?></p>
 			<h6 class="subheader"><?= __('Number') ?></h6>
@@ -30,7 +28,7 @@
 			<h6 class="subheader"><?= __('Email') ?></h6>
 			<p><?= h($portAgentContact->email) ?></p>
 		</div>
-		<div class="large-2 large-offset-1 columns numbers end">
+		<div class="large-2 columns numbers end">
 			<h6 class="subheader"><?= __('Id') ?></h6>
 			<p><?= $this->Number->format($portAgentContact->id) ?></p>
 		</div>

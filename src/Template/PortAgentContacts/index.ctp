@@ -2,11 +2,9 @@
 	<h3><?= __('Actions') ?></h3>
 	<ul class="side-nav">
 		<li><?= $this->Html->link(__('New Port Agent Contact'), ['action' => 'add']) ?></li>
-		<li><?= $this->Html->link(__('List Creators'), ['controller' => 'Creators', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Creator'), ['controller' => 'Creators', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Modifiers'), ['controller' => 'Modifiers', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Modifier'), ['controller' => 'Modifiers', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List PortAgents'), ['controller' => 'PortAgents', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('List Creators'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Creator'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
+		<li><?= $this->Html->link(__('List Port Agents'), ['controller' => 'PortAgents', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Port Agent'), ['controller' => 'PortAgents', 'action' => 'add']) ?> </li>
 	</ul>
 </div>
@@ -30,11 +28,11 @@
 			<td><?= $this->Number->format($portAgentContact->id) ?></td>
 			<td><?= h($portAgentContact->recstatus) ?></td>
 			<td>
-				<?= $portAgentContact->has('creator') ? $this->Html->link($portAgentContact->creator->id, ['controller' => 'Creators', 'action' => 'view', $portAgentContact->creator->id]) : '' ?>
+				<?= $portAgentContact->has('creator') ? $this->Html->link($portAgentContact->creator->id, ['controller' => 'Users', 'action' => 'view', $portAgentContact->creator->id]) : '' ?>
 			</td>
 			<td><?= h($portAgentContact->created) ?></td>
 			<td>
-				<?= $portAgentContact->has('modifier') ? $this->Html->link($portAgentContact->modifier->id, ['controller' => 'Modifiers', 'action' => 'view', $portAgentContact->modifier->id]) : '' ?>
+				<?= $portAgentContact->has('modifier') ? $this->Html->link($portAgentContact->modifier->id, ['controller' => 'Users', 'action' => 'view', $portAgentContact->modifier->id]) : '' ?>
 			</td>
 			<td><?= h($portAgentContact->modified) ?></td>
 			<td>
@@ -46,17 +44,16 @@
 				<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $portAgentContact->id], ['confirm' => __('Are you sure you want to delete # {0}?', $portAgentContact->id)]) ?>
 			</td>
 		</tr>
+
 	<?php endforeach; ?>
 	</tbody>
 	</table>
 	<div class="paginator">
 		<ul class="pagination">
-		<?php
-			echo $this->Paginator->prev('< ' . __('previous'));
-			echo $this->Paginator->numbers();
-			echo $this->Paginator->next(__('next') . ' >');
-		?>
+			<?= $this->Paginator->prev('< ' . __('previous')); ?>
+			<?= $this->Paginator->numbers(); ?>
+			<?=	$this->Paginator->next(__('next') . ' >'); ?>
 		</ul>
-		<p><?= $this->Paginator->counter() ?></p>
+		<p><?= $this->Paginator->counter(); ?></p>
 	</div>
 </div>

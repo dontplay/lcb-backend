@@ -20,6 +20,8 @@ class PortAgent extends Entity {
 		'name' => true,
 		'creator' => true,
 		'modifier' => true,
+		'dischargings' => true,
+		'loadings' => true,
 		'port_agent_contacts' => true,
 	];
 

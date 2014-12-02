@@ -21,24 +21,24 @@ class PortAgentContactsTable extends Table {
 		$this->displayField('name');
 		$this->primaryKey('id');
 		$this->addBehavior('Timestamp');
-
 		$this->belongsTo('Creators', [
 			'className' => 'Users',
-			'foreignKey' => 'creator_id',
+			'foreignKey' => 'creator_id'
 		]);
 		$this->belongsTo('Modifiers', [
 			'className' => 'Users',
-			'foreignKey' => 'modifier_id',
+			'foreignKey' => 'modifier_id'
 		]);
 		$this->belongsTo('PortAgents', [
-			'foreignKey' => 'port_agent_id',
+			'alias' => 'PortAgents',
+			'foreignKey' => 'port_agent_id'
 		]);
 	}
 
 /**
  * Default validation rules.
  *
- * @param \Cake\Validation\Validator $validator
+ * @param \Cake\Validation\Validator $validator instance
  * @return \Cake\Validation\Validator
  */
 	public function validationDefault(Validator $validator) {
@@ -46,21 +46,21 @@ class PortAgentContactsTable extends Table {
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
 			->add('recstatus', 'valid', ['rule' => 'boolean'])
-			->validatePresence('recstatus', 'create')
+			->requirePresence('recstatus', 'create')
 			->notEmpty('recstatus')
 			->add('creator_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('creator_id')
 			->add('modifier_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('modifier_id')
 			->add('port_agent_id', 'valid', ['rule' => 'numeric'])
-			->validatePresence('port_agent_id', 'create')
+			->requirePresence('port_agent_id', 'create')
 			->notEmpty('port_agent_id')
-			->validatePresence('name', 'create')
+			->requirePresence('name', 'create')
 			->notEmpty('name')
-			->validatePresence('number', 'create')
+			->requirePresence('number', 'create')
 			->notEmpty('number')
 			->add('email', 'valid', ['rule' => 'email'])
-			->validatePresence('email', 'create')
+			->requirePresence('email', 'create')
 			->notEmpty('email')
 			->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 

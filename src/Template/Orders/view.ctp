@@ -5,13 +5,11 @@
 		<li><?= $this->Form->postLink(__('Delete Order'), ['action' => 'delete', $order->id], ['confirm' => __('Are you sure you want to delete # {0}?', $order->id)]) ?> </li>
 		<li><?= $this->Html->link(__('List Orders'), ['action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Order'), ['action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Creators'), ['controller' => 'Creators', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Creator'), ['controller' => 'Creators', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Modifiers'), ['controller' => 'Modifiers', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Modifier'), ['controller' => 'Modifiers', 'action' => 'add']) ?> </li>
+		<li><?= $this->Html->link(__('List Creators'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Creator'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Customers'), ['controller' => 'Customers', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Customer'), ['controller' => 'Customers', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List VesselOwners'), ['controller' => 'VesselOwners', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('List Vessel Owners'), ['controller' => 'VesselOwners', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Vessel Owner'), ['controller' => 'VesselOwners', 'action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Statuses'), ['controller' => 'Statuses', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Status'), ['controller' => 'Statuses', 'action' => 'add']) ?> </li>
@@ -30,19 +28,19 @@
 	<div class="row">
 		<div class="large-5 columns strings">
 			<h6 class="subheader"><?= __('Creator') ?></h6>
-			<p><?= $order->has('creator') ? $this->Html->link($order->creator->id, ['controller' => 'Creators', 'action' => 'view', $order->creator->id]) : '' ?></p>
+			<p><?= $order->has('creator') ? $this->Html->link($order->creator->id, ['controller' => 'Users', 'action' => 'view', $order->creator->id]) : '' ?>" ?></p>
 			<h6 class="subheader"><?= __('Modifier') ?></h6>
-			<p><?= $order->has('modifier') ? $this->Html->link($order->modifier->id, ['controller' => 'Modifiers', 'action' => 'view', $order->modifier->id]) : '' ?></p>
+			<p><?= $order->has('modifier') ? $this->Html->link($order->modifier->id, ['controller' => 'Users', 'action' => 'view', $order->modifier->id]) : '' ?>" ?></p>
 			<h6 class="subheader"><?= __('Customer') ?></h6>
-			<p><?= $order->has('customer') ? $this->Html->link($order->customer->name, ['controller' => 'Customers', 'action' => 'view', $order->customer->id]) : '' ?></p>
+			<p><?= $order->has('customer') ? $this->Html->link($order->customer->name, ['controller' => 'Customers', 'action' => 'view', $order->customer->id]) : '' ?>" ?></p>
 			<h6 class="subheader"><?= __('Vessel Owner') ?></h6>
-			<p><?= $order->has('vessel_owner') ? $this->Html->link($order->vessel_owner->name, ['controller' => 'VesselOwners', 'action' => 'view', $order->vessel_owner->id]) : '' ?></p>
+			<p><?= $order->has('vessel_owner') ? $this->Html->link($order->vessel_owner->name, ['controller' => 'VesselOwners', 'action' => 'view', $order->vessel_owner->id]) : '' ?>" ?></p>
 			<h6 class="subheader"><?= __('Status') ?></h6>
-			<p><?= $order->has('status') ? $this->Html->link($order->status->name, ['controller' => 'Statuses', 'action' => 'view', $order->status->id]) : '' ?></p>
+			<p><?= $order->has('status') ? $this->Html->link($order->status->name, ['controller' => 'Statuses', 'action' => 'view', $order->status->id]) : '' ?>" ?></p>
 			<h6 class="subheader"><?= __('Vessel') ?></h6>
-			<p><?= $order->has('vessel') ? $this->Html->link($order->vessel->name, ['controller' => 'Vessels', 'action' => 'view', $order->vessel->id]) : '' ?></p>
+			<p><?= $order->has('vessel') ? $this->Html->link($order->vessel->name, ['controller' => 'Vessels', 'action' => 'view', $order->vessel->id]) : '' ?>" ?></p>
 		</div>
-		<div class="large-2 large-offset-1 columns numbers end">
+		<div class="large-2 columns numbers end">
 			<h6 class="subheader"><?= __('Id') ?></h6>
 			<p><?= $this->Number->format($order->id) ?></p>
 			<h6 class="subheader"><?= __('Recstatus') ?></h6>
@@ -78,7 +76,7 @@
 			<th><?= __('Rate') ?></th>
 			<th><?= __('Eta') ?></th>
 			<th><?= __('Comment') ?></th>
-			<th><?= __('Port Agent') ?></th>
+			<th><?= __('Port Agent Id') ?></th>
 			<th><?= __('CommDischarging') ?></th>
 			<th><?= __('Status') ?></th>
 			<th><?= __('CompletionDate') ?></th>
@@ -97,17 +95,22 @@
 			<td><?= h($dischargings->rate) ?></td>
 			<td><?= h($dischargings->eta) ?></td>
 			<td><?= h($dischargings->comment) ?></td>
-			<td><?= h($dischargings->port_agent) ?></td>
+			<td><?= h($dischargings->port_agent_id) ?></td>
 			<td><?= h($dischargings->commDischarging) ?></td>
 			<td><?= h($dischargings->status) ?></td>
 			<td><?= h($dischargings->completionDate) ?></td>
 			<td><?= h($dischargings->order_id) ?></td>
+
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['controller' => 'Dischargings', 'action' => 'view', $dischargings->id]) ?>
+
 				<?= $this->Html->link(__('Edit'), ['controller' => 'Dischargings', 'action' => 'edit', $dischargings->id]) ?>
+
 				<?= $this->Form->postLink(__('Delete'), ['controller' => 'Dischargings', 'action' => 'delete', $dischargings->id], ['confirm' => __('Are you sure you want to delete # {0}?', $dischargings->id)]) ?>
+
 			</td>
 		</tr>
+
 		<?php endforeach; ?>
 	</table>
 	<?php endif; ?>
@@ -163,12 +166,17 @@
 			<td><?= h($invoices->lfbBrokerageReceived) ?></td>
 			<td><?= h($invoices->lfbBrokerageRaised) ?></td>
 			<td><?= h($invoices->order_id) ?></td>
+
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['controller' => 'Invoices', 'action' => 'view', $invoices->id]) ?>
+
 				<?= $this->Html->link(__('Edit'), ['controller' => 'Invoices', 'action' => 'edit', $invoices->id]) ?>
+
 				<?= $this->Form->postLink(__('Delete'), ['controller' => 'Invoices', 'action' => 'delete', $invoices->id], ['confirm' => __('Are you sure you want to delete # {0}?', $invoices->id)]) ?>
+
 			</td>
 		</tr>
+
 		<?php endforeach; ?>
 	</table>
 	<?php endif; ?>
@@ -190,7 +198,7 @@
 			<th><?= __('Rate') ?></th>
 			<th><?= __('Freight') ?></th>
 			<th><?= __('Shipment Size') ?></th>
-			<th><?= __('Type Of Shipment Id') ?></th>
+			<th><?= __('Shipment Type Id') ?></th>
 			<th><?= __('Add Comm') ?></th>
 			<th><?= __('Broking Dollar') ?></th>
 			<th><?= __('Broking Percentage') ?></th>
@@ -200,7 +208,7 @@
 			<th><?= __('DueDate') ?></th>
 			<th><?= __('Eta') ?></th>
 			<th><?= __('Comment') ?></th>
-			<th><?= __('Port Agent') ?></th>
+			<th><?= __('Port Agent Id') ?></th>
 			<th><?= __('Stow Plan') ?></th>
 			<th><?= __('Dead Freight') ?></th>
 			<th><?= __('Discount Freight') ?></th>
@@ -226,7 +234,7 @@
 			<td><?= h($loadings->rate) ?></td>
 			<td><?= h($loadings->freight) ?></td>
 			<td><?= h($loadings->shipment_size) ?></td>
-			<td><?= h($loadings->type_of_shipment_id) ?></td>
+			<td><?= h($loadings->shipment_type_id) ?></td>
 			<td><?= h($loadings->add_comm) ?></td>
 			<td><?= h($loadings->broking_dollar) ?></td>
 			<td><?= h($loadings->broking_percentage) ?></td>
@@ -236,7 +244,7 @@
 			<td><?= h($loadings->dueDate) ?></td>
 			<td><?= h($loadings->eta) ?></td>
 			<td><?= h($loadings->comment) ?></td>
-			<td><?= h($loadings->port_agent) ?></td>
+			<td><?= h($loadings->port_agent_id) ?></td>
 			<td><?= h($loadings->stow_plan) ?></td>
 			<td><?= h($loadings->dead_freight) ?></td>
 			<td><?= h($loadings->discount_freight) ?></td>
@@ -248,12 +256,17 @@
 			<td><?= h($loadings->loi_status_id) ?></td>
 			<td><?= h($loadings->bl_status_id) ?></td>
 			<td><?= h($loadings->order_id) ?></td>
+
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['controller' => 'Loadings', 'action' => 'view', $loadings->order_id]) ?>
+
 				<?= $this->Html->link(__('Edit'), ['controller' => 'Loadings', 'action' => 'edit', $loadings->order_id]) ?>
+
 				<?= $this->Form->postLink(__('Delete'), ['controller' => 'Loadings', 'action' => 'delete', $loadings->order_id], ['confirm' => __('Are you sure you want to delete # {0}?', $loadings->order_id)]) ?>
+
 			</td>
 		</tr>
+
 		<?php endforeach; ?>
 	</table>
 	<?php endif; ?>

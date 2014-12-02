@@ -2,13 +2,11 @@
 	<h3><?= __('Actions') ?></h3>
 	<ul class="side-nav">
 		<li><?= $this->Html->link(__('New Order'), ['action' => 'add']) ?></li>
-		<li><?= $this->Html->link(__('List Creators'), ['controller' => 'Creators', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Creator'), ['controller' => 'Creators', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Modifiers'), ['controller' => 'Modifiers', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Modifier'), ['controller' => 'Modifiers', 'action' => 'add']) ?> </li>
+		<li><?= $this->Html->link(__('List Creators'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Creator'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Customers'), ['controller' => 'Customers', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Customer'), ['controller' => 'Customers', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List VesselOwners'), ['controller' => 'VesselOwners', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('List Vessel Owners'), ['controller' => 'VesselOwners', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Vessel Owner'), ['controller' => 'VesselOwners', 'action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Statuses'), ['controller' => 'Statuses', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Status'), ['controller' => 'Statuses', 'action' => 'add']) ?> </li>
@@ -42,11 +40,11 @@
 			<td><?= $this->Number->format($order->id) ?></td>
 			<td><?= $this->Number->format($order->recstatus) ?></td>
 			<td>
-				<?= $order->has('creator') ? $this->Html->link($order->creator->id, ['controller' => 'Creators', 'action' => 'view', $order->creator->id]) : '' ?>
+				<?= $order->has('creator') ? $this->Html->link($order->creator->id, ['controller' => 'Users', 'action' => 'view', $order->creator->id]) : '' ?>
 			</td>
 			<td><?= h($order->created) ?></td>
 			<td>
-				<?= $order->has('modifier') ? $this->Html->link($order->modifier->id, ['controller' => 'Modifiers', 'action' => 'view', $order->modifier->id]) : '' ?>
+				<?= $order->has('modifier') ? $this->Html->link($order->modifier->id, ['controller' => 'Users', 'action' => 'view', $order->modifier->id]) : '' ?>
 			</td>
 			<td><?= h($order->modified) ?></td>
 			<td><?= h($order->fixtureDate) ?></td>
@@ -56,17 +54,16 @@
 				<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $order->id], ['confirm' => __('Are you sure you want to delete # {0}?', $order->id)]) ?>
 			</td>
 		</tr>
+
 	<?php endforeach; ?>
 	</tbody>
 	</table>
 	<div class="paginator">
 		<ul class="pagination">
-		<?php
-			echo $this->Paginator->prev('< ' . __('previous'));
-			echo $this->Paginator->numbers();
-			echo $this->Paginator->next(__('next') . ' >');
-		?>
+			<?= $this->Paginator->prev('< ' . __('previous')); ?>
+			<?= $this->Paginator->numbers(); ?>
+			<?=	$this->Paginator->next(__('next') . ' >'); ?>
 		</ul>
-		<p><?= $this->Paginator->counter() ?></p>
+		<p><?= $this->Paginator->counter(); ?></p>
 	</div>
 </div>

@@ -21,6 +21,7 @@ class PortsController extends AppController {
         $this->loadComponent('RequestHandler');
 		$this->response->header('Access-Control-Allow-Origin', '*');
 		$this->response->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
+		$this->response->header('Access-Control-Allow-Headers', '*');
     }
 
 /**

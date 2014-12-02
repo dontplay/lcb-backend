@@ -11,6 +11,18 @@ use App\Controller\AppController;
 class PortAgentContactsController extends AppController {
 
 /**
+ * Initialize method
+ *
+ * @return void
+ */
+	public function initialize() {
+        parent::initialize();
+        $this->loadComponent('RequestHandler');
+		$this->response->header('Access-Control-Allow-Origin', '*');
+		$this->response->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');        
+    }
+
+/**
  * Index method
  *
  * @return void
@@ -25,15 +37,22 @@ class PortAgentContactsController extends AppController {
 /**
  * View method
  *
- * @param string $id
+ * @param string|null $id Port Agent Contact id
  * @return void
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function view($id = null) {
-		$portAgentContact = $this->PortAgentContacts->get($id, [
+		if($this->request->params['_ext']){
+			$portAgentContact = $this->PortAgentContacts->get($id);
+			$this->set('portAgentContact', $portAgentContact);
+	        $this->set('_serialize', ['portAgentContact']);
+		}
+		else {
+			$portAgentContact = $this->PortAgentContacts->get($id, [
 			'contain' => ['Creators', 'Modifiers', 'PortAgents']
 		]);
-		$this->set('portAgentContact', $portAgentContact);
+			$this->set('portAgentContact', $portAgentContact);
+		}
 	}
 
 /**
@@ -60,7 +79,7 @@ class PortAgentContactsController extends AppController {
 /**
  * Edit method
  *
- * @param string $id
+ * @param string|null $id Port Agent Contact id
  * @return void
  * @throws \Cake\Network\Exception\NotFoundException
  */
@@ -83,6 +102,7 @@ class PortAgentContactsController extends AppController {
 		$this->set(compact('portAgentContact', 'creators', 'modifiers', 'portAgents'));
 	}
 
+
 /**
  * Delete method
  *
@@ -91,13 +111,27 @@ class PortAgentContactsController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function delete($id = null) {
-		$portAgentContact = $this->PortAgentContacts->get($id);
-		$this->request->allowMethod(['post', 'delete']);
-		if ($this->PortAgentContacts->delete($portAgentContact)) {
-			$this->Flash->success('The port agent contact has been deleted.');
-		} else {
-			$this->Flash->error('The port agent contact could not be deleted. Please, try again.');
+		if($this->request->params['_ext']){
+	        $portAgentContact = $this->PortAgentContacts->get($id);
+	        $message = 'Deleted';
+	        if (!$this->PortAgentContacts->delete($portAgentContact)) {
+	            $message = 'Error';
+	        }
+	        $this->set([
+	            'message' => $message,
+	            '_serialize' => ['message']
+	        ]);
 		}
-		return $this->redirect(['action' => 'index']);
+		else {		
+			$portAgentContact = $this->VesselOwnerContacts->get($id);
+			$this->request->allowMethod(['post', 'delete']);
+			if ($this->VesselOwnerContacts->delete($portAgentContact)) {
+				$this->Flash->success('The portAgentContact has been deleted.');
+			} else {
+				$this->Flash->error('The portAgentContact could not be deleted. Please, try again.');
+			}
+			return $this->redirect(['action' => 'index']);
+		}
 	}
+
 }

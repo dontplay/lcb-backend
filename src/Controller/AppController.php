@@ -15,7 +15,6 @@
 namespace App\Controller;
 
 use Cake\Controller\Controller;
-use \Blame\Controller\BlameTrait;
 
 /**
  * Application Controller
@@ -39,5 +38,6 @@ class AppController extends Controller {
 		$this->loadComponent('RequestHandler');
 		$this->response->header('Access-Control-Allow-Origin', '*');
 		$this->response->header('Access-Control-Allow-Methods', '*');
+
 	}
 }
