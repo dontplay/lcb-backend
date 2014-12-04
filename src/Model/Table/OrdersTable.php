@@ -61,6 +61,11 @@ class OrdersTable extends Table {
 			'alias' => 'Loadings',
 			'foreignKey' => 'order_id'
 		]);
+		$this->hasMany('Events', [
+			'alias' => 'Events',
+			'foreignKey' => 'order_id'
+		]);
+
 	}
 
 /**

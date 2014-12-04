@@ -29,7 +29,7 @@ class OrdersController extends AppController {
  */
 	public function index() {
 		$this->paginate = [
-			'contain' => ['Creators', 'Modifiers', 'Users','Customers', 'VesselOwners', 'Statuses', 'Vessels','Loadings'=>['PortAgents','Ports','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents','Ports'],'Invoices']
+			'contain' => ['Creators', 'Modifiers', 'Users','Customers', 'VesselOwners', 'Statuses', 'Vessels','Loadings'=>['PortAgents','Ports','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents','Ports'],'Invoices','Events']
 		];
 		$this->set('orders', $this->paginate($this->Orders));
 		$this->set('_serialize', ['orders']);
@@ -45,7 +45,7 @@ class OrdersController extends AppController {
 	public function view($id = null) {
 		if($this->request->params['_ext']){
 			$order = $this->Orders->get($id, [
-			'contain' => ['Creators', 'Statuses','Customers','VesselOwners','Vessels','Modifiers','Loadings'=>['PortAgents','Ports','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents','Ports'],'Invoices']
+			'contain' => ['Creators', 'Statuses','Customers','VesselOwners','Vessels','Modifiers','Loadings'=>['PortAgents','Ports','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents','Ports'],'Invoices','Events']
 			]);
 			$this->set('order', $order);
 			$this->set('_serialize', ['order']);
@@ -106,7 +106,7 @@ class OrdersController extends AppController {
 	public function edit($id = null) {
 		if($this->request->params['_ext']){
 			$order = $this->Orders->get($id, [
-				'contain' => ['Creators', 'Modifiers', 'Customers', 'VesselOwners', 'Statuses', 'Vessels','Loadings'=>['PortAgents','Ports','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents'],'Invoices']
+				'contain' => ['Creators', 'Modifiers', 'Customers', 'VesselOwners', 'Statuses', 'Vessels','Loadings'=>['PortAgents','Ports','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents'],'Invoices','Events']
 			]);
 			if ($this->request->is(['patch', 'post', 'put'])) {
 				$order = $this->Orders->patchEntity($order, $this->request->data);

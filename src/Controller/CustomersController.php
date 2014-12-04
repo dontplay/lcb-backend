@@ -49,11 +49,6 @@ class CustomersController extends AppController {
 			]);
 			$this->set('customer', $customer);
 			$this->set('_serialize', ['customer']);
-		} else {
-			$customer = $this->Customers->get($id, [
-				'contain' => ['Creators', 'Modifiers', 'CustomerCategories', 'CustomerContacts', 'Cities', 'Vessels']
-			]);
-			$this->set('customer', $customer);
 		}
 	}
 
@@ -76,21 +71,6 @@ class CustomersController extends AppController {
 				'customer' => $customer,
 				'_serialize' => ['message', 'customer', 'data']
 			]);
-		} else {
-			$customer = $this->Customers->newEntity($this->request->data);
-			if ($this->request->is('post')) {
-				if ($this->Customers->save($customer)) {
-					$this->Flash->success('The customer has been saved.');
-					return $this->redirect(['action' => 'index']);
-				} else {
-					$this->Flash->error('The customer could not be saved. Please, try again.');
-				}
-			}
-			$creators = $this->Customers->Creators->find('list');
-			$modifiers = $this->Customers->Modifiers->find('list');
-			$categories = $this->Customers->Categories->find('list');
-			$cities = $this->Customers->Cities->find('list');
-			$this->set(compact('customer', 'creators', 'modifiers', 'categories', 'cities'));
 		}
 	}
 
@@ -121,25 +101,6 @@ class CustomersController extends AppController {
 				'_serialize' => ['message','customer','data']
 			]);
 		}
-		else {
-			$customer = $this->Customers->get($id, [
-				'contain' => ['CustomerContacts']
-			]);
-			if ($this->request->is(['patch', 'post', 'put'])) {
-				$customer = $this->Customers->patchEntity($customer, $this->request->data);
-				if ($this->Customers->save($customer, ['validate' => false])) {
-					$this->Flash->success('The customer has been saved.');
-					return $this->redirect(['action' => 'index']);
-				} else {
-					$this->Flash->error('The customer could not be saved. Please, try again.');
-				}
-			}
-			$creators = $this->Customers->Creators->find('list');
-			$modifiers = $this->Customers->Modifiers->find('list');
-			$categories = $this->Customers->Categories->find('list');
-			$cities = $this->Customers->Cities->find('list');
-			$this->set(compact('customer', 'creators', 'modifiers', 'categories', 'cities'));
-		}
 	}
 
 /**
@@ -160,16 +121,6 @@ class CustomersController extends AppController {
 				'message' => $message,
 				'_serialize' => ['message']
 			]);
-		}
-		else {		
-			$customer = $this->Customers->get($id);
-			$this->request->allowMethod(['post', 'delete']);
-			if ($this->Customers->delete($customer)) {
-				$this->Flash->success('The customer has been deleted.');
-			} else {
-				$this->Flash->error('The customer could not be deleted. Please, try again.');
-			}
-			return $this->redirect(['action' => 'index']);
 		}
 	}
 }

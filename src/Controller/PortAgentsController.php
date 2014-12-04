@@ -28,11 +28,13 @@ class PortAgentsController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->paginate = [
-			'contain' => ['PortAgentContacts']
-		];
-		$this->set('portAgents', $this->paginate($this->PortAgents));
-		$this->set('_serialize', ['portAgents']);
+		if($this->request->params['_ext']){
+			$this->paginate = [
+				'contain' => ['PortAgentContacts']
+			];
+			$this->set('portAgents', $this->paginate($this->PortAgents));
+			$this->set('_serialize', ['portAgents']);
+		}
 	}
 
 /**
@@ -49,11 +51,6 @@ class PortAgentsController extends AppController {
 			]);
 			$this->set('portAgent', $portAgent);
 			$this->set('_serialize', ['portAgent']);
-		} else {
-		$portAgent = $this->PortAgents->get($id, [
-			'contain' => ['Creators', 'Modifiers', 'Dischargings', 'Loadings', 'PortAgentContacts']
-		]);
-		$this->set('portAgent', $portAgent);
 		}
 	}
 
@@ -63,7 +60,8 @@ class PortAgentsController extends AppController {
  * @return void
  */
 	public function add() {
-		if($this->request->params['_ext']){
+		if($this->request->params['_ext']) {
+			debug($this->request->data);
 			$portAgent = $this->PortAgents->newEntity($this->request->data);
 			if ($this->PortAgents->save($portAgent, ['validate' => false])) {
 				$message = 'Saved';
@@ -76,19 +74,6 @@ class PortAgentsController extends AppController {
 				'portAgent' => $portAgent,
 				'_serialize' => ['message', 'portAgent', 'data']
 			]);
-		} else {
-			$portAgent = $this->PortAgents->newEntity($this->request->data);
-			if ($this->request->is('post')) {
-				if ($this->PortAgents->save($portAgent)) {
-					$this->Flash->success('The port agent has been saved.');
-					return $this->redirect(['action' => 'index']);
-				} else {
-					$this->Flash->error('The port agent could not be saved. Please, try again.');
-				}
-			}
-			$creators = $this->PortAgents->Creators->find('list');
-			$modifiers = $this->PortAgents->Modifiers->find('list');
-			$this->set(compact('portAgent', 'creators', 'modifiers'));
 		}
 	}
 
@@ -119,22 +104,6 @@ class PortAgentsController extends AppController {
 				'data' => $this->request->data,
 				'_serialize' => ['message','portAgent','data']
 			]);
-		} else {
-			$portAgent = $this->PortAgents->get($id, [
-				'contain' => []
-			]);
-			if ($this->request->is(['patch', 'post', 'put'])) {
-				$portAgent = $this->PortAgents->patchEntity($portAgent, $this->request->data);
-				if ($this->PortAgents->save($portAgent)) {
-					$this->Flash->success('The port agent has been saved.');
-					return $this->redirect(['action' => 'index']);
-				} else {
-					$this->Flash->error('The port agent could not be saved. Please, try again.');
-				}
-			}
-			$creators = $this->PortAgents->Creators->find('list');
-			$modifiers = $this->PortAgents->Modifiers->find('list');
-			$this->set(compact('portAgent', 'creators', 'modifiers'));
 		}
 	}
 
@@ -146,14 +115,17 @@ class PortAgentsController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function delete($id = null) {
-		$portAgent = $this->PortAgents->get($id);
-		$this->request->allowMethod(['post', 'delete']);
-		if ($this->PortAgents->delete($portAgent)) {
-			$this->Flash->success('The port agent has been deleted.');
-		} else {
-			$this->Flash->error('The port agent could not be deleted. Please, try again.');
+		if($this->request->params['_ext']){
+	        $portAgent = $this->PortAgents->get($id);
+	        $message = 'Deleted';
+	        if (!$this->PortAgents->delete($portAgent)) {
+	            $message = 'Error';
+	        }
+	        $this->set([
+	            'message' => $message,
+	            '_serialize' => ['message']
+	        ]);
 		}
-		return $this->redirect(['action' => 'index']);
 	}
 
 }

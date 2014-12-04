@@ -122,16 +122,6 @@ class PortAgentContactsController extends AppController {
 	            '_serialize' => ['message']
 	        ]);
 		}
-		else {		
-			$portAgentContact = $this->VesselOwnerContacts->get($id);
-			$this->request->allowMethod(['post', 'delete']);
-			if ($this->VesselOwnerContacts->delete($portAgentContact)) {
-				$this->Flash->success('The portAgentContact has been deleted.');
-			} else {
-				$this->Flash->error('The portAgentContact could not be deleted. Please, try again.');
-			}
-			return $this->redirect(['action' => 'index']);
-		}
 	}
 
 }

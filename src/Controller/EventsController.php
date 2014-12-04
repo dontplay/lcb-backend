@@ -6,21 +6,9 @@ use App\Controller\AppController;
 /**
  * Events Controller
  *
- * @property App\Model\Table\EventsTable $Events
+ * @property \App\Model\Table\EventsTable $Events
  */
 class EventsController extends AppController {
-
-/**
- * Initialize method
- *
- * @return void
- */
-	public function initialize() {
-		parent::initialize();
-		$this->loadComponent('RequestHandler');
-		$this->response->header('Access-Control-Allow-Origin', '*');
-		$this->response->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
-	}
 
 /**
  * Index method
@@ -29,7 +17,7 @@ class EventsController extends AppController {
  */
 	public function index() {
 		$this->paginate = [
-			'contain' => ['Creators', 'Modifiers']
+			'contain' => ['Creators', 'Modifiers', 'Users', 'Orders']
 		];
 		$this->set('events', $this->paginate($this->Events));
 		$this->set('_serialize', ['events']);
@@ -44,7 +32,7 @@ class EventsController extends AppController {
  */
 	public function view($id = null) {
 		$event = $this->Events->get($id, [
-			'contain' => ['Creators', 'Modifiers']
+			'contain' => ['Creators', 'Modifiers', 'Users', 'Orders']
 		]);
 		$this->set('event', $event);
 	}
@@ -55,32 +43,20 @@ class EventsController extends AppController {
  * @return void
  */
 	public function add() {
-		if ($this->request->params['_ext']) {
-			$events = $this->Events->newEntities($this->request->data);
-			foreach ($events as $event) {
-				if ($this->Events->save($event, ['validate' => false])) {
-					$message = 'Saved';
-				}
+		$event = $this->Events->newEntity($this->request->data);
+		if ($this->request->is('post')) {
+			if ($this->Events->save($event)) {
+				$this->Flash->success('The event has been saved.');
+				return $this->redirect(['action' => 'index']);
+			} else {
+				$this->Flash->error('The event could not be saved. Please, try again.');
 			}
-			$this->set([
-				'data' => $this->request->data,
-				'message' => $message,
-				'_serialize' => ['message', 'data']
-			]);
-		} else {
-			$event = $this->Events->newEntity($this->request->data);
-			if ($this->request->is('post')) {
-				if ($this->Events->save($event)) {
-					$this->Flash->success('The event has been saved.');
-					return $this->redirect(['action' => 'index']);
-				} else {
-					$this->Flash->error('The event could not be saved. Please, try again.');
-				}
-			}
-			$creators = $this->Events->Creators->find('list');
-			$modifiers = $this->Events->Modifiers->find('list');
-			$this->set(compact('event', 'creators', 'modifiers'));
 		}
+		$creators = $this->Events->Creators->find('list');
+		$modifiers = $this->Events->Modifiers->find('list');
+		$users = $this->Events->Users->find('list');
+		$orders = $this->Events->Orders->find('list');
+		$this->set(compact('event', 'creators', 'modifiers', 'users', 'orders'));
 	}
 
 /**
@@ -105,7 +81,9 @@ class EventsController extends AppController {
 		}
 		$creators = $this->Events->Creators->find('list');
 		$modifiers = $this->Events->Modifiers->find('list');
-		$this->set(compact('event', 'creators', 'modifiers'));
+		$users = $this->Events->Users->find('list');
+		$orders = $this->Events->Orders->find('list');
+		$this->set(compact('event', 'creators', 'modifiers', 'users', 'orders'));
 	}
 
 /**

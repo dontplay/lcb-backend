@@ -17,8 +17,11 @@ class Event extends Entity {
 		'recstatus' => true,
 		'creator_id' => true,
 		'modifier_id' => true,
+		'titlehead' => true,
 		'title' => true,
 		'start' => true,
+		'user_id' => true,
+		'order_id' => true,
 		'creator' => true,
 		'modifier' => true,
 	];

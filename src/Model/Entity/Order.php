@@ -34,6 +34,7 @@ class Order extends Entity {
 		'dischargings' => true,
 		'invoices' => true,
 		'loadings' => true,
+		'events' => true
 	];
 
 }

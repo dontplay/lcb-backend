@@ -29,6 +29,14 @@ class EventsTable extends Table {
 			'className' => 'Users',
 			'foreignKey' => 'modifier_id'
 		]);
+		$this->belongsTo('Users', [
+			'alias' => 'Users',
+			'foreignKey' => 'user_id'
+		]);
+		$this->belongsTo('Orders', [
+			'alias' => 'Orders',
+			'foreignKey' => 'order_id'
+		]);
 	}
 
 /**
@@ -48,10 +56,14 @@ class EventsTable extends Table {
 			->allowEmpty('creator_id')
 			->add('modifier_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('modifier_id')
+			->allowEmpty('titlehead')
 			->allowEmpty('title')
 			->add('start', 'valid', ['rule' => 'datetime'])
-			->requirePresence('start', 'create')
-			->notEmpty('start');
+			->allowEmpty('start')
+			->add('user_id', 'valid', ['rule' => 'numeric'])
+			->allowEmpty('user_id')
+			->add('order_id', 'valid', ['rule' => 'numeric'])
+			->allowEmpty('order_id');
 
 		return $validator;
 	}

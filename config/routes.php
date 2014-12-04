@@ -26,11 +26,17 @@ Router::scope('/', function ($routes) {
 	$routes->extensions(['json']);
 
 	$routes->resources('Ports');
+	$routes->resources('PortAgents');
+	$routes->resources('PortAgentContacts');
  	$routes->resources('Vessels');
 
  	$routes->resources('Users');
+ 	$routes->resources('Events');
 
  	$routes->resources('Orders');
+ 	$routes->resources('Dischargings');
+ 	$routes->resources('Loadings');
+ 	$routes->resources('Invoices');
  	$routes->resources('ShipmentTypes');
  	$routes->resources('Statuses');
  	$routes->resources('LoiStatuses');
