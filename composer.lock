@@ -4,8 +4,59 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3ce07fa018d5cd4a50d48f4b7606bf36",
+    "hash": "887eadd93bc34393b217cfb72f86c095",
     "packages": [
+        {
+            "name": "admad/cakephp-jwt-auth",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ADmad/cakephp-jwt-auth.git",
+                "reference": "e8359a0384a76694211f8cfde6abde6eaa0cccdb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ADmad/cakephp-jwt-auth/zipball/e8359a0384a76694211f8cfde6abde6eaa0cccdb",
+                "reference": "e8359a0384a76694211f8cfde6abde6eaa0cccdb",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "3.0.*-dev",
+                "cakephp/plugin-installer": "*",
+                "firebase/php-jwt": "~1.0"
+            },
+            "type": "cakephp-plugin",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ADmad\\JwtAuth\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ADmad",
+                    "homepage": "https://github.com/ADmad",
+                    "role": "Author"
+                }
+            ],
+            "description": "CakePHP plugin for authenticating using JSON Web Tokens",
+            "homepage": "http://github.com/ADmad/cakephp-jwt-auth",
+            "keywords": [
+                "Authentication",
+                "authenticate",
+                "cakephp",
+                "jwt"
+            ],
+            "time": "2014-11-30 16:12:10"
+        },
         {
             "name": "aura/installer-default",
             "version": "1.0.0",
@@ -287,6 +338,50 @@
             "time": "2014-08-29 19:01:27"
         },
         {
+            "name": "firebase/php-jwt",
+            "version": "1.0.0",
+            "target-dir": "Firebase/PHP-JWT",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/firebase/php-jwt.git",
+                "reference": "58c1e61d0dff797f2989c54415229f4016d57a6d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/58c1e61d0dff797f2989c54415229f4016d57a6d",
+                "reference": "58c1e61d0dff797f2989c54415229f4016d57a6d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "Authentication/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Neuman Vong",
+                    "email": "neuman+pear@twilio.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anant Narayanan",
+                    "email": "anant@php.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
+            "homepage": "https://github.com/firebase/php-jwt",
+            "time": "2014-08-28 17:14:17"
+        },
+        {
             "name": "ircmaxell/password-compat",
             "version": "v1.0.4",
             "source": {
@@ -506,7 +601,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "cakephp/cakephp": 20,
-        "cakephp/debug_kit": 20
+        "cakephp/debug_kit": 20,
+        "admad/cakephp-jwt-auth": 20
     },
     "prefer-stable": true,
     "platform": {

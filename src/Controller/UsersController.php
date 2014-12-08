@@ -2,6 +2,10 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Network\Exception\ForbiddenException;
+use \JWT;
+use Cake\Utility\Security;
+
 
 /**
  * Users Controller
@@ -9,6 +13,59 @@ use App\Controller\AppController;
  * @property App\Model\Table\UsersTable $Users
  */
 class UsersController extends AppController {
+/*
+	public function beforeFilter(Event $event) {
+	    parent::beforeFilter($event);
+	    
+	    $this->Auth->config('authenticate', [
+	        'ADmad/JwtAuth.Jwt' => [
+	            'parameter' => 'token',
+	            'userModel' => 'Users',
+	            'scope' => ['Users.recstatus' => 1],
+	            'fields' => [
+	                'username' => 'username',
+	                'password' => 'password'
+	            ]
+	        ],
+	        'Form' => [
+                	'fields' => ['username' => 'username', 'password' => 'password']
+            ]
+	    ]);
+	    // Allow users to register and logout.
+	    // You should not add the "login" action to allow list. Doing so would
+	    // cause problems with normal functioning of AuthComponent.
+	    $this->Auth->allow(['add', 'logout','login']);
+	}*/
+
+	public function login() {
+        if (!$this->request->is('post')) {
+            return;
+        }
+        $user = $this->Auth->identify();
+        if ($this->request->is('json')) {
+            $token = $error = false;
+            if ($user) {
+                $token = JWT::encode(array('record' => $user), Security::salt());
+            } else {
+                $error = 'No user found';
+            }
+            $this->set([
+                'token' => $token,
+                '_serialize' => ['token', 'error'],
+                'error' => $error
+            ]);
+            return;
+        }
+        if ($user) {
+            $this->Auth->setUser($user);
+            return $this->redirect($this->Auth->redirectUrl());
+        }
+        $this->Flash->error(__('Invalid username or password, try again'));
+    }
+    
+	public function logout() {
+	    return $this->redirect($this->Auth->logout());
+	}
 
 /**
  * Initialize method

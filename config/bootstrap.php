@@ -167,6 +167,7 @@ Request::addDetector('tablet', function ($request) {
  */
 
 Plugin::load('DebugKit', ['bootstrap' => true]);
+Plugin::load('ADmad/JwtAuth');
 
 /**
  * Connect middleware/dispatcher filters.
