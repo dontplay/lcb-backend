@@ -43,16 +43,17 @@ class UsersController extends AppController {
         }
         $user = $this->Auth->identify();
         if ($this->request->is('json')) {
-            $token = $error = false;
+            $token = $message = 'Error';
             if ($user) {
                 $token = JWT::encode(array('record' => $user), Security::salt());
+                $message = 'Saved';
             } else {
-                $error = 'No user found';
+                $message = 'Error';
             }
             $this->set([
                 'token' => $token,
-                '_serialize' => ['token', 'error'],
-                'error' => $error
+                'message' => $message,
+                '_serialize' => ['token', 'message']
             ]);
             return;
         }
