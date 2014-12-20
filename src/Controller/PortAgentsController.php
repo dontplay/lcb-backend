@@ -61,7 +61,6 @@ class PortAgentsController extends AppController {
  */
 	public function add() {
 		if($this->request->params['_ext']) {
-			debug($this->request->data);
 			$portAgent = $this->PortAgents->newEntity($this->request->data);
 			if ($this->PortAgents->save($portAgent, ['validate' => false])) {
 				$message = 'Saved';

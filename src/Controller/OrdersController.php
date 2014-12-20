@@ -58,6 +58,23 @@ class OrdersController extends AppController {
 	}
 
 /**
+ * View Order method
+ *
+ * @param string|null $id Order id
+ * @return void
+ * @throws \Cake\Network\Exception\NotFoundException
+ */
+	public function view_order($id = null) {
+		if($this->request->params['_ext']){
+			$order = $this->Orders->get($id, [
+			'contain' => ['Creators', 'Statuses','Customers','VesselOwners','Vessels','Modifiers','Loadings'=>['PortAgents','Ports','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents','Ports'],'Invoices','Events','Users']
+			]);
+			$this->set('order', $order);
+			$this->set('_serialize', ['order']);
+		}
+	}
+
+/**
  * Add method
  *
  * @return void
