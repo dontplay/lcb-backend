@@ -45,7 +45,7 @@ class OrdersController extends AppController {
 	public function view($id = null) {
 		if($this->request->params['_ext']){
 			$order = $this->Orders->get($id, [
-			'contain' => ['Creators', 'Statuses','Customers','VesselOwners','Vessels','Modifiers','Loadings'=>['PortAgents','Ports','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents','Ports'],'Invoices','Events']
+				'contain' => ['Creators', 'Modifiers','Loadings'=>['PortAgents','Ports','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents'],'Invoices']
 			]);
 			$this->set('order', $order);
 			$this->set('_serialize', ['order']);
@@ -123,7 +123,7 @@ class OrdersController extends AppController {
 	public function edit($id = null) {
 		if($this->request->params['_ext']){
 			$order = $this->Orders->get($id, [
-				'contain' => ['Creators', 'Modifiers', 'Customers', 'VesselOwners', 'Statuses', 'Vessels','Loadings'=>['PortAgents','Ports','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents'],'Invoices','Events']
+				'contain' => ['Creators', 'Modifiers','Loadings'=>['PortAgents','Ports','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents'],'Invoices']
 			]);
 			if ($this->request->is(['patch', 'post', 'put'])) {
 				$order = $this->Orders->patchEntity($order, $this->request->data);
