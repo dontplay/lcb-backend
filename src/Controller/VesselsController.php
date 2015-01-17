@@ -30,10 +30,8 @@ class VesselsController extends AppController {
  */
 
 	public function index() {
-		$data = $this->Vessels->VesselOwners->VesselOwnerContacts->find('all', array('order' => array('created' => 'DESC')))->first();
-		$this->paginate = [
-			'contain' => ['VesselOwners']
-		];
+		$data = $this->Vessels->find('all', array('order' => array('created' => 'DESC')))->first();
+		$this->paginate = [];
 		$this->set('vessels', $this->paginate($this->Vessels));
 		$this->set('_serialize', ['vessels']);
 	}
@@ -91,8 +89,7 @@ class VesselsController extends AppController {
 			}
 			$creators = $this->Vessels->Creators->find('list');
 			$modifiers = $this->Vessels->Modifiers->find('list');
-			$vesselOwners = $this->Vessels->VesselOwners->find('list');
-			$this->set(compact('vessel', 'creators', 'modifiers', 'vesselOwners'));
+			$this->set(compact('vessel', 'creators', 'modifiers'));
 		}
 	}
 
@@ -138,8 +135,7 @@ class VesselsController extends AppController {
 			}
 			$creators = $this->Vessels->Creators->find('list');
 			$modifiers = $this->Vessels->Modifiers->find('list');
-			$vesselOwners = $this->Vessels->VesselOwners->find('list');
-			$this->set(compact('vessel', 'creators', 'modifiers', 'vesselOwners'));
+			$this->set(compact('vessel', 'creators', 'modifiers'));
 		}
 	}
 

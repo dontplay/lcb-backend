@@ -42,9 +42,6 @@ class VesselOwnersTable extends Table {
 		$this->hasMany('VesselOwnerContacts', [
 			'foreignKey' => 'vessel_owner_id',
 		]);
-		$this->hasMany('Vessels', [
-			'foreignKey' => 'vessel_owner_id',
-		]);
 	}
 
 /**

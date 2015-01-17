@@ -30,9 +30,6 @@ class VesselsTable extends Table {
 			'className' => 'Users',
 			'foreignKey' => 'modifier_id',
 		]);
-		$this->belongsTo('VesselOwners', [
-			'foreignKey' => 'vessel_owner_id',
-		]);
 	}
 
 /**
@@ -51,14 +48,7 @@ class VesselsTable extends Table {
 			->add('creator_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('creator_id')
 			->add('modifier_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('modifier_id')
-			->validatePresence('name', 'create')
-			->notEmpty('name')
-			->validatePresence('catagory', 'create')
-			->notEmpty('catagory')
-			->add('vessel_owner_id', 'valid', ['rule' => 'numeric'])
-			->validatePresence('vessel_owner_id', 'create')
-			->notEmpty('vessel_owner_id');
+			->allowEmpty('modifier_id');
 
 		return $validator;
 	}

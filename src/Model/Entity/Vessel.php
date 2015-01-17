@@ -18,11 +18,13 @@ class Vessel extends Entity {
 		'creator_id' => true,
 		'modifier_id' => true,
 		'name' => true,
-		'catagory' => true,
-		'vessel_owner_id' => true,
-		'creator' => true,
-		'modifier' => true,
-		'vessel_owner' => true,
+		'loa' => true,
+		'beam' => true,
+		'flag' => true,
+		'imo' => true,
+		'grt' => true,
+		'nrt' => true,
+		'dwt' => true
 	];
 
 }
