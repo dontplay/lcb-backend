@@ -49,7 +49,7 @@ class Loading extends Entity {
 		'creator' => true,
 		'modifier' => true,
 		'loi_status' => true,
-		'bill_status' => true,
+		'bl_status' => true,
 		'order' => true,
 		'port' => true,
 	];

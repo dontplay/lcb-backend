@@ -33,8 +33,8 @@ class LoadingsTable extends Table {
 			'alias' => 'Ports',
 			'foreignKey' => 'port_id'
 		]);
-		$this->belongsTo('Ports', [
-			'alias' => 'Ports',
+		$this->belongsTo('Ports2', [
+			'className' => 'Ports',
 			'foreignKey' => 'two_port_id'
 		]);
 		$this->belongsTo('ShipmentTypes', [

@@ -29,7 +29,7 @@ class OrdersController extends AppController {
  */
 	public function index() {
 		$this->paginate = [
-			'contain' => ['Creators', 'Modifiers', 'Users','Customers', 'VesselOwners', 'Statuses', 'Vessels','Loadings'=>['PortAgents','Ports','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents','Ports'],'Invoices','Events']
+			'contain' => ['Creators', 'Modifiers', 'Users','Customers', 'VesselOwners', 'Statuses', 'Vessels','Loadings'=>['PortAgents','Ports','Ports2','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents','Ports','Ports2'],'Invoices','Events']
 		];
 		$this->set('orders', $this->paginate($this->Orders));
 		$this->set('_serialize', ['orders']);
