@@ -21,7 +21,7 @@
 use Cake\Core\Plugin;
 use Cake\Routing\Router;
 
-Router::scope('/', function ($routes) {
+Router::scope('/api/v1', function ($routes) {
 
 	$routes->extensions(['json']);
 
