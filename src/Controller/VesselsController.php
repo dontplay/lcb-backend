@@ -30,9 +30,12 @@ class VesselsController extends AppController {
  */
 
 	public function index() {
-		$data = $this->Vessels->find('all', array('order' => array('created' => 'DESC')))->first();
-		//$this->paginate = [];
-		$this->set('vessels', $data);
+		if ($this->request->params['_ext']) {
+			$this->set('vessels', $this->BlStatuses->find('all'));
+		}
+		else {
+			$this->set('vessels', $this->BlStatuses->find('all'));
+		}
 		$this->set('_serialize', ['vessels']);
 	}
 

@@ -29,10 +29,7 @@ class BlStatusesController extends AppController {
  */
 	public function index() {
 		if ($this->request->params['_ext']) {
-			$conditions = [
-			//	'fields' => ['BlStatuses.id', 'BlStatuses.name']
-			];
-			$this->set('blStatuses', $this->BlStatuses->find('all', $conditions));
+			$this->set('blStatuses', $this->BlStatuses->find('all'));
 		}
 		else {
 			$this->set('blStatuses', $this->BlStatuses->find('all'));
