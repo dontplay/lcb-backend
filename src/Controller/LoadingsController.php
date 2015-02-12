@@ -28,10 +28,16 @@ class LoadingsController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->paginate = [
-			'contain' => ['Creators', 'Modifiers', 'Ports', 'ShipmentTypes', 'PortAgents', 'LoiStatuses', 'BlStatuses', 'Orders']
-		];
-		$this->set('loadings', $this->paginate($this->Loadings));
+		if ($this->request->params['_ext']) {
+			$this->set('loadings', $this->Loadings->find('all',['contain' => ['Ports', 'ShipmentTypes', 'PortAgents', 'LoiStatuses', 'BlStatuses', 'Orders']]));
+			$this->set('_serialize', ['loadings']);
+		}
+		else {
+			$this->paginate = [
+				'contain' => ['Ports', 'ShipmentTypes', 'PortAgents', 'LoiStatuses', 'BlStatuses', 'Orders']
+			];
+			$this->set('loadings', $this->paginate($this->Loadings));
+		}
 	}
 
 /**

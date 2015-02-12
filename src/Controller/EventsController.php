@@ -16,11 +16,17 @@ class EventsController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->paginate = [
-			'contain' => ['Creators', 'Modifiers', 'Users', 'Orders']
-		];
-		$this->set('events', $this->paginate($this->Events));
-		$this->set('_serialize', ['events']);
+		if ($this->request->params['_ext']) {
+			$this->set('events', $this->Events->find('all',['contain' => ['Users', 'Orders']]));
+			$this->set('_serialize', ['events']);
+		}
+		else {
+			$this->paginate = [
+				'contain' => ['Creators', 'Modifiers', 'Users', 'Orders']
+			];
+			$this->set('events', $this->paginate($this->Events));
+			$this->set('_serialize', ['events']);
+		}
 	}
 
 /**

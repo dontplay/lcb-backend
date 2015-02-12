@@ -30,15 +30,14 @@ class CitiesController extends AppController {
 	public function index() {
 		if ($this->request->params['_ext']) {
 			$conditions = [
-			//	'fields' => ['Cities.id', 'Cities.name']
 				'contain' => ['Countries']
 			];
 			$this->set('cities', $this->Cities->find('all', $conditions));
+			$this->set('_serialize', ['cities']);
 		}
 		else {
-			$this->set('cities', $this->Cities->find('all'));
+			$this->set('cities', $this->paginate($this->Cities));
 		}
-		$this->set('_serialize', ['cities']);
 	}
 
 /**

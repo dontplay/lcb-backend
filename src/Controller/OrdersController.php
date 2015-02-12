@@ -28,11 +28,15 @@ class OrdersController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->paginate = [
-			'contain' => ['Creators', 'Modifiers', 'Users','Customers', 'VesselOwners', 'Statuses', 'Vessels','Loadings'=>['PortAgents','Ports','Ports2','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents','Ports','Ports2'],'Invoices','Events']
-		];
-		$this->set('orders', $this->paginate($this->Orders));
-		$this->set('_serialize', ['orders']);
+		if ($this->request->params['_ext']) {
+			$this->set('orders', $this->Orders->find('all',['contain' => ['Creators', 'Modifiers', 'Users','Customers', 'VesselOwners', 'Statuses', 'Vessels','Loadings'=>['PortAgents','Ports','Ports2','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents','Ports','Ports2'],'Invoices','Events']]));
+			$this->set('_serialize', ['orders']);
+		} else {
+			$this->paginate = [
+				'contain' => ['Creators', 'Modifiers', 'Users','Customers', 'VesselOwners', 'Statuses', 'Vessels','Loadings'=>['PortAgents','Ports','Ports2','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents','Ports','Ports2'],'Invoices','Events']
+			];
+			$this->set('orders', $this->paginate($this->Orders));
+		}
 	}
 
 /**

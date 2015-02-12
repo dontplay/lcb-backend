@@ -86,11 +86,16 @@ class UsersController extends AppController {
  */
 
 	public function index() {
-		$this->paginate = [
-			'contain' => ['Creators', 'Modifiers']
-		];
-		$this->set('users', $this->paginate($this->Users));
-        $this->set('_serialize', ['users']);
+		if ($this->request->params['_ext']) {
+			$this->set('users', $this->Users->find('all',['contain' => ['Creators','Modifiers']]));
+			$this->set('_serialize', ['users']);
+		}
+		else {
+			$this->paginate = [
+				'contain' => ['Creators', 'Modifiers']
+			];
+			$this->set('users', $this->paginate($this->Users));
+	    }
     }
 
 /**

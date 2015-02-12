@@ -28,7 +28,7 @@ class DischargingsController extends AppController {
  */
 	public function index() {
 		$this->paginate = [
-			'contain' => ['Creators', 'Modifiers', 'Ports', 'PortAgents', 'Orders']
+			'contain' => ['Ports', 'PortAgents', 'Orders']
 		];
 		$this->set('dischargings', $this->paginate($this->Dischargings));
 	}

@@ -29,11 +29,16 @@ class VesselOwnersController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->paginate = [
-			'contain' => ['VesselOwnerCategories', 'VesselOwnerContacts', 'Cities']
-		];
-		$this->set('vesselOwners', $this->paginate($this->VesselOwners));
-		$this->set('_serialize', ['vesselOwners']);
+		if ($this->request->params['_ext']) {
+			$this->set('vesselOwners', $this->VesselOwners->find('all',['contain' => ['VesselOwnerCategories', 'VesselOwnerContacts', 'Cities']]));
+			$this->set('_serialize', ['vesselOwners']);
+		}
+		else {
+			$this->paginate = [
+				'contain' => ['VesselOwnerCategories', 'VesselOwnerContacts', 'Cities']
+			];
+			$this->set('vesselOwners', $this->paginate($this->VesselOwners));
+		}
 	}
 
 /**

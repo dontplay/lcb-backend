@@ -29,15 +29,12 @@ class LoiStatusesController extends AppController {
  */
 	public function index() {
 		if ($this->request->params['_ext']) {
-			$conditions = [
-			//	'fields' => ['LoiStatuses.id', 'LoiStatuses.name']
-			];
-			$this->set('loiStatuses', $this->LoiStatuses->find('all', $conditions));
+			$this->set('loiStatuses', $this->LoiStatuses->find('all'));
+			$this->set('_serialize', ['loiStatuses']);
 		}
 		else {
-			$this->set('loiStatuses', $this->LoiStatuses->find('all'));
+			$this->set('loiStatuses', $this->paginate($this->LoiStatuses));
 		}
-		$this->set('_serialize', ['loiStatuses']);
 	}
 
 /**

@@ -29,15 +29,13 @@ class StatusesController extends AppController {
  */
 	public function index() {
 		if ($this->request->params['_ext']) {
-			$conditions = [
-			//	'fields' => ['Statuses.id', 'Statuses.name']
-			];
-			$this->set('statuses', $this->Statuses->find('all', $conditions));
+			$this->set('statuses', $this->Statuses->find('all'));
+			$this->set('_serialize', ['statuses']);
 		}
 		else {
-			$this->set('statuses', $this->Statuses->find('all'));
+			$this->set('statuses', $this->paginate($this->Statuses));
 		}
-		$this->set('_serialize', ['statuses']);
+		
 	}
 
 /**

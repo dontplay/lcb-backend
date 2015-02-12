@@ -30,11 +30,11 @@ class BlStatusesController extends AppController {
 	public function index() {
 		if ($this->request->params['_ext']) {
 			$this->set('blStatuses', $this->BlStatuses->find('all'));
+			$this->set('_serialize', ['blStatuses']);
 		}
 		else {
-			$this->set('blStatuses', $this->BlStatuses->find('all'));
+			$this->set('blStatuses', $this->paginate($this->Orders));
 		}
-		$this->set('_serialize', ['blStatuses']);
 	}
 
 /**

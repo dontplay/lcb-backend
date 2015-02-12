@@ -29,15 +29,12 @@ class CountriesController extends AppController {
  */
 	public function index() {
 		if ($this->request->params['_ext']) {
-			$conditions = [
-			//	'fields' => ['Countries.id', 'Countries.name']
-			];
-			$this->set('countries', $this->Countries->find('all', $conditions));
+			$this->set('countries', $this->Countries->find('all'));
+			$this->set('_serialize', ['countries']);
 		}
 		else {
-			$this->set('countries', $this->Countries->find('all'));
+			$this->set('countries', $this->paginate($this->Countries));
 		}
-		$this->set('_serialize', ['countries']);
 	}
 
 /**

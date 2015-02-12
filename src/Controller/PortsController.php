@@ -30,11 +30,16 @@ class PortsController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->paginate = [
-			'contain' => ['Countries']
-		];
-		$this->set('ports', $this->paginate($this->Ports));
-        $this->set('_serialize', ['ports']);
+		if ($this->request->params['_ext']) {
+			$this->set('ports', $this->Ports->find('all',['contain' => ['Countries']]));
+			$this->set('_serialize', ['ports']);
+		}
+		else {
+			$this->paginate = [
+				'contain' => ['Countries']
+			];
+			$this->set('ports', $this->paginate($this->Ports));
+	    }
 	}
 
 /**
