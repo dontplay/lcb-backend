@@ -3,3 +3,4 @@
 /tmp/*
 /logs/*
 .Trash-1000/
+webroot/phpmyadmin
