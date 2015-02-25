@@ -71,7 +71,7 @@ class OrdersController extends AppController {
 	public function view_order($id = null) {
 		if($this->request->params['_ext']){
 			$order = $this->Orders->get($id, [
-				'contain' => ['Statuses','Customers','VesselOwners','Vessels','Loadings'=>['PortAgents','Ports','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents','Ports'],'Invoices','Events','Users']
+				'contain' => ['Statuses','Customers','VesselOwners','Vessels','Loadings'=>['PortAgents','Ports','Ports2','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents','Ports','Ports2'],'Invoices','Events','Users']
 			]);
 			$this->set('order', $order);
 			$this->set('_serialize', ['order']);

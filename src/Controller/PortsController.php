@@ -31,7 +31,7 @@ class PortsController extends AppController {
  */
 	public function index() {
 		if ($this->request->params['_ext']) {
-			$this->set('ports', $this->Ports->find('all',['contain' => ['Countries']]));
+			$this->set('ports', $this->Ports->find('all',['contain' => ['Countries'],'order'=>['Ports.name']]));
 			$this->set('_serialize', ['ports']);
 		}
 		else {

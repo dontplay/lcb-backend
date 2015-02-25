@@ -27,19 +27,27 @@ class PortAgentsTable extends Table {
 		]);
 		$this->belongsTo('Modifiers', [
 			'className' => 'Users',
-			'foreignKey' => 'modifier_id'
+			'foreignKey' => 'modifier_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 		$this->hasMany('Dischargings', [
 			'alias' => 'Dischargings',
-			'foreignKey' => 'port_agent_id'
+			'foreignKey' => 'port_agent_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 		$this->hasMany('Loadings', [
 			'alias' => 'Loadings',
-			'foreignKey' => 'port_agent_id'
+			'foreignKey' => 'port_agent_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 		$this->hasMany('PortAgentContacts', [
 			'alias' => 'PortAgentContacts',
-			'foreignKey' => 'port_agent_id'
+			'foreignKey' => 'port_agent_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 	}
 

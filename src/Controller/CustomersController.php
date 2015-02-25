@@ -29,7 +29,7 @@ class CustomersController extends AppController {
  */
 	public function index() {
 		if ($this->request->params['_ext']) {
-			$this->set('customers', $this->Customers->find('all',['contain' => ['CustomerCategories', 'CustomerContacts', 'Cities']]));
+			$this->set('customers', $this->Customers->find('all',['contain' => ['CustomerCategories', 'CustomerContacts', 'Cities'],'order'=>['Customers.name']]));
 			$this->set('_serialize', ['customers']);
 		}
 		else {

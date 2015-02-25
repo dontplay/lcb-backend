@@ -42,14 +42,10 @@ class UsersTable extends Table {
 		$validator
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
-			->add('recstatus', 'valid', ['rule' => 'boolean'])
-			->validatePresence('recstatus', 'create')
-			->notEmpty('recstatus')
-			->validatePresence('username', 'create')
 			->notEmpty('username')
 			->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
-			->validatePresence('password', 'create')
-			->notEmpty('password');
+			->notEmpty('email')
+			->add('email', ['unique' => ['rule' => 'validateUnique', 'provider' => 'table']]);
 
 		return $validator;
 	}

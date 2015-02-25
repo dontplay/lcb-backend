@@ -29,7 +29,7 @@ class CountriesController extends AppController {
  */
 	public function index() {
 		if ($this->request->params['_ext']) {
-			$this->set('countries', $this->Countries->find('all'));
+			$this->set('countries', $this->Countries->find('all',['order'=>['Countries.name']]));
 			$this->set('_serialize', ['countries']);
 		}
 		else {

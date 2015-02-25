@@ -29,7 +29,7 @@ class ShipmentTypesController extends AppController {
  */
 	public function index() {
 		if ($this->request->params['_ext']) {
-			$this->set('shipmentTypes', $this->ShipmentTypes->find('all'));
+			$this->set('shipmentTypes', $this->ShipmentTypes->find('all',['order'=>['ShipmentTypes.name']]));
 			$this->set('_serialize', ['shipmentTypes']);
 		}
 		else {

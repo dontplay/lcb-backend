@@ -29,7 +29,7 @@ class LoiStatusesController extends AppController {
  */
 	public function index() {
 		if ($this->request->params['_ext']) {
-			$this->set('loiStatuses', $this->LoiStatuses->find('all'));
+			$this->set('loiStatuses', $this->LoiStatuses->find('all',['order'=>['LoiStatuses.name']]));
 			$this->set('_serialize', ['loiStatuses']);
 		}
 		else {

@@ -30,7 +30,7 @@ class CitiesController extends AppController {
 	public function index() {
 		if ($this->request->params['_ext']) {
 			$conditions = [
-				'contain' => ['Countries']
+				'contain' => ['Countries'],'order'=>['Cities.name']
 			];
 			$this->set('cities', $this->Cities->find('all', $conditions));
 			$this->set('_serialize', ['cities']);

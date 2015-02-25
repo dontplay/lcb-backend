@@ -30,7 +30,7 @@ class VesselOwnersController extends AppController {
  */
 	public function index() {
 		if ($this->request->params['_ext']) {
-			$this->set('vesselOwners', $this->VesselOwners->find('all',['contain' => ['VesselOwnerCategories', 'VesselOwnerContacts', 'Cities']]));
+			$this->set('vesselOwners', $this->VesselOwners->find('all',['contain' => ['VesselOwnerCategories', 'VesselOwnerContacts', 'Cities'],'order'=>['VesselOwners.name']]));
 			$this->set('_serialize', ['vesselOwners']);
 		}
 		else {

@@ -29,7 +29,7 @@ class PortAgentsController extends AppController {
  */
 	public function index() {
 		if($this->request->params['_ext']){
-			$this->set('portAgents', $this->PortAgents->find('all',['contain' => ['PortAgentContacts']]));
+			$this->set('portAgents', $this->PortAgents->find('all',['contain' => ['PortAgentContacts'],'order'=>['PortAgents.name']]));
 			$this->set('_serialize', ['portAgents']);
 		} else {
 			$this->paginate = [

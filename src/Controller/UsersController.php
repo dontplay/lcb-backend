@@ -13,29 +13,6 @@ use Cake\Utility\Security;
  * @property App\Model\Table\UsersTable $Users
  */
 class UsersController extends AppController {
-/*
-	public function beforeFilter(Event $event) {
-	    parent::beforeFilter($event);
-	    
-	    $this->Auth->config('authenticate', [
-	        'ADmad/JwtAuth.Jwt' => [
-	            'parameter' => 'token',
-	            'userModel' => 'Users',
-	            'scope' => ['Users.recstatus' => 1],
-	            'fields' => [
-	                'username' => 'username',
-	                'password' => 'password'
-	            ]
-	        ],
-	        'Form' => [
-                	'fields' => ['username' => 'username', 'password' => 'password']
-            ]
-	    ]);
-	    // Allow users to register and logout.
-	    // You should not add the "login" action to allow list. Doing so would
-	    // cause problems with normal functioning of AuthComponent.
-	    $this->Auth->allow(['add', 'logout','login']);
-	}*/
 
 	public function login() {
         if (!$this->request->is('post')) {
@@ -123,14 +100,17 @@ class UsersController extends AppController {
 			$user = $this->Users->newEntity($this->request->data);
 			if ($this->Users->save($user)) {
 				$message = 'Saved';
+        $error = '';
 			} else {
 				$message = 'Error';
+        $error = $user->errors();
 			}
 			$this->set([
 				'data' => $this->request->data,
 				'message' => $message,
 				'user' => $user,
-				'_serialize' => ['message', 'user', 'data']
+        'error' => $error,
+				'_serialize' => ['message', 'user', 'data','error']
 			]);
 		} else {
 			$user = $this->Users->newEntity($this->request->data);
