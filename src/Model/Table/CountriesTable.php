@@ -29,11 +29,16 @@ class CountriesTable extends Table {
 		$this->belongsTo('Modifiers', [
 			'className' => 'Users',
 			'foreignKey' => 'modifier_id',
-		]);		$this->hasMany('Cities', [
+		]);
+		$this->hasMany('Cities', [
 			'foreignKey' => 'country_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 		$this->hasMany('Ports', [
 			'foreignKey' => 'country_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 	}
 

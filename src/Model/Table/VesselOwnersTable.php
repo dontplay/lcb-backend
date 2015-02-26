@@ -38,9 +38,13 @@ class VesselOwnersTable extends Table {
 		]);
 		$this->hasMany('Orders', [
 			'foreignKey' => 'vessel_owner_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 		$this->hasMany('VesselOwnerContacts', [
 			'foreignKey' => 'vessel_owner_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 	}
 

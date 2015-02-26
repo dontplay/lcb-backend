@@ -32,6 +32,8 @@ class VesselOwnerCategoriesTable extends Table {
 		]);
 		$this->hasMany('VesselOwners', [
 			'foreignKey' => 'vessel_owner_category_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 	}
 

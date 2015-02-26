@@ -32,6 +32,8 @@ class LoiStatusesTable extends Table {
 		]);
 		$this->hasMany('Loadings', [
 			'foreignKey' => 'loi_status_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 	}
 

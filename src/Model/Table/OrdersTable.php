@@ -51,19 +51,27 @@ class OrdersTable extends Table {
 		]);
 		$this->hasMany('Dischargings', [
 			'alias' => 'Dischargings',
-			'foreignKey' => 'order_id'
+			'foreignKey' => 'order_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 		$this->hasMany('Invoices', [
 			'alias' => 'Invoices',
-			'foreignKey' => 'order_id'
+			'foreignKey' => 'order_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 		$this->hasMany('Loadings', [
 			'alias' => 'Loadings',
-			'foreignKey' => 'order_id'
+			'foreignKey' => 'order_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 		$this->hasMany('Events', [
 			'alias' => 'Events',
-			'foreignKey' => 'order_id'
+			'foreignKey' => 'order_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 
 	}

@@ -32,6 +32,8 @@ class BlStatusesTable extends Table {
 		]);
 		$this->hasMany('Loadings', [
 			'foreignKey' => 'bl_status_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 	}
 

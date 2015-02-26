@@ -32,6 +32,8 @@ class CustomerCategoriesTable extends Table {
 		]);
 		$this->hasMany('Customers', [
 			'foreignKey' => 'customer_category_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 	}
 

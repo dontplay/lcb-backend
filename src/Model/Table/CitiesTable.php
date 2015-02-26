@@ -35,9 +35,13 @@ class CitiesTable extends Table {
 		]);
 		$this->hasMany('Customers', [
 			'foreignKey' => 'city_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 		$this->hasMany('VesselOwners', [
 			'foreignKey' => 'city_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 	}
 

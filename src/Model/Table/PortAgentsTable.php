@@ -27,9 +27,7 @@ class PortAgentsTable extends Table {
 		]);
 		$this->belongsTo('Modifiers', [
 			'className' => 'Users',
-			'foreignKey' => 'modifier_id',
-			'dependent' => true,
-    	'cascadeCallbacks' => true
+			'foreignKey' => 'modifier_id'
 		]);
 		$this->hasMany('Dischargings', [
 			'alias' => 'Dischargings',

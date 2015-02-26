@@ -32,6 +32,8 @@ class StatusesTable extends Table {
 		]);
 		$this->hasMany('Orders', [
 			'foreignKey' => 'status_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 	}
 

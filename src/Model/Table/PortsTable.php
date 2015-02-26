@@ -35,9 +35,13 @@ class PortsTable extends Table {
 		]);
 		$this->hasMany('Dischargings', [
 			'foreignKey' => 'port_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 		$this->hasMany('Loadings', [
 			'foreignKey' => 'port_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
 		]);
 	}
 
