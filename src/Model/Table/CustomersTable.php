@@ -33,9 +33,6 @@ class CustomersTable extends Table {
 		$this->belongsTo('Cities', [
 			'foreignKey' => 'city_id',
 		]);
-		$this->belongsTo('CustomerCategories', [
-			'foreignKey' => 'customer_category_id',
-		]);
 		$this->hasMany('CustomerContacts', [
 			'foreignKey' => 'customer_id',
 			'dependent' => true,
@@ -86,10 +83,7 @@ class CustomersTable extends Table {
 			->notEmpty('remarks')
 			->add('city_id', 'valid', ['rule' => 'numeric'])
 			->validatePresence('city_id', 'create')
-			->notEmpty('city_id')
-			->add('customer_category_id', 'valid', ['rule' => 'numeric'])
-			->validatePresence('customer_category_id', 'create')
-			->notEmpty('customer_category_id');
+			->notEmpty('city_id');
 
 		return $validator;
 	}

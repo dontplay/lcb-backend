@@ -30,12 +30,12 @@ class VesselOwnersController extends AppController {
  */
 	public function index() {
 		if ($this->request->params['_ext']) {
-			$this->set('vesselOwners', $this->VesselOwners->find('all',['contain' => ['VesselOwnerCategories', 'VesselOwnerContacts', 'Cities'],'order'=>['VesselOwners.name']]));
+			$this->set('vesselOwners', $this->VesselOwners->find('all',['contain' => ['VesselOwnerContacts', 'Cities'],'order'=>['VesselOwners.name']]));
 			$this->set('_serialize', ['vesselOwners']);
 		}
 		else {
 			$this->paginate = [
-				'contain' => ['VesselOwnerCategories', 'VesselOwnerContacts', 'Cities']
+				'contain' => ['VesselOwnerContacts', 'Cities']
 			];
 			$this->set('vesselOwners', $this->paginate($this->VesselOwners));
 		}
@@ -58,7 +58,7 @@ class VesselOwnersController extends AppController {
 		}
 		else {
 			$vesselOwner = $this->VesselOwners->get($id, [
-				'contain' => ['Creators', 'Modifiers', 'VesselOwnerCategories', 'VesselOwnerContacts', 'Cities', 'Vessels']
+				'contain' => ['Creators', 'Modifiers', 'VesselOwnerContacts', 'Cities', 'Vessels']
 			]);
 			$this->set('vesselOwner', $vesselOwner);
 		}
@@ -96,9 +96,8 @@ class VesselOwnersController extends AppController {
 			}
 			$creators = $this->VesselOwners->Creators->find('list');
 			$modifiers = $this->VesselOwners->Modifiers->find('list');
-			$categories = $this->VesselOwners->Categories->find('list');
 			$cities = $this->VesselOwners->Cities->find('list');
-			$this->set(compact('vesselOwner', 'creators', 'modifiers', 'categories', 'cities'));
+			$this->set(compact('vesselOwner', 'creators', 'modifiers', 'cities'));
 		}
 	}
 
@@ -145,9 +144,8 @@ class VesselOwnersController extends AppController {
 			}
 			$creators = $this->VesselOwners->Creators->find('list');
 			$modifiers = $this->VesselOwners->Modifiers->find('list');
-			$categories = $this->VesselOwners->Categories->find('list');
 			$cities = $this->VesselOwners->Cities->find('list');
-			$this->set(compact('vesselOwner', 'creators', 'modifiers', 'categories', 'cities'));
+			$this->set(compact('vesselOwner', 'creators', 'modifiers','cities'));
 		}
 	}
 

@@ -24,11 +24,9 @@ class VesselOwner extends Entity {
 		'contact' => true,
 		'credit_period' => true,
 		'remarks' => true,
-		'vessel_owner_category_id' => true,
 		'city_id' => true,
 		'creator' => true,
 		'modifier' => true,
-		'vessel_owner_category' => true,
 		'city' => true,
 		'orders' => true,
 		'vessel_owner_contacts' => true

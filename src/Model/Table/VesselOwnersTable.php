@@ -30,9 +30,6 @@ class VesselOwnersTable extends Table {
 			'className' => 'Users',
 			'foreignKey' => 'modifier_id',
 		]);
-		$this->belongsTo('VesselOwnerCategories', [
-			'foreignKey' => 'vessel_owner_category_id',
-		]);
 		$this->belongsTo('Cities', [
 			'foreignKey' => 'city_id',
 		]);
@@ -84,9 +81,6 @@ class VesselOwnersTable extends Table {
 			->notEmpty('credit_period')
 			->validatePresence('remarks', 'create')
 			->notEmpty('remarks')
-			->add('vessel_owner_category_id', 'valid', ['rule' => 'numeric'])
-			->validatePresence('vessel_owner_category_id', 'create')
-			->notEmpty('vessel_owner_category_id')
 			->add('city_id', 'valid', ['rule' => 'numeric'])
 			->validatePresence('city_id', 'create')
 			->notEmpty('city_id');

@@ -29,12 +29,12 @@ class CustomersController extends AppController {
  */
 	public function index() {
 		if ($this->request->params['_ext']) {
-			$this->set('customers', $this->Customers->find('all',['contain' => ['CustomerCategories', 'CustomerContacts', 'Cities'],'order'=>['Customers.name']]));
+			$this->set('customers', $this->Customers->find('all',['contain' => ['CustomerContacts', 'Cities'],'order'=>['Customers.name']]));
 			$this->set('_serialize', ['customers']);
 		}
 		else {
 			$this->paginate = [
-				'contain' => ['CustomerCategories', 'CustomerContacts', 'Cities']
+				'contain' => ['CustomerContacts', 'Cities']
 			];
 			$this->set('customers', $this->paginate($this->Customers));
 		}
