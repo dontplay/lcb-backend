@@ -29,13 +29,25 @@ class OrdersController extends AppController {
  */
 	public function index() {
 		if ($this->request->params['_ext']) {
-			$this->set('orders', $this->Orders->find('all',['contain' => ['Creators', 'Modifiers', 'Users','Customers', 'VesselOwners', 'Statuses', 'Vessels','Loadings'=>['PortAgents','Ports','Ports2','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents','Ports','Ports2'],'Invoices','Events']]));
+			$this->set('orders', $this->Orders->find('all',['order' => ['Orders.id DESC'],'contain' => ['Creators', 'Modifiers', 'Users','Customers', 'VesselOwners', 'Statuses', 'Vessels','Loadings'=>['PortAgents','Ports','Ports2','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents','Ports','Ports2'],'Invoices','Events']]));
 			$this->set('_serialize', ['orders']);
 		} else {
 			$this->paginate = [
 				'contain' => ['Creators', 'Modifiers', 'Users','Customers', 'VesselOwners', 'Statuses', 'Vessels','Loadings'=>['PortAgents','Ports','Ports2','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents','Ports','Ports2'],'Invoices','Events']
 			];
 			$this->set('orders', $this->paginate($this->Orders));
+		}
+	}
+
+	/**
+ * Index method
+ *
+ * @return void
+ */
+	public function index_order() {
+		if ($this->request->params['_ext']) {
+			$this->set('orders', $this->Orders->find('all',['order' => ['Orders.id DESC'],'contain' => ['Users'=>['fields'=>['id','username']],'Customers'=>['fields'=>['id','name']], 'VesselOwners'=>['fields'=>['id','name']], 'Statuses'=>['fields'=>['id','name']], 'Vessels'=>['fields'=>['id','name']],'Loadings'=>['Ports'=>['fields'=>['id','name']],'fields'=>['id','port_id','demurrage_rate','freight','order_id']],'Dischargings'=>['Ports'=>['fields'=>['id','name']],'fields'=>['id','order_id']]],'fields'=>['id','fixtureDate','laycanStartDate','laycanEndDate','customer_id','vessel_owner_id','status_id','vessel_id','user_id']]));
+			$this->set('_serialize', ['orders']);
 		}
 	}
 

@@ -136,21 +136,40 @@ class UsersController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function edit($id = null) {
-		$user = $this->Users->get($id, [
-			'contain' => []
-		]);
-		if ($this->request->is(['patch', 'post', 'put'])) {
-			$user = $this->Users->patchEntity($user, $this->request->data);
-			if ($this->Users->save($user)) {
-				$this->Flash->success('The user has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The user could not be saved. Please, try again.');
-			}
-		}
-		$creators = $this->Users->Creators->find('list');
-		$modifiers = $this->Users->Modifiers->find('list');
-		$this->set(compact('user', 'creators', 'modifiers'));
+    if ($this->request->params['_ext']) {
+  		$user = $this->Users->get($id);
+  		if ($this->request->is(['patch', 'post', 'put'])) {
+  			$user = $this->Users->patchEntity($user, $this->request->data);
+  			if ($this->Users->save($user)) {
+        $message = 'Saved';
+        $error = '';
+      } else {
+        $message = 'Error';
+        $error = $user->errors();
+      }
+      $this->set([
+        'data' => $this->request->data,
+        'message' => $message,
+        'user' => $user,
+        'error' => $error,
+        '_serialize' => ['message', 'user', 'data','error']
+      ]);
+    } 
+  } else {
+      $user = $this->Users->get($id);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+          $user = $this->Users->patchEntity($user, $this->request->data);
+          if ($this->Users->save($user)) {
+            $this->Flash->success('The user has been saved.');
+            return $this->redirect(['action' => 'index']);
+          } else {
+            $this->Flash->error('The user could not be saved. Please, try again.');
+          }
+        }
+  		$creators = $this->Users->Creators->find('list');
+  		$modifiers = $this->Users->Modifiers->find('list');
+  		$this->set(compact('user', 'creators', 'modifiers'));
+    }
 	}
 
 /**
