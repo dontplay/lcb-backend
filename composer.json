@@ -9,7 +9,8 @@
 		"cakephp/cakephp": "3.0.*-dev",
 		"mobiledetect/mobiledetectlib": "2.*",
 		"cakephp/debug_kit": "3.0.*-dev",
-		"admad/cakephp-jwt-auth": "1.0.x-dev"
+		"admad/cakephp-jwt-auth": "1.0.x-dev",
+		"cakephp/plugin-installer": "dev-master"
 	},
 	"require-dev": {
 		"d11wtq/boris": "1.0.*"
@@ -30,7 +31,8 @@
 		}
 	},
 	"scripts": {
-		"post-install-cmd": "App\\Console\\Installer::postInstall"
+		"post-install-cmd": "App\\Console\\Installer::postInstall",
+    "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump"
 	},
 	"minimum-stability" : "dev",
 	"prefer-stable": true

@@ -40,13 +40,25 @@ class OrdersController extends AppController {
 	}
 
 	/**
- * Index method
+ * Index method for view page
  *
  * @return void
  */
 	public function index_order() {
 		if ($this->request->params['_ext']) {
 			$this->set('orders', $this->Orders->find('all',['order' => ['Orders.id DESC'],'contain' => ['Users'=>['fields'=>['id','username']],'Customers'=>['fields'=>['id','name']], 'VesselOwners'=>['fields'=>['id','name']], 'Statuses'=>['fields'=>['id','name']], 'Vessels'=>['fields'=>['id','name']],'Loadings'=>['Ports'=>['fields'=>['id','name']],'fields'=>['id','port_id','demurrage_rate','freight','order_id']],'Dischargings'=>['Ports'=>['fields'=>['id','name']],'fields'=>['id','order_id']]],'fields'=>['id','fixtureDate','laycanStartDate','laycanEndDate','customer_id','vessel_owner_id','status_id','vessel_id','user_id']]));
+			$this->set('_serialize', ['orders']);
+		}
+	}
+
+	/**
+ * Index method for Events
+ *
+ * @return void
+ */
+	public function order_events() {
+		if ($this->request->params['_ext']) {
+			$this->set('orders', $this->Orders->find('all',['contain' => ['Events'=>['Users'=>['fields'=>['id','username']],'fields'=>['id','title','start','user_id','order_id']]],'fields'=>['id']]));
 			$this->set('_serialize', ['orders']);
 		}
 	}
