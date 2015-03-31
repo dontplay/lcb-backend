@@ -60,6 +60,7 @@ class CountriesTable extends Table {
 			->add('modifier_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('modifier_id')
 			->requirePresence('name', 'create')
+			->add('name',['unique' => ['rule' => 'validateUnique', 'provider' => 'table']])
 			->notEmpty('name');
 
 		return $validator;

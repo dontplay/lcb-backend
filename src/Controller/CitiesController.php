@@ -69,16 +69,18 @@ class CitiesController extends AppController {
 	public function add() {
 		if ($this->request->params['_ext']) {
 			$city = $this->Cities->newEntity($this->request->data);
-			if ($this->Cities->save($city, ['validate' => false])) {
+			if ($this->Cities->save($city)) {
 				$message = 'Saved';
 			} else {
 				$message = 'Error';
+				$error = $city->errors();
 			}
 			$this->set([
 				'data' => $this->request->data,
 				'message' => $message,
 				'city' => $city,
-				'_serialize' => ['message', 'city', 'data']
+				'error' => $error,
+				'_serialize' => ['message', 'city', 'data','error']
 			]);
 		} else {
 			$city = $this->Cities->newEntity($this->request->data);
@@ -108,17 +110,19 @@ class CitiesController extends AppController {
 			$city = $this->Cities->get($id);
 			if ($this->request->is(['patch', 'post', 'put'])) {
 				$city = $this->Cities->patchEntity($city, $this->request->data);
-				if ($this->Cities->save($city, ['validate' => false])) {
+				if ($this->Cities->save($city)) {
 					$message = 'Saved';
 				} else {
 					$message = 'Error';
+					$error = $city->errors();
 				}
 			}
 			$this->set([
 				'city' => $city,
 				'message' => $message,
 				'data' => $this->request->data,
-				'_serialize' => ['message','city','data']
+				'error' => $error,
+				'_serialize' => ['message','city','data','error']
 			]);
 		}
 		else {

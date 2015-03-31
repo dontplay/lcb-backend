@@ -65,15 +65,17 @@ class CustomersController extends AppController {
 	public function add() {
 		if ($this->request->params['_ext']) {
 			$customer = $this->Customers->newEntity($this->request->data);
-			if ($this->Customers->save($customer, ['validate' => false])) {
+			if ($this->Customers->save($customer)) {
 				$message = 'Saved';
 			} else {
 				$message = 'Error';
+				$error = $customer->errors();
 			}
 			$this->set([
 				'data' => $this->request->data,
 				'message' => $message,
 				'customer' => $customer,
+				'error' => $error,
 				'_serialize' => ['message', 'customer', 'data']
 			]);
 		}
@@ -93,17 +95,19 @@ class CustomersController extends AppController {
 			]);
 			if ($this->request->is(['patch', 'post', 'put'])) {
 				$customer = $this->Customers->patchEntity($customer, $this->request->data);
-				if ($this->Customers->save($customer, ['validate' => false])) {
+				if ($this->Customers->save($customer)) {
 					$message = 'Saved';
 				} else {
 					$message = 'Error';
+					$error = $customer->errors();
 				}
 			}
 			$this->set([
 				'customer' => $customer,
 				'message' => $message,
 				'data' => $this->request->data,
-				'_serialize' => ['message','customer','data']
+				'error' => $error,
+				'_serialize' => ['message','customer','data','error']
 			]);
 		}
 	}

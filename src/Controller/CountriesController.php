@@ -66,16 +66,18 @@ class CountriesController extends AppController {
 	public function add() {
 		if ($this->request->params['_ext']) {
 			$country = $this->Countries->newEntity($this->request->data);
-			if ($this->Countries->save($country, ['validate' => false])) {
+			if ($this->Countries->save($country)) {
 				$message = 'Saved';
 			} else {
 				$message = 'Error';
+				$error = $country->errors();
 			}
 			$this->set([
 				'data' => $this->request->data,
 				'message' => $message,
 				'country' => $country,
-				'_serialize' => ['message', 'country', 'data']
+				'error' => $error,
+				'_serialize' => ['message', 'country', 'data','error']
 			]);
 		} else {
 			$country = $this->Countries->newEntity($this->request->data);
@@ -105,17 +107,19 @@ class CountriesController extends AppController {
 			$country = $this->Countries->get($id);
 			if ($this->request->is(['patch', 'post', 'put'])) {
 				$country = $this->Countries->patchEntity($country, $this->request->data);
-				if ($this->Countries->save($country, ['validate' => false])) {
+				if ($this->Countries->save($country)) {
 					$message = 'Saved';
 				} else {
 					$message = 'Error';
+					$error = $country->errors();
 				}
 			}
 			$this->set([
 				'country' => $country,
 				'message' => $message,
 				'data' => $this->request->data,
-				'_serialize' => ['message','country','data']
+				'error' => $error,
+				'_serialize' => ['message','country','data','error']
 			]);
 		}
 		else {

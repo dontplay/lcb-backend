@@ -66,16 +66,18 @@ class LoiStatusesController extends AppController {
 	public function add() {
 		if ($this->request->params['_ext']) {
 			$loiStatus = $this->LoiStatuses->newEntity($this->request->data);
-			if ($this->LoiStatuses->save($loiStatus, ['validate' => false])) {
+			if ($this->LoiStatuses->save($loiStatus)) {
 				$message = 'Saved';
 			} else {
 				$message = 'Error';
+				$error = $loiStatus->errors();
 			}
 			$this->set([
 				'data' => $this->request->data,
 				'message' => $message,
 				'loiStatus' => $loiStatus,
-				'_serialize' => ['message', 'loiStatus', 'data']
+				'error' => $error,
+				'_serialize' => ['message', 'loiStatus', 'data','error']
 			]);
 		} else {
 			$loiStatus = $this->LoiStatuses->newEntity($this->request->data);
@@ -105,17 +107,19 @@ class LoiStatusesController extends AppController {
 			$loiStatus = $this->LoiStatuses->get($id);
 			if ($this->request->is(['patch', 'post', 'put'])) {
 				$loiStatus = $this->LoiStatuses->patchEntity($loiStatus, $this->request->data);
-				if ($this->LoiStatuses->save($loiStatus, ['validate' => false])) {
+				if ($this->LoiStatuses->save($loiStatus)) {
 					$message = 'Saved';
 				} else {
 					$message = 'Error';
+					$error = $loiStatus->errors();
 				}
 			}
 			$this->set([
 				'loiStatus' => $loiStatus,
 				'message' => $message,
 				'data' => $this->request->data,
-				'_serialize' => ['message','loiStatus','data']
+				'error' => $error,
+				'_serialize' => ['message','loiStatus','data','error']
 			]);
 		}
 		else {

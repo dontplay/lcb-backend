@@ -66,16 +66,18 @@ class BlStatusesController extends AppController {
 	public function add() {
 		if ($this->request->params['_ext']) {
 			$blStatus = $this->BlStatuses->newEntity($this->request->data);
-			if ($this->BlStatuses->save($blStatus, ['validate' => false])) {
+			if ($this->BlStatuses->save($blStatus)) {
 				$message = 'Saved';
 			} else {
 				$message = 'Error';
+				$error = $blStatus->errors();
 			}
 			$this->set([
 				'data' => $this->request->data,
 				'message' => $message,
 				'blStatus' => $blStatus,
-				'_serialize' => ['message', 'blStatus', 'data']
+				'error' => $error,
+				'_serialize' => ['message', 'blStatus', 'data','error']
 			]);
 		} else {
 			$blStatus = $this->BlStatuses->newEntity($this->request->data);
@@ -105,17 +107,19 @@ class BlStatusesController extends AppController {
 			$blStatus = $this->BlStatuses->get($id);
 			if ($this->request->is(['patch', 'post', 'put'])) {
 				$blStatus = $this->BlStatuses->patchEntity($blStatus, $this->request->data);
-				if ($this->BlStatuses->save($blStatus, ['validate' => false])) {
+				if ($this->BlStatuses->save($blStatus)) {
 					$message = 'Saved';
 				} else {
 					$message = 'Error';
+					$error = $blStatus->errors();
 				}
 			}
 			$this->set([
 				'blStatus' => $blStatus,
 				'message' => $message,
 				'data' => $this->request->data,
-				'_serialize' => ['message','blStatus','data']
+				'error' => $error,
+				'_serialize' => ['message','blStatus','data','error']
 			]);
 		}
 		else {

@@ -68,6 +68,7 @@ class PortsTable extends Table {
 			->requirePresence('country_id', 'create')
 			->notEmpty('country_id')
 			->requirePresence('name', 'create')
+			->add('name',['unique' => ['rule' => 'validateUnique', 'provider' => 'table']])
 			->notEmpty('name');
 
 		return $validator;

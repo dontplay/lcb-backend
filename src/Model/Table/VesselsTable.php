@@ -48,7 +48,10 @@ class VesselsTable extends Table {
 			->add('creator_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('creator_id')
 			->add('modifier_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('modifier_id');
+			->allowEmpty('modifier_id')
+			->requirePresence('name', 'create')
+			->add('name',['unique' => ['rule' => 'validateUnique', 'provider' => 'table']])
+			->notEmpty('name');
 
 		return $validator;
 	}
