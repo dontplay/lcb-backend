@@ -64,7 +64,7 @@ class UsersController extends AppController {
 
 	public function index() {
 		if ($this->request->params['_ext']) {
-			$this->set('users', $this->Users->find('all',['contain' => ['Creators','Modifiers']]));
+			$this->set('users', $this->Users->find('all',['contain' => ['Creators','Modifiers'],'conditions'=>['Users.recstatus'=>1]]));
 			$this->set('_serialize', ['users']);
 		}
 		else {
@@ -171,6 +171,36 @@ class UsersController extends AppController {
   		$this->set(compact('user', 'creators', 'modifiers'));
     }
 	}
+
+/**
+ * Deactivate method
+ *
+ * @param string $id
+ * @return void
+ * @throws \Cake\Network\Exception\NotFoundException
+ */
+  public function deactivate($id = null) {
+    if ($this->request->params['_ext']) {
+      $user = $this->Users->get($id);
+      if ($this->request->is(['patch', 'post', 'put'])) {
+        $user = $this->Users->patchEntity($user, $this->request->data);
+        if ($this->Users->save($user)) {
+        $message = 'Saved';
+        $error = '';
+      } else {
+        $message = 'Error';
+        $error = $user->errors();
+      }
+      $this->set([
+        'data' => $this->request->data,
+        'message' => $message,
+        'user' => $user,
+        'error' => $error,
+        '_serialize' => ['message', 'user', 'data','error']
+      ]);
+    } 
+  }
+}
 
 /**
  * Delete method

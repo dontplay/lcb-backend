@@ -43,7 +43,7 @@ class VesselsTable extends Table {
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
 			->add('recstatus', 'valid', ['rule' => 'boolean'])
-			->validatePresence('recstatus', 'create')
+			->requirePresence('recstatus', 'create')
 			->notEmpty('recstatus')
 			->add('creator_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('creator_id')

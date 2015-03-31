@@ -53,13 +53,13 @@ class CountriesTable extends Table {
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
 			->add('recstatus', 'valid', ['rule' => 'boolean'])
-			->validatePresence('recstatus', 'create')
+			->requirePresence('recstatus', 'create')
 			->notEmpty('recstatus')
 			->add('creator_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('creator_id')
 			->add('modifier_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('modifier_id')
-			->validatePresence('name', 'create')
+			->requirePresence('name', 'create')
 			->notEmpty('name');
 
 		return $validator;
