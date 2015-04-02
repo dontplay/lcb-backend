@@ -54,15 +54,7 @@ class PortAgentContactsTable extends Table {
 			->allowEmpty('modifier_id')
 			->add('port_agent_id', 'valid', ['rule' => 'numeric'])
 			->requirePresence('port_agent_id', 'create')
-			->notEmpty('port_agent_id')
-			->requirePresence('name', 'create')
-			->notEmpty('name')
-			->requirePresence('number', 'create')
-			->notEmpty('number')
-			->add('email', 'valid', ['rule' => 'email'])
-			->requirePresence('email', 'create')
-			->notEmpty('email')
-			->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+			->notEmpty('port_agent_id');
 
 		return $validator;
 	}

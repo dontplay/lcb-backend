@@ -85,38 +85,7 @@ class OrdersTable extends Table {
 	public function validationDefault(Validator $validator) {
 		$validator
 			->add('id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('id', 'create')
-			->add('recstatus', 'valid', ['rule' => 'numeric'])
-			->requirePresence('recstatus', 'create')
-			->notEmpty('recstatus')
-			->add('creator_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('creator_id')
-			->add('modifier_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('modifier_id')
-			->add('fixtureDate', 'valid', ['rule' => 'datetime'])
-			->requirePresence('fixtureDate', 'create')
-			->notEmpty('fixtureDate')
-			->add('laycanStartDate', 'valid', ['rule' => 'datetime'])
-			->requirePresence('laycanStartDate', 'create')
-			->notEmpty('laycanStartDate')
-			->add('laycanEndDate', 'valid', ['rule' => 'datetime'])
-			->requirePresence('laycanEndDate', 'create')
-			->notEmpty('laycanEndDate')
-			->add('customer_id', 'valid', ['rule' => 'numeric'])
-			->requirePresence('customer_id', 'create')
-			->notEmpty('customer_id')
-			->add('vessel_owner_id', 'valid', ['rule' => 'numeric'])
-			->requirePresence('vessel_owner_id', 'create')
-			->notEmpty('vessel_owner_id')
-			->add('status_id', 'valid', ['rule' => 'numeric'])
-			->requirePresence('status_id', 'create')
-			->notEmpty('status_id')
-			->add('vessel_id', 'valid', ['rule' => 'numeric'])
-			->requirePresence('vessel_id', 'create')
-			->notEmpty('vessel_id')
-			->add('user_id', 'valid', ['rule' => 'numeric'])
-			->requirePresence('user_id', 'create')
-			->notEmpty('user_id');
+			->allowEmpty('id', 'create');
 
 		return $validator;
 	}

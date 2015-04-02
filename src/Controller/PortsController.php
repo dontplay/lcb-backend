@@ -73,16 +73,18 @@ class PortsController extends AppController {
 	public function add() {
 		if($this->request->params['_ext']){
 	        $port = $this->Ports->newEntity($this->request->data);
-	        if ($this->Ports->save($port, ['validate' => false])) {
+	        if ($this->Ports->save($port)) {
 	            $message = 'Saved';
 	        } else {
 	            $message = 'Error';
+	            $error = $port->errors();
 	        }
 	        $this->set([
 	            'data' => $this->request->data,
 	            'message' => $message,
 	            'port' => $port,
-	            '_serialize' => ['message', 'port', 'data']
+	            'error' => $error,
+	            '_serialize' => ['message', 'port', 'data','error']
 	        ]);
 		}
 		else {
@@ -116,17 +118,19 @@ class PortsController extends AppController {
 			]);
 			if ($this->request->is(['patch', 'post', 'put'])) {
 				$port = $this->Ports->patchEntity($port, $this->request->data);
-				if ($this->Ports->save($port, ['validate' => false])) {
+				if ($this->Ports->save($port)) {
 	                $message = 'Saved';
 				} else {
 		            $message = 'Error';
+		            $error = $port->errors();
 				}
 			}
 	        $this->set([
 	        	'port' => $port,
-	            'message' => $message,
-	            'data' => $this->request->data,
-	            '_serialize' => ['message','port','data']
+	          'message' => $message,
+	          'data' => $this->request->data,
+	          'error' => $error,
+	          '_serialize' => ['message','port','data','error']
 	        ]);
 		}
 		else {

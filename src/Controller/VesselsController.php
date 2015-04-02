@@ -68,16 +68,18 @@ class VesselsController extends AppController {
 	public function add() {
 		if($this->request->params['_ext']){
 			$vessel = $this->Vessels->newEntity($this->request->data);
-			if ($this->Vessels->save($vessel, ['validate' => false])) {
+			if ($this->Vessels->save($vessel)) {
 				$message = 'Saved';
 			} else {
 				$message = 'Error';
+				$error = $vessel->errors();
 			}
 			$this->set([
 				'data' => $this->request->data,
 				'message' => $message,
 				'vessel' => $vessel,
-				'_serialize' => ['message', 'vessel', 'data']
+				'error' => $error,
+				'_serialize' => ['message', 'vessel', 'data','error']
 			]);
 		}
 		else {
@@ -110,17 +112,19 @@ class VesselsController extends AppController {
 			]);
 			if ($this->request->is(['patch', 'post', 'put'])) {
 				$vessel = $this->Vessels->patchEntity($vessel, $this->request->data);
-				if ($this->Vessels->save($vessel, ['validate' => false])) {
+				if ($this->Vessels->save($vessel)) {
 					$message = 'Saved';
 				} else {
 					$message = 'Error';
+					$error = $vessel->errors();
 				}
 			}
 			$this->set([
 				'vessel' => $vessel,
 				'message' => $message,
 				'data' => $this->request->data,
-				'_serialize' => ['message','vessel','data']
+				'error' => $error,
+				'_serialize' => ['message','vessel','data','error']
 			]);
 		}
 		else {

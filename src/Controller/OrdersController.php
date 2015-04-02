@@ -16,11 +16,11 @@ class OrdersController extends AppController {
  * @return void
  */
 	public function initialize() {
-        parent::initialize();
-        $this->loadComponent('RequestHandler');
+    parent::initialize();
+    $this->loadComponent('RequestHandler');
 		$this->response->header('Access-Control-Allow-Origin', '*');
 		$this->response->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');        
-    }
+  }
 
 /**
  * Index method
@@ -58,7 +58,7 @@ class OrdersController extends AppController {
  */
 	public function order_events() {
 		if ($this->request->params['_ext']) {
-			$this->set('orders', $this->Orders->find('all',['contain' => ['Events'=>['Users'=>['fields'=>['id','username']],'fields'=>['id','title','start','user_id','order_id']]],'fields'=>['id']]));
+			$this->set('orders', $this->Orders->Events->find('all'));
 			$this->set('_serialize', ['orders']);
 		}
 	}
@@ -109,17 +109,19 @@ class OrdersController extends AppController {
  */
 	public function add() {
 		if($this->request->params['_ext']){
-			$order = $this->Orders->newEntity($this->request->data);
-			if ($this->Orders->save($order, ['validate' => false])) {
+			$order = $this->Orders->newEntity($this->request->data, ['validate' => false]);
+			if ($this->Orders->save($order)) {
 				$message = 'Saved';
 			} else {
 				$message = 'Error';
+				$error = $order->errors();
 			}
 			$this->set([
 				'data' => $this->request->data,
 				'message' => $message,
 				'order' => $order,
-				'_serialize' => ['message', 'order', 'data']
+				'error' => $error,
+				'_serialize' => ['message', 'order', 'data','error']
 			]);
 		} else {
 		$order = $this->Orders->newEntity($this->request->data);
@@ -155,7 +157,7 @@ class OrdersController extends AppController {
 			]);
 			if ($this->request->is(['patch', 'post', 'put'])) {
 				$order = $this->Orders->patchEntity($order, $this->request->data);
-				if ($this->Orders->save($order, ['validate' => false])) {
+				if ($this->Orders->save($order)) {
 					$message = 'Saved';
 				}
 				else {

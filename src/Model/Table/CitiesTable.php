@@ -64,10 +64,7 @@ class CitiesTable extends Table {
 			->allowEmpty('modifier_id')
 			->requirePresence('name', 'create')
 			->add('name',['unique' => ['rule' => 'validateUnique', 'provider' => 'table']])
-			->notEmpty('name')
-			->add('country_id', 'valid', ['rule' => 'numeric'])
-			->requirePresence('country_id', 'create')
-			->notEmpty('country_id');
+			->notEmpty('name');
 
 		return $validator;
 	}

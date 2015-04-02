@@ -29,9 +29,9 @@ class EventsTable extends Table {
 			'className' => 'Users',
 			'foreignKey' => 'modifier_id'
 		]);
-		$this->belongsTo('Users', [
-			'alias' => 'Users',
-			'foreignKey' => 'user_id'
+		$this->belongsTo('Vessels', [
+			'alias' => 'Vessels',
+			'foreignKey' => 'vessel_id'
 		]);
 		$this->belongsTo('Orders', [
 			'alias' => 'Orders',
@@ -48,22 +48,7 @@ class EventsTable extends Table {
 	public function validationDefault(Validator $validator) {
 		$validator
 			->add('id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('id', 'create')
-			->add('recstatus', 'valid', ['rule' => 'boolean'])
-			->requirePresence('recstatus', 'create')
-			->notEmpty('recstatus')
-			->add('creator_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('creator_id')
-			->add('modifier_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('modifier_id')
-			->allowEmpty('titlehead')
-			->allowEmpty('title')
-			->add('start', 'valid', ['rule' => 'datetime'])
-			->allowEmpty('start')
-			->add('user_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('user_id')
-			->add('order_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('order_id');
+			->allowEmpty('id', 'create');
 
 		return $validator;
 	}

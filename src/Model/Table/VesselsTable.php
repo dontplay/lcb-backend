@@ -30,6 +30,11 @@ class VesselsTable extends Table {
 			'className' => 'Users',
 			'foreignKey' => 'modifier_id',
 		]);
+		$this->hasMany('Events', [
+			'foreignKey' => 'vessel_id',
+			'dependent' => true,
+    	'cascadeCallbacks' => true
+		]);
 	}
 
 /**
@@ -45,10 +50,6 @@ class VesselsTable extends Table {
 			->add('recstatus', 'valid', ['rule' => 'boolean'])
 			->requirePresence('recstatus', 'create')
 			->notEmpty('recstatus')
-			->add('creator_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('creator_id')
-			->add('modifier_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('modifier_id')
 			->requirePresence('name', 'create')
 			->add('name',['unique' => ['rule' => 'validateUnique', 'provider' => 'table']])
 			->notEmpty('name');

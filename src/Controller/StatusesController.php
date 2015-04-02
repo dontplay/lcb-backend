@@ -67,16 +67,18 @@ class StatusesController extends AppController {
 	public function add() {
 		if ($this->request->params['_ext']) {
 			$status = $this->Statuses->newEntity($this->request->data);
-			if ($this->Statuses->save($status, ['validate' => false])) {
+			if ($this->Statuses->save($status)) {
 				$message = 'Saved';
 			} else {
 				$message = 'Error';
+				$error = $status->errors();
 			}
 			$this->set([
 				'data' => $this->request->data,
 				'message' => $message,
 				'status' => $status,
-				'_serialize' => ['message', 'status', 'data']
+				'error' => $error,
+				'_serialize' => ['message', 'status', 'data','error']
 			]);
 		} else {
 			$status = $this->Statuses->newEntity($this->request->data);
@@ -106,17 +108,19 @@ class StatusesController extends AppController {
 			$status = $this->Statuses->get($id);
 			if ($this->request->is(['patch', 'post', 'put'])) {
 				$status = $this->Statuses->patchEntity($status, $this->request->data);
-				if ($this->Statuses->save($status, ['validate' => false])) {
+				if ($this->Statuses->save($status)) {
 					$message = 'Saved';
 				} else {
 					$message = 'Error';
+					$error = $status->errors();
 				}
 			}
 			$this->set([
 				'status' => $status,
 				'message' => $message,
 				'data' => $this->request->data,
-				'_serialize' => ['message','status','data']
+				'error' => $error,
+				'_serialize' => ['message','status','data','error']
 			]);
 		}
 		else {

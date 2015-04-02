@@ -17,12 +17,12 @@ class EventsController extends AppController {
  */
 	public function index() {
 		if ($this->request->params['_ext']) {
-			$this->set('events', $this->Events->find('all',['contain' => ['Users', 'Orders']]));
+			$this->set('events', $this->Events->find('all',['contain' => ['Vessels', 'Orders']]));
 			$this->set('_serialize', ['events']);
 		}
 		else {
 			$this->paginate = [
-				'contain' => ['Creators', 'Modifiers', 'Users', 'Orders']
+				'contain' => ['Creators', 'Modifiers', 'Vessels', 'Orders']
 			];
 			$this->set('events', $this->paginate($this->Events));
 			$this->set('_serialize', ['events']);
@@ -38,7 +38,7 @@ class EventsController extends AppController {
  */
 	public function view($id = null) {
 		$event = $this->Events->get($id, [
-			'contain' => ['Creators', 'Modifiers', 'Users', 'Orders']
+			'contain' => ['Creators', 'Modifiers', 'Vessels', 'Orders']
 		]);
 		$this->set('event', $event);
 	}
@@ -60,7 +60,7 @@ class EventsController extends AppController {
 		}
 		$creators = $this->Events->Creators->find('list');
 		$modifiers = $this->Events->Modifiers->find('list');
-		$users = $this->Events->Users->find('list');
+		$users = $this->Events->Vessels->find('list');
 		$orders = $this->Events->Orders->find('list');
 		$this->set(compact('event', 'creators', 'modifiers', 'users', 'orders'));
 	}
@@ -87,7 +87,7 @@ class EventsController extends AppController {
 		}
 		$creators = $this->Events->Creators->find('list');
 		$modifiers = $this->Events->Modifiers->find('list');
-		$users = $this->Events->Users->find('list');
+		$users = $this->Events->Vessels->find('list');
 		$orders = $this->Events->Orders->find('list');
 		$this->set(compact('event', 'creators', 'modifiers', 'users', 'orders'));
 	}

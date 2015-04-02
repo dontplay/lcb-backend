@@ -71,17 +71,19 @@ class VesselOwnersController extends AppController {
  */
 	public function add() {
 		if($this->request->params['_ext']){
-			$vesselOwner = $this->VesselOwners->newEntity($this->request->data, ['validate' => false]);
+			$vesselOwner = $this->VesselOwners->newEntity($this->request->data);
 			if ($this->VesselOwners->save($vesselOwner)) {
 				$message = 'Saved';
 			} else {
 				$message = 'Error';
+				$error = $vesselOwner->errors();
 			}
 			$this->set([
 				'data' => $this->request->data,
 				'message' => $message,
 				'vesselOwner' => $vesselOwner,
-				'_serialize' => ['message', 'vesselOwner', 'data']
+				'error' => $error,
+				'_serialize' => ['message', 'vesselOwner', 'data','error']
 			]);
 		}
 		else {
@@ -114,19 +116,21 @@ class VesselOwnersController extends AppController {
 				'contain' => ['VesselOwnerContacts']
 			]);
 			if ($this->request->is(['patch', 'post', 'put'])) {
-				$vesselOwner = $this->VesselOwners->patchEntity($vesselOwner, $this->request->data, ['validate' => false]);
+				$vesselOwner = $this->VesselOwners->patchEntity($vesselOwner, $this->request->data);
 				if ($this->VesselOwners->save($vesselOwner)) {
 					$message = 'Saved';
 				}
 				else {
 					$message = 'Error';
+					$error = $vesselOwner->errors();
 				}
 			}
 			$this->set([
 				'vesselOwner' => $vesselOwner,
 				'message' => $message,
 				'data' => $this->request->data,
-				'_serialize' => ['message','vesselOwner','data']
+				'error' => $error,
+				'_serialize' => ['message','vesselOwner','data','error']
 			]);
 		}
 		else {

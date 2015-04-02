@@ -64,16 +64,18 @@ class PortAgentsController extends AppController {
 	public function add() {
 		if($this->request->params['_ext']) {
 			$portAgent = $this->PortAgents->newEntity($this->request->data);
-			if ($this->PortAgents->save($portAgent, ['validate' => false])) {
+			if ($this->PortAgents->save($portAgent)) {
 				$message = 'Saved';
 			} else {
 				$message = 'Error';
+				$error = $portAgent->errors();
 			}
 			$this->set([
 				'data' => $this->request->data,
 				'message' => $message,
 				'portAgent' => $portAgent,
-				'_serialize' => ['message', 'portAgent', 'data']
+				'error' => $error,
+				'_serialize' => ['message', 'portAgent', 'data','error']
 			]);
 		}
 	}
@@ -92,18 +94,20 @@ class PortAgentsController extends AppController {
 			]);
 			if ($this->request->is(['patch', 'post', 'put'])) {
 				$portAgent = $this->PortAgents->patchEntity($portAgent, $this->request->data);
-				if ($this->PortAgents->save($portAgent, ['validate' => false])) {
+				if ($this->PortAgents->save($portAgent)) {
 					$message = 'Saved';
 				}
 				else {
 					$message = 'Error';
+					$error = $portAgent->errors();
 				}
 			}
 			$this->set([
 				'portAgent' => $portAgent,
 				'message' => $message,
 				'data' => $this->request->data,
-				'_serialize' => ['message','portAgent','data']
+				'error' => $error,
+				'_serialize' => ['message','portAgent','data','error']
 			]);
 		}
 	}

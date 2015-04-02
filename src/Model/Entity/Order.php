@@ -20,6 +20,7 @@ class Order extends Entity {
 		'fixtureDate' => true,
 		'laycanStartDate' => true,
 		'laycanEndDate' => true,
+		'laycan_comment' => true,
 		'customer_id' => true,
 		'vessel_owner_id' => true,
 		'status_id' => true,

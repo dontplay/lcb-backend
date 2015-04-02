@@ -54,11 +54,7 @@ class CustomerContactsTable extends Table {
 			->allowEmpty('modifier_id')
 			->add('customer_id', 'valid', ['rule' => 'numeric'])
 			->requirePresence('customer_id', 'create')
-			->notEmpty('customer_id')
-			->requirePresence('name', 'create')
-			->notEmpty('name')
-			->requirePresence('number', 'create')
-			->notEmpty('number');
+			->notEmpty('customer_id');
 
 		return $validator;
 	}

@@ -67,16 +67,18 @@ class ShipmentTypesController extends AppController {
 	public function add() {
 		if ($this->request->params['_ext']) {
 			$shipmentType = $this->ShipmentTypes->newEntity($this->request->data);
-			if ($this->ShipmentTypes->save($shipmentType, ['validate' => false])) {
+			if ($this->ShipmentTypes->save($shipmentType)) {
 				$message = 'Saved';
 			} else {
 				$message = 'Error';
+				$error = $shipmentType->errors();
 			}
 			$this->set([
 				'data' => $this->request->data,
 				'message' => $message,
 				'shipmentType' => $shipmentType,
-				'_serialize' => ['message', 'shipmentType', 'data']
+				'error' => $error,
+				'_serialize' => ['message', 'shipmentType', 'data','error']
 			]);
 		} else {
 			$shipmentType = $this->ShipmentTypes->newEntity($this->request->data);
@@ -106,17 +108,19 @@ class ShipmentTypesController extends AppController {
 			$shipmentType = $this->ShipmentTypes->get($id);
 			if ($this->request->is(['patch', 'post', 'put'])) {
 				$shipmentType = $this->ShipmentTypes->patchEntity($shipmentType, $this->request->data);
-				if ($this->ShipmentTypes->save($shipmentType, ['validate' => false])) {
+				if ($this->ShipmentTypes->save($shipmentType)) {
 					$message = 'Saved';
 				} else {
 					$message = 'Error';
+					$error = $shipmentType->errors();
 				}
 			}
 			$this->set([
 				'shipmentType' => $shipmentType,
 				'message' => $message,
 				'data' => $this->request->data,
-				'_serialize' => ['message','shipmentType','data']
+				'error' => $error,
+				'_serialize' => ['message','shipmentType','data','error']
 			]);
 		}
 		else {

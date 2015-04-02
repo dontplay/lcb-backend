@@ -56,39 +56,7 @@ class DischargingsTable extends Table {
 	public function validationDefault(Validator $validator) {
 		$validator
 			->add('id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('id', 'create')
-			->add('recstatus', 'valid', ['rule' => 'boolean'])
-			->requirePresence('recstatus', 'create')
-			->notEmpty('recstatus')
-			->add('creator_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('creator_id')
-			->add('modifier_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('modifier_id')
-			->add('port_id', 'valid', ['rule' => 'numeric'])
-			->requirePresence('port_id', 'create')
-			->notEmpty('port_id')
-			->add('rate', 'valid', ['rule' => 'numeric'])
-			->requirePresence('rate', 'create')
-			->notEmpty('rate')
-			->add('eta', 'valid', ['rule' => 'datetime'])
-			->requirePresence('eta', 'create')
-			->notEmpty('eta')
-			->requirePresence('comment', 'create')
-			->notEmpty('comment')
-			->add('port_agent_id', 'valid', ['rule' => 'numeric'])
-			->requirePresence('port_agent_id', 'create')
-			->notEmpty('port_agent_id')
-			->add('commDischarging', 'valid', ['rule' => 'datetime'])
-			->requirePresence('commDischarging', 'create')
-			->notEmpty('commDischarging')
-			->requirePresence('status', 'create')
-			->notEmpty('status')
-			->add('completionDate', 'valid', ['rule' => 'datetime'])
-			->requirePresence('completionDate', 'create')
-			->notEmpty('completionDate')
-			->add('order_id', 'valid', ['rule' => 'numeric'])
-			->requirePresence('order_id', 'create')
-			->notEmpty('order_id');
+			->allowEmpty('id', 'create');
 
 		return $validator;
 	}
