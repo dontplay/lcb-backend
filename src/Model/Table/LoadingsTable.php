@@ -45,13 +45,25 @@ class LoadingsTable extends Table {
 			'alias' => 'PortAgents',
 			'foreignKey' => 'port_agent_id'
 		]);
+		$this->belongsTo('PortAgents2', [
+			'className' => 'PortAgents',
+			'foreignKey' => 'port_agent_id_1'
+		]);
 		$this->belongsTo('LoiStatuses', [
 			'alias' => 'LoiStatuses',
 			'foreignKey' => 'loi_status_id'
 		]);
+		$this->belongsTo('LoiStatuses2', [
+			'className' => 'LoiStatuses',
+			'foreignKey' => 'loi_status_id_1'
+		]);
 		$this->belongsTo('BlStatuses', [
 			'alias' => 'BlStatuses',
 			'foreignKey' => 'bl_status_id'
+		]);
+		$this->belongsTo('BlStatuses2', [
+			'className' => 'BlStatuses',
+			'foreignKey' => 'bl_status_id_1'
 		]);
 		$this->belongsTo('Orders', [
 			'alias' => 'Orders',

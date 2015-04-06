@@ -52,6 +52,21 @@ class Loading extends Entity {
 		'bl_status' => true,
 		'order' => true,
 		'port' => true,
+		'port_agent' => true,
+		'eta_1' => true,
+		'comment_1' => true,
+		'port_agent_id_1' => true,
+		'stow_plan_1' => true,
+		'dead_freight_1' => true,
+		'discount_freight_1' => true,
+		'qty_loaded_1' => true,
+		'radio_eta_1' => true,
+		'commLoading_1' => true,
+		'status_1' => true,
+		'completionDate_1' => true,
+		'blDate_1' => true,
+		'loi_status_id_1' => true,
+		'bl_status_id_1' => true,
 	];
 
 }

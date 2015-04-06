@@ -19,7 +19,7 @@ class OrdersController extends AppController {
     parent::initialize();
     $this->loadComponent('RequestHandler');
 		$this->response->header('Access-Control-Allow-Origin', '*');
-		$this->response->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');        
+		$this->response->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
   }
 
 /**
@@ -29,13 +29,21 @@ class OrdersController extends AppController {
  */
 	public function index() {
 		if ($this->request->params['_ext']) {
-			$this->set('orders', $this->Orders->find('all',['order' => ['Orders.id DESC'],'contain' => ['Creators', 'Modifiers', 'Users','Customers', 'VesselOwners', 'Statuses', 'Vessels','Loadings'=>['PortAgents','Ports','Ports2','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents','Ports','Ports2'],'Invoices','Events']]));
+			$this->set('orders', $this->Orders->find('all',['order' => ['Orders.id DESC'],
+				                                               'contain' => [
+					                                                'Users','Customers','VesselOwners',
+					                                                'Statuses', 'Vessels',
+																													'Loadings'=>[
+																																				'PortAgents','PortAgents2',
+																																				'Ports','Ports2','LoiStatuses',
+																																				'LoiStatuses2','BlStatuses','BlStatuses2',
+																																				'ShipmentTypes'
+																																			],
+																													'Dischargings'=>['PortAgents','PortAgents2','Ports','Ports2'],
+																													'Invoices','Events'
+				                                                ]
+				                                                ]));
 			$this->set('_serialize', ['orders']);
-		} else {
-			$this->paginate = [
-				'contain' => ['Creators', 'Modifiers', 'Users','Customers', 'VesselOwners', 'Statuses', 'Vessels','Loadings'=>['PortAgents','Ports','Ports2','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents','Ports','Ports2'],'Invoices','Events']
-			];
-			$this->set('orders', $this->paginate($this->Orders));
 		}
 	}
 
@@ -46,7 +54,28 @@ class OrdersController extends AppController {
  */
 	public function index_order() {
 		if ($this->request->params['_ext']) {
-			$this->set('orders', $this->Orders->find('all',['order' => ['Orders.id DESC'],'contain' => ['Users'=>['fields'=>['id','username']],'Customers'=>['fields'=>['id','name']], 'VesselOwners'=>['fields'=>['id','name']], 'Statuses'=>['fields'=>['id','name']], 'Vessels'=>['fields'=>['id','name']],'Loadings'=>['Ports'=>['fields'=>['id','name']],'fields'=>['id','port_id','demurrage_rate','freight','order_id']],'Dischargings'=>['Ports'=>['fields'=>['id','name']],'fields'=>['id','order_id']]],'fields'=>['id','fixtureDate','laycanStartDate','laycanEndDate','customer_id','vessel_owner_id','status_id','vessel_id','user_id']]));
+			$this->set('orders', $this->Orders->find('all',[
+				                                    'order' => ['Orders.id DESC'],
+				                                    'contain' => [
+					                                    'Users'=>['fields'=>['id','username']],
+					                                    'Customers'=>['fields'=>['id','name']],
+					                                    'VesselOwners'=>['fields'=>['id','name']], 
+					                                    'Statuses'=>['fields'=>['id','name']], 
+					                                    'Vessels'=>['fields'=>['id','name']],
+					                                    'Loadings'=>[
+					                                                 'Ports'=>['fields'=>['id','name']],
+					                                                 'Ports2'=>['fields'=>['id','name']],
+					                                                 'fields'=>['id','demurrage_rate','freight','order_id']
+					                                                ],
+					                                    'Dischargings'=>[
+					                                                  'Ports'=>['fields'=>['id','name']],
+					                                                  'Ports2'=>['fields'=>['id','name']],
+					                                                  'fields'=>['id','order_id']
+					                                                ]
+				                                    ],
+				                                    'fields'=>['id','fixtureDate','laycanStartDate','laycanEndDate',
+				                                               'customer_id','vessel_owner_id','status_id','vessel_id','user_id']
+				                                    ]));
 			$this->set('_serialize', ['orders']);
 		}
 	}
@@ -73,15 +102,22 @@ class OrdersController extends AppController {
 	public function view($id = null) {
 		if($this->request->params['_ext']){
 			$order = $this->Orders->get($id, [
-				'contain' => ['Loadings'=>['PortAgents','Ports','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents'],'Invoices','Events']
+							'contain' => 
+					[
+						'Users','Customers',
+						'VesselOwners', 'Statuses', 'Vessels',
+						'Loadings'=>[
+													'PortAgents','PortAgents2',
+													'Ports','Ports2','LoiStatuses',
+													'LoiStatuses2','BlStatuses','BlStatuses2',
+													'ShipmentTypes'
+												],
+						'Dischargings'=>['PortAgents','PortAgents2','Ports','Ports2'],
+						'Invoices','Events'
+					]
 			]);
 			$this->set('order', $order);
 			$this->set('_serialize', ['order']);
-		} else {
-		$order = $this->Orders->get($id, [
-			'contain' => ['Creators', 'Modifiers','Loadings'=>['PortAgents','Ports','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents'],'Invoices']
-		]);
-		$this->set('order', $order);
 		}
 	}
 
@@ -95,7 +131,17 @@ class OrdersController extends AppController {
 	public function view_order($id = null) {
 		if($this->request->params['_ext']){
 			$order = $this->Orders->get($id, [
-				'contain' => ['Statuses','Customers','VesselOwners','Vessels','Loadings'=>['PortAgents','Ports','Ports2','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents','Ports','Ports2'],'Invoices','Events','Users']
+				'contain' => 
+				[
+					'Statuses','Customers','VesselOwners','Vessels',
+					'Loadings'=>[
+												'PortAgents','PortAgents2',
+												'Ports','Ports2','LoiStatuses','LoiStatuses2',
+												'BlStatuses','BlStatuses2','ShipmentTypes'
+											],
+					'Dischargings'=>['PortAgents','PortAgents2','Ports','Ports2'],
+					'Invoices','Events','Users'
+				]
 			]);
 			$this->set('order', $order);
 			$this->set('_serialize', ['order']);
@@ -123,23 +169,6 @@ class OrdersController extends AppController {
 				'error' => $error,
 				'_serialize' => ['message', 'order', 'data','error']
 			]);
-		} else {
-		$order = $this->Orders->newEntity($this->request->data);
-		if ($this->request->is('post')) {
-			if ($this->Orders->save($order)) {
-				$this->Flash->success('The order has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The order could not be saved. Please, try again.');
-			}
-		}
-		$creators = $this->Orders->Creators->find('list');
-		$modifiers = $this->Orders->Modifiers->find('list');
-		$customers = $this->Orders->Customers->find('list');
-		$vesselOwners = $this->Orders->VesselOwners->find('list');
-		$statuses = $this->Orders->Statuses->find('list');
-		$vessels = $this->Orders->Vessels->find('list');
-		$this->set(compact('order', 'creators', 'modifiers', 'customers', 'vesselOwners', 'statuses', 'vessels'));
 		}
 	}
 
@@ -153,44 +182,38 @@ class OrdersController extends AppController {
 	public function edit($id = null) {
 		if($this->request->params['_ext']){
 			$order = $this->Orders->get($id, [
-				'contain' => ['Loadings'=>['PortAgents','Ports','LoiStatuses','BlStatuses','ShipmentTypes'],'Dischargings'=>['PortAgents'],'Invoices','Events']
+							'contain' => 
+					[
+						'Users','Customers',
+						'VesselOwners', 'Statuses', 'Vessels',
+						'Loadings'=>[
+													'PortAgents','PortAgents2',
+													'Ports','Ports2','LoiStatuses',
+													'LoiStatuses2','BlStatuses','BlStatuses2',
+													'ShipmentTypes'
+												],
+						'Dischargings'=>['PortAgents','PortAgents2','Ports','Ports2'],
+						'Invoices','Events'
+					]
 			]);
 			if ($this->request->is(['patch', 'post', 'put'])) {
-				$order = $this->Orders->patchEntity($order, $this->request->data);
+				$order = $this->Orders->patchEntity($order, $this->request->data, ['validate' => false]);
 				if ($this->Orders->save($order)) {
 					$message = 'Saved';
 				}
 				else {
 					$message = 'Error';
+					$error = $order->errors();
 				}
 			}
 			$this->set([
 				'order' => $order,
 				'message' => $message,
 				'data' => $this->request->data,
-				'_serialize' => ['message','order','data']
+				'error' => $error,
+				'_serialize' => ['message','order','data','error']
 			]);
-		} else {
-		$order = $this->Orders->get($id, [
-			'contain' => []
-		]);
-		if ($this->request->is(['patch', 'post', 'put'])) {
-			$order = $this->Orders->patchEntity($order, $this->request->data);
-			if ($this->Orders->save($order)) {
-				$this->Flash->success('The order has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The order could not be saved. Please, try again.');
-			}
 		}
-		$creators = $this->Orders->Creators->find('list');
-		$modifiers = $this->Orders->Modifiers->find('list');
-		$customers = $this->Orders->Customers->find('list');
-		$vesselOwners = $this->Orders->VesselOwners->find('list');
-		$statuses = $this->Orders->Statuses->find('list');
-		$vessels = $this->Orders->Vessels->find('list');
-		$this->set(compact('order', 'creators', 'modifiers', 'customers', 'vesselOwners', 'statuses', 'vessels'));
-	}
 }
 
 /**

@@ -41,6 +41,10 @@ class DischargingsTable extends Table {
 			'alias' => 'PortAgents',
 			'foreignKey' => 'port_agent_id'
 		]);
+		$this->belongsTo('PortAgents2', [
+			'className' => 'PortAgents',
+			'foreignKey' => 'port_agent_id_1'
+		]);
 		$this->belongsTo('Orders', [
 			'alias' => 'Orders',
 			'foreignKey' => 'order_id'
