@@ -87,7 +87,7 @@ class OrdersController extends AppController {
  */
 	public function order_events() {
 		if ($this->request->params['_ext']) {
-			$this->set('orders', $this->Orders->Events->find('all'));
+			$this->set('orders', $this->Orders->Events->find('all',['contain'=>['Vessels'=>['fields'=>['id','name']]]]));
 			$this->set('_serialize', ['orders']);
 		}
 	}
