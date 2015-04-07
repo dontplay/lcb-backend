@@ -21,6 +21,7 @@ class Loading extends Entity {
 		'port_id' => true,
 		'two_port_id' => true,
 		'rate' => true,
+		'rate_1' => true,
 		'freight' => true,
 		'shipment_size' => true,
 		'shipment_type_id' => true,

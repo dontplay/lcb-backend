@@ -20,6 +20,7 @@ class Discharging extends Entity {
 		'port_id' => true,
 		'two_port_id' => true,
 		'rate' => true,
+		'rate_1' => true,
 		'eta' => true,
 		'demurrage_rate' => true,
 		'comment' => true,
