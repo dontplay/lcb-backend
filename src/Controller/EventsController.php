@@ -100,14 +100,27 @@ class EventsController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function delete($id = null) {
-		$event = $this->Events->get($id);
-		$this->request->allowMethod(['post', 'delete']);
-		if ($this->Events->delete($event)) {
-			$this->Flash->success('The event has been deleted.');
-		} else {
-			$this->Flash->error('The event could not be deleted. Please, try again.');
+		if ($this->request->params['_ext']) {
+			$event = $this->Events->get($id);
+			$message = 'Deleted';
+			if (!$this->Events->delete($event)) {
+				$message = 'Error';
+			}
+			$this->set([
+				'message' => $message,
+				'_serialize' => ['message']
+			]);
 		}
-		return $this->redirect(['action' => 'index']);
+		else {	
+			$event = $this->Events->get($id);
+			$this->request->allowMethod(['post', 'delete']);
+			if ($this->Events->delete($event)) {
+				$this->Flash->success('The event has been deleted.');
+			} else {
+				$this->Flash->error('The event could not be deleted. Please, try again.');
+			}
+			return $this->redirect(['action' => 'index']);
+		}
 	}
 
 }
