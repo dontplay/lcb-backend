@@ -44,17 +44,7 @@ class PortAgentContactsTable extends Table {
 	public function validationDefault(Validator $validator) {
 		$validator
 			->add('id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('id', 'create')
-			->add('recstatus', 'valid', ['rule' => 'boolean'])
-			->requirePresence('recstatus', 'create')
-			->notEmpty('recstatus')
-			->add('creator_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('creator_id')
-			->add('modifier_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('modifier_id')
-			->add('port_agent_id', 'valid', ['rule' => 'numeric'])
-			->requirePresence('port_agent_id', 'create')
-			->notEmpty('port_agent_id');
+			->allowEmpty('id', 'create');
 
 		return $validator;
 	}

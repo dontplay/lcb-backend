@@ -21,6 +21,7 @@ class Order extends Entity {
 		'laycanStartDate' => true,
 		'laycanEndDate' => true,
 		'laycan_comment' => true,
+		'general_notes' => true,
 		'customer_id' => true,
 		'vessel_owner_id' => true,
 		'status_id' => true,

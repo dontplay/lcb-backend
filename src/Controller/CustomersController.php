@@ -76,7 +76,7 @@ class CustomersController extends AppController {
 				'message' => $message,
 				'customer' => $customer,
 				'error' => $error,
-				'_serialize' => ['message', 'customer', 'data']
+				'_serialize' => ['message', 'customer', 'data','error']
 			]);
 		}
 	}

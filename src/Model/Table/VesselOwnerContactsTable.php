@@ -44,21 +44,7 @@ class VesselOwnerContactsTable extends Table {
 	public function validationDefault(Validator $validator) {
 		$validator
 			->add('id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('id', 'create')
-			->add('recstatus', 'valid', ['rule' => 'boolean'])
-			->requirePresence('recstatus', 'create')
-			->notEmpty('recstatus')
-			->add('creator_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('creator_id')
-			->add('modifier_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('modifier_id')
-			->add('vessel_owner_id', 'valid', ['rule' => 'numeric'])
-			->requirePresence('vessel_owner_id', 'create')
-			->notEmpty('vessel_owner_id')
-			->requirePresence('name', 'create')
-			->notEmpty('name')
-			->requirePresence('number', 'create')
-			->notEmpty('number');
+			->allowEmpty('id', 'create');
 
 		return $validator;
 	}

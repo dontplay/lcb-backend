@@ -27,6 +27,7 @@ class VesselOwner extends Entity {
 		'city_id' => true,
 		'creator' => true,
 		'modifier' => true,
+		'full_style' => true,
 		'city' => true,
 		'orders' => true,
 		'vessel_owner_contacts' => true

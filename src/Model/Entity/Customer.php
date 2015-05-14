@@ -28,6 +28,7 @@ class Customer extends Entity {
 		'creator' => true,
 		'modifier' => true,
 		'city' => true,
+		'full_style' => true,
 		'customer_contacts' => true,
 		'orders' => true,
 	];
